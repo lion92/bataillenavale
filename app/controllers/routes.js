@@ -18,6 +18,12 @@ module.exports = {
     app.get('/select/:bateau', function(req, res){
       todo.reqselect(req.params.bateau,res)
     });
+    app.get('/tirs', function(req, res){
+      todo.gettir(res)
+    });
+    app.get('/bateau', function(req, res){
+      todo.getbateau(res)
+    });
     app.post('/envoi', function(req,res){
       todo.envoi(req.body.message,res);
     });
