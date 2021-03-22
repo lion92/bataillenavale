@@ -12,8 +12,8 @@ function Connection() {
         password: "",
         connectionLimit: 10,
         multipleStatements: true, //mysql connection pool length
-        database: "todo"
-      
+      //  database: "todo"
+        database:"batailleNavale"
     });
   };
 

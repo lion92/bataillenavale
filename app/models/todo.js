@@ -34,7 +34,7 @@ function Todo() {
       console.log("Connecté à la base de données MySQL!");
 
       con.query(
-        "insert into bateau (nom) values (?) ",
+        "insert into bateau (nom) values ('?') ",
         req,
         function (err, result) {
           if (err) {
@@ -47,43 +47,42 @@ function Todo() {
       );
     });
   };
-    this.reqplace = function (position,bateau,joueurs, res) {
+
+  this.reqtir= function (posX,posY, res) {
+    connection.acquire(function (err, con) {
+      console.log(err);
+      console.log("Connecté à la base de données MySQL!");
+
+      con.query(
+        "insert into plateau (placeX, placeY) values (?,?) ",
+        [posX,
+        posY],
+        function (err, result) {
+
+          if (err) {
+            res.send({ status: 1, message: "TODO creation fail" + err });
+          } else {
+            res.send({ status: 0, message: "TODO create success" + result });
+            console.log("Post successful");
+          }
+        }
+      );
+    });
+  };
+
+    this.reqplace = function (bateau,plateau, res) {
       connection.acquire(function (err, con) {
         console.log(err);
         console.log("Connecté à la base de données MySQL!");
 
         con.query(
-          "insert into place (idPostion, idBateau,idBateau_Place) values (?,?,?) ",
-          [position,
-          bateau,
-          joueurs],
+          "insert into position2 (bateau_idbateau, plateau_idplateau) values ("+bateau+","+plateau+")",
           function (err, result) {
 
             if (err) {
               res.send({ status: 1, message: "TODO creation fail" + err });
             } else {
               res.send({ status: 0, message: "TODO create success" + result });
-              console.log("Post successful");
-            }
-          }
-        );
-      });
-    };
-    this.reqselect = function (bateau, res) {
-      connection.acquire(function (err, con) {
-        console.log(err);
-        console.log("Connecté à la base de données MySQL!");
-
-        con.query(
-          " select * from Place INNER JOIN bateau ON Place.idbateau_place = bateau.idbateau inner join Position2 on Place.idbateau_place=Position2.idPostion where nom=?",
-          bateau,
-          function (err, result) {
-
-            if (err) {
-              res.send({ status: 1, message: "TODO creation fail" + err });
-            } else {
-             
-              res.send(result);
               console.log("Post successful");
             }
           }

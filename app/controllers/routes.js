@@ -6,11 +6,14 @@ module.exports = {
     app.post('/insertpmu', function(req, res){
       todo.reqpmu(req.body.pmu,res);
     });
-    app.post('/insert/nombateau', function(req, res){
+    app.post('/insert/bateau', function(req, res){
       todo.reqbateau(req.body.nom,res);
     });
-    app.post('/insert/place/joueurbateau', function(req, res){
-      todo.reqplace(req.body.position, req.body.bateau, req.body.joueur,res)
+    app.post('/insert/position', function(req, res){
+      todo.reqplace(req.body.bateau, req.body.plateau,res)
+    });
+    app.post('/insert/tir', function(req, res){
+      todo.reqtir(req.body.posX, req.body.posY,res)
     });
     app.get('/select/:bateau', function(req, res){
       todo.reqselect(req.params.bateau,res)
