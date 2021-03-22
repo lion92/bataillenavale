@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Prise de note kriss CLOTILDE</title>
+  <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+  <link rel="stylesheet" href="css/main.css">
+</head>
+
+<body>
+
+  <div class="container">
+    <h1>Prise de note </h1>
+    <a href="/about">About Page<br><br></a>
+
+    <form id="tacheCree" action="http://localhost:8000/todo" method="POST" target="hiddenFrame">
+
+      <input type="text" id="name" name="name" required minlength="1" size="10">
+      <input onclick="actu()" type="submit" value="Submit request" />
+    </form>
+    <iframe id="transit" name="hiddenFrame" width="0" height="0" border="0" style="display: none;"></iframe>
+
+
+
+    <label for="id">Choix de l'ID</label>
+    <input name="id" style="width:100px" type="text" id="id" />
+    <script>
+      var id = 0;
+      function update() {
+        id = document.getElementById("id").value;
+        document.getElementById("update").action = "http://localhost:8000/todo/" + id;
+      }
+      function deletebis() {
+        id = document.getElementById("id").value;
+        document.getElementById("delete").action = "http://localhost:8000/delete/" + id;
+      }
+    </script>
+    <div class="container">
+      <form id="update" method="POST" action="/" target="hiddenFrame">
+        <label for="name">Note à entrer</label>
+        <input type="text" name="name" />
+
+        <input onclick="update(), actu()" type="submit" value="Submit update" />
+      </form>
+    </div>
+    <div class="container">
+      <form id="delete" method="POST" action="/" target="hiddenFrame">
+
+        <input onclick="deletebis(), actu()" type="submit" value="Submit deletebis" />
+      </form>
+     
+      <p id="insert"></p>
+    </div>
+
+
+    <script>
+      function actu() {
+        $("#insert").empty();
+        $.getJSON('/todo', function (data) {
+          console.log(data);
+          for (var i = 0; i < data.length; i++) {
+
+            $("#insert").append("id :  " + data[i].id + " " + data[i].name + "                 " + "   <br>                      date :  " + data[i].date + " " + "<br>");
+          };
+
+
+
+
+
+
+        });
+
+      }
+      $(document).ready(function () {
+        actu();
+        $("#tacheCree").submit(function(e) {
+
+e.preventDefault(); // avoid to execute the actual submit of the form.
+
+var form = $(this);
+var url = form.attr('action');
+
+$.ajax({
+       type: "POST",
+       url: url,
+       data: form.serialize(), // serializes the form's elements.
+       success: function(data)
+       {
+        actu();
+        ///   alert(data); // show response from the php script.
+       }
+     });
+
+
+});
+
+$("#delete").submit(function(e) {
+
+e.preventDefault(); // avoid to execute the actual submit of the form.
+
+var form = $(this);
+var url = form.attr('action');
+
+$.ajax({
+       type: "POST",
+       url: url,
+       data: form.serialize(), // serializes the form's elements.
+       success: function(data)
+       {
+        actu();
+        ///   alert(data); // show response from the php script.
+       }
+     });
+
+
+});
+
+$("#update").submit(function(e) {
+
+e.preventDefault(); // avoid to execute the actual submit of the form.
+
+var form = $(this);
+var url = form.attr('action');
+
+$.ajax({
+       type: "POST",
+       url: url,
+       data: form.serialize(), // serializes the form's elements.
+       success: function(data)
+       {
+        actu();
+           ///alert(data); // show response from the php script.
+       }
+     });
+
+
+});
+
+      });
+    </script>
+  </div>
+
+</body>
+
+</html>
