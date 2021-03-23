@@ -69,6 +69,46 @@ function Todo() {
       );
     });
   };
+  this.deleteplateau= function ( res) {
+    connection.acquire(function (err, con) {
+      console.log(err);
+      console.log("Connecté à la base de données MySQL!");
+
+      con.query(
+        "delete from plateau where idplateau>=1 ",
+       
+        function (err, result) {
+
+          if (err) {
+            res.send({ status: 1, message: "TODO creation fail" + err });
+          } else {
+            res.send({ status: 0, message: "TODO create success" + result });
+            console.log("Post successful");
+          }
+        }
+      );
+    });
+  };
+  this.deleteposition= function ( res) {
+    connection.acquire(function (err, con) {
+      console.log(err);
+      console.log("Connecté à la base de données MySQL!");
+
+      con.query(
+        "delete from position2 where bateau_idbateau>=1 ",
+       
+        function (err, result) {
+
+          if (err) {
+            res.send({ status: 1, message: "TODO creation fail" + err });
+          } else {
+            res.send({ status: 0, message: "TODO create success" + result });
+            console.log("Post successful");
+          }
+        }
+      );
+    });
+  };
 
     this.reqplace = function (bateau,plateau, res) {
       connection.acquire(function (err, con) {

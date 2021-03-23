@@ -15,6 +15,12 @@ module.exports = {
     app.post('/insert/tir', function(req, res){
       todo.reqtir(req.body.posX, req.body.posY,res)
     });
+    app.post('/deletetir', function(req, res){
+      todo.deleteplateau(res)
+    });
+    app.post('/deleteposition', function(req, res){
+      todo.deleteposition(res)
+    });
     app.get('/select/:bateau', function(req, res){
       todo.reqselect(req.params.bateau,res)
     });
