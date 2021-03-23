@@ -69,48 +69,64 @@
 
 </tbody>
   <div class="container">
-    <h1>Prise de note </h1>
-    <a href="/about">About Page<br><br></a>
+    <h1>bataille navale</h1>
+ 
 
-    <form id="tacheCree" action="http://localhost:8000/todo" method="POST" target="hiddenFrame">
-
-      <input type="text" id="name" name="name" required minlength="1" size="10">
-      <input onclick="actu()" type="submit" value="Submit request" />
-    </form>
+  
     <iframe id="transit" name="hiddenFrame" width="0" height="0" border="0" style="display: none;"></iframe>
 
 
 
-    <label for="id">Choix de l'ID</label>
-    <input name="id" style="width:100px" type="text" id="id" />
+
     <script>
-      var id = 0;
-      function update() {
-        id = document.getElementById("id").value;
-        document.getElementById("update").action = "http://localhost:8000/todo/" + id;
+    
+      function tirdessus() {
+        
+        document.getElementById("tirdessus").action = "http://localhost:8000/insert/tir" ;
       }
-      function deletebis() {
-        id = document.getElementById("id").value;
-        document.getElementById("delete").action = "http://localhost:8000/delete/" + id;
+      function tirdelete() {
+        
+        document.getElementById("tirdelete").action = "http://localhost:8000/deletetir" ;
+        $('td, tr').css("background-color, initial");
+
+
       }
     </script>
     <div class="container">
-      <form id="update" method="POST" action="/" target="hiddenFrame">
+      <form id="tirdessus" method="POST" action="/" target="hiddenFrame">
         <label for="name">Note à entrer</label>
-        <input type="text" name="name" />
 
-        <input onclick="update(), actu()" type="submit" value="Submit update" />
+
+        <select name="posX">
+        <nom>posX</nom>
+      
+        <option valeur="1">1</option>
+        <option valeur="2">2</option>
+        <option valeur="3">3</option>
+        <option valeur="4">4</option>
+        <option valeur="5">5</option>
+        
+        </select>
+     <select name="posY">
+     <nom>posY</nom>
+   
+     <option valeur="1">1</option>
+     <option valeur="2">2</option>
+     <option valeur="3">3</option>
+     <option valeur="4">4</option>
+     <option valeur="5">5</option>
+     </select>
+        <input onclick="tirdessus(), actutirs()" type="submit" value="tirer" />
       </form>
     </div>
+  
     <div class="container">
-      <form id="delete" method="POST" action="/" target="hiddenFrame">
-
-        <input onclick="deletebis(), actu()" type="submit" value="Submit deletebis" />
+      <form id="tirdelete" method="POST" action="/" target="hiddenFrame">
+        <label for="name">Note à entrer</label>
+        
+        <input onclick="tirdelete(), actutirs()" type="submit" value="effacer tous les tirs" />
       </form>
-     
-      <p id="insert"></p>
     </div>
-
 
     <script>
       function actu() {
@@ -212,7 +228,7 @@ $.ajax({
 
 });
 
-$("#update").submit(function(e) {
+$("#tirdessus").submit(function(e) {
 
 e.preventDefault(); // avoid to execute the actual submit of the form.
 
@@ -225,7 +241,30 @@ $.ajax({
        data: form.serialize(), // serializes the form's elements.
        success: function(data)
        {
-        actu();
+        
+        actutirs();
+           ///alert(data); // show response from the php script.
+       }
+     });
+
+
+});
+
+$("#tirdelete").submit(function(e) {
+
+e.preventDefault(); // avoid to execute the actual submit of the form.
+
+var form = $(this);
+var url = form.attr('action');
+
+$.ajax({
+       type: "POST",
+       url: url,
+       data: form.serialize(), // serializes the form's elements.
+       success: function(data)
+       {
+        location.assign(location.href);
+        actutirs();
            ///alert(data); // show response from the php script.
        }
      });

@@ -10,7 +10,7 @@ function Connection() {
         port: "3306",
         user: "root",
         password: "",
-        connectionLimit: 10,
+        connectionLimit: 50,
         multipleStatements: true, //mysql connection pool length
       //  database: "todo"
         database:"batailleNavale"
