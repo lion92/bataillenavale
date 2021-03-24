@@ -132,7 +132,7 @@
 
 
 
-function poserbateau() {
+function poserbateau(positionX,positionY) {
 
   $('td').mouseover(function() {
    
@@ -146,18 +146,20 @@ var posX="";
 
 
     function() {
-      
+    (positionX+positionY);
       posX=  Number(this.id.replace('td', '').substr(0, 1));
     posY=Number(this.id.replace('td', '').substr(1, 2));
+    var hoverX=posX+positionX;
+    var hoverY=posY+positionY;
     console.log('X :'+posX+'Y :'+posY);
     console.log( '#'+posX+posY);
     $(  this).css( "background-color", "green" );
-    $('#td'+(posX+1)+(posY+1)).css( "background-color", "green" );
+    $('#td'+hoverX+hoverY).css( "background-color", "green" );
   },
   
   function() {
     $(  this).css( "background-color", "cyan" );
-    $('#td'+(posX+1)+(posY+1)).css( "background-color", "cyan" );
+    $('#td'+hoverX+hoverY).css( "background-color", "cyan" );
   }
 );
         
