@@ -94,27 +94,27 @@
     </script>
     <div class="container">
       <form id="tirdessus" method="POST" action="/" target="hiddenFrame">
-        <label for="name">Note à entrer</label>
+        <label for="name"></label>
 
 
         <select name="posX">
         <nom>posX</nom>
-      
+        <option valeur="0">0</option>
         <option valeur="1">1</option>
         <option valeur="2">2</option>
         <option valeur="3">3</option>
         <option valeur="4">4</option>
-        <option valeur="5">5</option>
+      
         
         </select>
      <select name="posY">
      <nom>posY</nom>
-   
+     <option valeur="0">0</option>
      <option valeur="1">1</option>
      <option valeur="2">2</option>
      <option valeur="3">3</option>
      <option valeur="4">4</option>
-     <option valeur="5">5</option>
+     
      </select>
         <input onclick="tirdessus(), actutirs()" type="submit" value="tirer" />
       </form>
@@ -122,13 +122,48 @@
   
     <div class="container">
       <form id="tirdelete" method="POST" action="/" target="hiddenFrame">
-        <label for="name">Note à entrer</label>
+        <label for="name"></label>
         
         <input onclick="tirdelete(), actutirs()" type="submit" value="effacer tous les tirs" />
       </form>
     </div>
 
     <script>
+
+
+
+function poserbateau() {
+
+  $('td').mouseover(function() {
+   
+ 
+   
+});
+var posX="";
+   var posY="";
+  
+    $( 'td' ).hover(
+
+
+    function() {
+      
+      posX=  Number(this.id.replace('td', '').substr(0, 1));
+    posY=Number(this.id.replace('td', '').substr(1, 2));
+    console.log('X :'+posX+'Y :'+posY);
+    console.log( '#'+posX+posY);
+    $(  this).css( "background-color", "green" );
+    $('#td'+(posX+1)+(posY+1)).css( "background-color", "green" );
+  },
+  
+  function() {
+    $(  this).css( "background-color", "cyan" );
+    $('#td'+(posX+1)+(posY+1)).css( "background-color", "cyan" );
+  }
+);
+        
+    }
+
+
       function actu() {
         $("#insert").empty();
         $.getJSON('/todo', function (data) {
@@ -182,6 +217,7 @@ $("#td"+data[i].placeX+data[i].placeY).empty();
       }
 
       $(document).ready(function () {
+        poserbateau(1,1);
         actu(); 
         actubateau();
         actutirs();

@@ -57,3 +57,11 @@ body {font-family: Arial, Helvetica, sans-serif;
     width: 30px;
     height: 30px;
   }
+  tr {
+    display: table-row;
+    vertical-align: inherit;
+    border-color: inherit;
+  }
+  table{  width: 20%;
+    margin: 0 auto; }
+  
