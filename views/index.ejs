@@ -148,7 +148,8 @@
 function poserbateau() {
 var positionX=Number($('#inputX').val());
   var positionY=Number($('#inputY').val());
-  console.log("OOOO"+positionX);
+  console.log("OOOO"+positionX);  
+      
   $('td').mouseover(function() {
    
  
@@ -171,24 +172,25 @@ var posX;
     console.log('X :'+posX+'Y :'+posY);
     console.log( '#'+posX+posY);
    // $(  this).css( "background-color", "green" );
-    for(var i=posX;i<positionX;i++){
-    
-    $('#td'+i+hoverY).css( "background-color", "green" );
-    console.log('#td'+i+hoverY);
-      }
+ 
+   $(this).css( "background-color", "green" );
+    $('#td'+hoverX+hoverY).css( "background-color", "green" );
+ //  $('#td'+(hoverX-1)+(hoverY-1)).css( "background-color", "green" );
+      
     
   },
   
   function() {
     //$(  this).css( "background-color", "cyan" );
     //$('#td'+hoverX+hoverY).css( "background-color", "cyan" );
-    for(var i=posX;i<positionX;i++){
-      
-    $('#td'+i+hoverY).css( "background-color", "cyan" );
-    console.log('#td'+i+hoverY);
+   
+    $(this).css( "background-color", "cyan" );
+    $('#td'+hoverX+hoverY).css( "background-color", "cyan" );
+   
+   // $('#td'+(hoverX-1)+(hoverY-1)).css( "background-color", "cyan" );
       }
     
-  }
+  
 );
         
     }

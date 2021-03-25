@@ -19,6 +19,10 @@ function Todo() {
     connection.acquire(function (err, con) {
       console.log("Connecté à la base de données MySQL!");
       con.query(req, function (err, result) {
+        con.release();
+        res.header("Access-Control-Allow-Origin", "*");
+        res.header("Access-Control-Allow-Methods", "GET,HEAD,OPTIONS,POST,PUT");
+        res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, x-client-key, x-client-token, x-client-secret, Authorization");
         if (err) {
           res.send({ status: 1, message: "TODO creation fail" + err });
         } else {
@@ -37,6 +41,10 @@ function Todo() {
         "insert into bateau (nom) values ('?') ",
         req,
         function (err, result) {
+          con.release();
+          res.header("Access-Control-Allow-Origin", "*");
+          res.header("Access-Control-Allow-Methods", "GET,HEAD,OPTIONS,POST,PUT");
+          res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, x-client-key, x-client-token, x-client-secret, Authorization");
           if (err) {
             res.send({ status: 1, message: "TODO creation fail" + err });
           } else {
@@ -48,7 +56,7 @@ function Todo() {
     });
   };
 
-  this.reqtir= function (posX,posY, res) {
+  this.reqtir = function (posX, posY, res) {
     connection.acquire(function (err, con) {
       console.log(err);
       console.log("Connecté à la base de données MySQL!");
@@ -56,8 +64,12 @@ function Todo() {
       con.query(
         "insert into plateau (placeX, placeY) values (?,?) ",
         [posX,
-        posY],
+          posY],
         function (err, result) {
+          con.release();
+          res.header("Access-Control-Allow-Origin", "*");
+          res.header("Access-Control-Allow-Methods", "GET,HEAD,OPTIONS,POST,PUT");
+          res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, x-client-key, x-client-token, x-client-secret, Authorization");
 
           if (err) {
             res.send({ status: 1, message: "TODO creation fail" + err });
@@ -69,15 +81,19 @@ function Todo() {
       );
     });
   };
-  this.deleteplateau= function ( res) {
+  this.deleteplateau = function (res) {
     connection.acquire(function (err, con) {
       console.log(err);
       console.log("Connecté à la base de données MySQL!");
 
       con.query(
         "delete from plateau where idplateau>=1 ",
-       
+
         function (err, result) {
+          con.release();
+          res.header("Access-Control-Allow-Origin", "*");
+          res.header("Access-Control-Allow-Methods", "GET,HEAD,OPTIONS,POST,PUT");
+          res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, x-client-key, x-client-token, x-client-secret, Authorization");
 
           if (err) {
             res.send({ status: 1, message: "TODO creation fail" + err });
@@ -89,15 +105,19 @@ function Todo() {
       );
     });
   };
-  this.deleteposition= function ( res) {
+  this.deleteposition = function (res) {
     connection.acquire(function (err, con) {
       console.log(err);
       console.log("Connecté à la base de données MySQL!");
 
       con.query(
         "delete from position2 where bateau_idbateau>=1 ",
-       
+
         function (err, result) {
+          con.release();
+          res.header("Access-Control-Allow-Origin", "*");
+          res.header("Access-Control-Allow-Methods", "GET,HEAD,OPTIONS,POST,PUT");
+          res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, x-client-key, x-client-token, x-client-secret, Authorization");
 
           if (err) {
             res.send({ status: 1, message: "TODO creation fail" + err });
@@ -110,29 +130,36 @@ function Todo() {
     });
   };
 
-    this.reqplace = function (bateau,plateau, res) {
-      connection.acquire(function (err, con) {
-        console.log(err);
-        console.log("Connecté à la base de données MySQL!");
+  this.reqplace = function (bateau, plateau, res) {
+    connection.acquire(function (err, con) {
+      console.log(err);
+      console.log("Connecté à la base de données MySQL!");
 
-        con.query(
-          "insert into position2 (bateau_idbateau, plateau_idplateau) values ("+bateau+","+plateau+")",
-          function (err, result) {
-
-            if (err) {
-              res.send({ status: 1, message: "TODO creation fail" + err });
-            } else {
-              res.send({ status: 0, message: "TODO create success" + result });
-              console.log("Post successful");
-            }
+      con.query(
+        "insert into position2 (bateau_idbateau, plateau_idplateau) values (" + bateau + "," + plateau + ")",
+        function (err, result) {
+          con.release();
+          res.header("Access-Control-Allow-Origin", "*");
+          res.header("Access-Control-Allow-Methods", "GET,HEAD,OPTIONS,POST,PUT");
+          res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, x-client-key, x-client-token, x-client-secret, Authorization");
+          if (err) {
+            res.send({ status: 1, message: "TODO creation fail" + err });
+          } else {
+            res.send({ status: 0, message: "TODO create success" + result });
+            console.log("Post successful");
           }
-        );
-      });
-    };
+        }
+      );
+    });
+  };
   this.createpmu = function (text, res) {
     connection.acquire(function (err, con) {
       con.query("?", text, function (err, result) {
         con.release();
+        res.header("Access-Control-Allow-Origin", "*");
+        res.header("Access-Control-Allow-Methods", "GET,HEAD,OPTIONS,POST,PUT");
+        res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, x-client-key, x-client-token, x-client-secret, Authorization");
+
         if (err) {
           res.send({ status: 1, message: "TODO creation fail" });
         } else {
@@ -146,10 +173,10 @@ function Todo() {
     connection.acquire(function (err, con) {
       con.query("select * from todo_list", function (err, result) {
         con.release();
-
         res.header("Access-Control-Allow-Origin", "*");
         res.header("Access-Control-Allow-Methods", "GET,HEAD,OPTIONS,POST,PUT");
         res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, x-client-key, x-client-token, x-client-secret, Authorization");
+
 
 
 
@@ -158,15 +185,15 @@ function Todo() {
       });
     });
   };
-  this.gettir = function ( res) {
+  this.gettir = function (res) {
     connection.acquire(function (err, con) {
 
       con.query("SELECT * FROM position2 right JOIN plateau ON position2.plateau_idplateau = plateau.idplateau WHERE position2.plateau_idplateau is null ", function (err, result) {
         con.release();
-
         res.header("Access-Control-Allow-Origin", "*");
         res.header("Access-Control-Allow-Methods", "GET,HEAD,OPTIONS,POST,PUT");
         res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, x-client-key, x-client-token, x-client-secret, Authorization");
+
 
 
 
@@ -175,15 +202,15 @@ function Todo() {
       });
     });
   };
-  this.getbateau = function ( res) {
+  this.getbateau = function (res) {
     connection.acquire(function (err, con) {
 
       con.query("SELECT * FROM position2 right JOIN plateau ON position2.plateau_idplateau = plateau.idplateau WHERE position2.plateau_idplateau ", function (err, result) {
         con.release();
-
         res.header("Access-Control-Allow-Origin", "*");
         res.header("Access-Control-Allow-Methods", "GET,HEAD,OPTIONS,POST,PUT");
         res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, x-client-key, x-client-token, x-client-secret, Authorization");
+
 
 
 
@@ -199,6 +226,10 @@ function Todo() {
         id,
         function (err, result) {
           con.release();
+          res.header("Access-Control-Allow-Origin", "*");
+          res.header("Access-Control-Allow-Methods", "GET,HEAD,OPTIONS,POST,PUT");
+          res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, x-client-key, x-client-token, x-client-secret, Authorization");
+
           res.send(result);
           console.log("Get by ID successful");
         }
@@ -209,6 +240,10 @@ function Todo() {
     connection.acquire(function (err, con) {
       con.query("insert into todo_list set ?", todo, function (err, result) {
         con.release();
+        res.header("Access-Control-Allow-Origin", "*");
+        res.header("Access-Control-Allow-Methods", "GET,HEAD,OPTIONS,POST,PUT");
+        res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, x-client-key, x-client-token, x-client-secret, Authorization");
+
         if (err) {
           res.send({ status: 1, message: "TODO creation fail" });
         } else {
@@ -225,6 +260,10 @@ function Todo() {
         [todo, id],
         function (err, result) {
           con.release();
+          res.header("Access-Control-Allow-Origin", "*");
+          res.header("Access-Control-Allow-Methods", "GET,HEAD,OPTIONS,POST,PUT");
+          res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, x-client-key, x-client-token, x-client-secret, Authorization");
+
           if (err) {
             res.send({ status: 1, message: "TODO update fail" });
           } else {
@@ -242,6 +281,10 @@ function Todo() {
         id,
         function (err, result) {
           con.release();
+          res.header("Access-Control-Allow-Origin", "*");
+          res.header("Access-Control-Allow-Methods", "GET,HEAD,OPTIONS,POST,PUT");
+          res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, x-client-key, x-client-token, x-client-secret, Authorization");
+
           if (err) {
             res.send({ status: 1, message: "TODO delete fail" });
           } else {
@@ -252,13 +295,17 @@ function Todo() {
       );
     });
   };
-  this.deletetout = function ( req, res) {
+  this.deletetout = function (req, res) {
     connection.acquire(function (err, con) {
       con.query(
         "delete from todo_list where id>1",
         function (err, result) {
           con.release();
           if (err) {
+            res.header("Access-Control-Allow-Origin", "*");
+            res.header("Access-Control-Allow-Methods", "GET,HEAD,OPTIONS,POST,PUT");
+            res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, x-client-key, x-client-token, x-client-secret, Authorization");
+
             res.send({ status: 1, message: "TODO delete fail" });
           } else {
             res.send({ status: 0, message: "TODO delete success" });
