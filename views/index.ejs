@@ -127,39 +127,67 @@
         <input onclick="tirdelete(), actutirs()" type="submit" value="effacer tous les tirs" />
       </form>
     </div>
+    <div class="container">
+     
+       
+         <label>InputX</label>
+        <input id='inputX' type="text"  />
+        <label>InputY</label>
+        <input id='inputY' type="text" />
+        <button onclick="poserbateau()">poser bateau</button>
 
+
+
+
+      </form>
+    </div> 
     <script>
 
 
 
-function poserbateau(positionX,positionY) {
-
+function poserbateau() {
+var positionX=Number($('#inputX').val());
+  var positionY=Number($('#inputY').val());
+  console.log("OOOO"+positionX);
   $('td').mouseover(function() {
    
  
    
 });
-var posX="";
-   var posY="";
+var posX;
+   var posY;
+   var hoverY;
+   var hoverX;
   
     $( 'td' ).hover(
 
 
     function() {
-    (positionX+positionY);
+    
       posX=  Number(this.id.replace('td', '').substr(0, 1));
     posY=Number(this.id.replace('td', '').substr(1, 2));
-    var hoverX=posX+positionX;
-    var hoverY=posY+positionY;
+    hoverX=posX+positionX;
+     hoverY=posY+positionY;
     console.log('X :'+posX+'Y :'+posY);
     console.log( '#'+posX+posY);
-    $(  this).css( "background-color", "green" );
-    $('#td'+hoverX+hoverY).css( "background-color", "green" );
+   // $(  this).css( "background-color", "green" );
+    for(var i=posX;i<positionX;i++){
+    
+    $('#td'+i+hoverY).css( "background-color", "green" );
+    console.log('#td'+i+hoverY);
+      }
+    
   },
   
   function() {
-    $(  this).css( "background-color", "cyan" );
-    $('#td'+hoverX+hoverY).css( "background-color", "cyan" );
+    //$(  this).css( "background-color", "cyan" );
+    //$('#td'+hoverX+hoverY).css( "background-color", "cyan" );
+    for(var i=posX;i<positionX;i++){
+      
+    $('#td'+i+hoverY).css( "background-color", "cyan" );
+    console.log('#td'+i+hoverY);
+      }
+    
   }
 );
         
@@ -219,7 +247,7 @@ $("#td"+data[i].placeX+data[i].placeY).empty();
       }
 
       $(document).ready(function () {
-        poserbateau(1,1);
+        
         actu(); 
         actubateau();
         actutirs();
