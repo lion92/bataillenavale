@@ -6,14 +6,16 @@ function Connection() {
   this.init = function() {
     this.pool = mysql.createPool({
       
-        host: "localhost",
-        port: "3306",
-        user: "root",
-        password: "",
-        connectionLimit: 50,
-        multipleStatements: true, //mysql connection pool length
+        host:"localhost",
+        port:"3306",
+        user:"root",
+        password:"",
+        connectionLimit:10,
+        multipleStatements:true,
+        database:"bataillenavale"
+         //mysql connection pool length
       //  database: "todo"
-        database:"batailleNavale"
+        
     });
   };
 
