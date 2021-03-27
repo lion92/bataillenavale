@@ -2,7 +2,7 @@ var connection = require("../config/connection");
 const jwt = require('jsonwebtoken');
 const nodemailer = require("nodemailer");
 const bcrypt = require('bcryptjs');
-const cookieParser=require("cookie-parser");
+const cookieParser = require("cookie-parser");
 var messagebis = "diidoi";
 let transport = nodemailer.createTransport({
   host: "mail.krissdeveloppeur.com",
@@ -17,60 +17,177 @@ let transport = nodemailer.createTransport({
 });
 
 function Todo() {
-  this.reqgister = function (reqemail, reqpassword, req, res) {
- let hashpass="";
- let bon="";
+  this.reqlogin = function (reqemail, reqpassword, req, res) {
+    let conection2=false;
+    jwt.verify(req.cookies['essai'], 'secret_this_should_be_longer', function(err, decoded) {
+      console.log("////////////");
+      if(decoded===undefined){
+        conection2=true;
+      }
+      else{
+        conection2=false;
+      }
+      //console.log(decoded.code) // bar
+    });
+    if(conection2 ==true){
     connection.acquire(function (err, con) {
       console.log(err);
       console.log("Connecté à la base de données MySQL!");
- req.cookies.title='GeeksforGeeks';  
-  console.log(req.cookies);
+
       con.query(
-        "SELECT * FROM position2 right JOIN plateau ON position2.plateau_idplateau = plateau.idplateau WHERE position2.plateau_idplateau ",
-      
+        'select password2 from user where email=?',
+        reqemail,
         function (err, result) {
-         
           con.release();
-          bcrypt.hash(reqpassword, 10, function(err, hash) {
-            console.log(hash);
-            // Store hash in your password DB.
-            hashpass=hash;
-            let result3=bcrypt.compareSync("gvuyuv", hashpass);
-       console.log(result3); 
-       if(result3){
-        const jwttoken = jwt.sign(
-          {code:hash },
-          "secret_this_should_be_longer",
-          { expiresIn: "1h" }
-        );
-       const cookieOption={
-        expiresIn:new Date( 
-          Date.now()+24*3600
-        ),
-        httpOnly:true
-       }
-       res.cookie('', jwttoken, cookieOption);
-       };
-       
-      
-         
           res.header("Access-Control-Allow-Origin", "*");
           res.header("Access-Control-Allow-Methods", "GET,HEAD,OPTIONS,POST,PUT");
           res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, x-client-key, x-client-token, x-client-secret, Authorization");
-
           if (err) {
             res.send({ status: 1, message: "TODO creation fail" + err });
-          } else {
-          
-            res.send({ status: 0, message: "TODO create success" + result });
+          }
+
+
+
+          else {
+
+
+
+            // res.send({ status: 0, message:  result[0].password2});
             console.log("Post successful");
+
+
+            bcrypt.compare(reqpassword, result[0].password2, function (err, result2) {
+              // result == true
+              if (err) {
+
+
+
+              }
+              else {
+
+             
+
+                const jwttoken = jwt.sign(
+                  { code: result[0].password2 },
+                  "secret_this_should_be_longer",
+                  { expiresIn: "1h" }
+                );
+                const cookieOption = {
+                  expiresIn: new Date(
+                    Date.now() + 24 * 3600
+                  ),
+                  httpOnly: true
+                }
+                res.cookie('essai', jwttoken, cookieOption);
+                res.send({ status: 0, message: "Connecte" + req.cookies['essai'] });
+
+
+              
+
+              }
+           
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+            });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
           }
         }
       );
     });
 
-  });
-}
+  }else{
+   // res.clearCookie("essai");
+    res.send({ status: 1, message:"connecter" });
+    
+  }
+  }
+  this.reqgister = function (reqemail, reqpassword, req, res) {
+    let hashpass = "";
+    let bon = "";
+    connection.acquire(function (err, con) {
+      console.log(err);
+      console.log("Connecté à la base de données MySQL!");
+      req.cookies.title = 'GeeksforGeeks';
+      console.log(req.cookies);
+
+      bcrypt.hash(reqpassword, 10, function (err, hash) {
+
+
+        con.release();
+        console.log(hash);
+        // Store hash in your password DB.
+        hashpass = hash;
+        let result3 = bcrypt.compareSync("gvuyuv", hashpass);
+        console.log(result3);
+        if (result3) {
+          const jwttoken = jwt.sign(
+            { code: hash },
+            "secret_this_should_be_longer",
+            { expiresIn: "1h" }
+          );
+          const cookieOption = {
+            expiresIn: new Date(
+              Date.now() + 24 * 3600
+            ),
+            httpOnly: true
+          }
+          res.cookie('essai', jwttoken, cookieOption);
+        };
+        con.query(
+          "insert into user (email, password2) values (?,?)", [reqemail, hashpass]
+          ,
+
+          function (err, result) {
+
+
+            res.header("Access-Control-Allow-Origin", "*");
+            res.header("Access-Control-Allow-Methods", "GET,HEAD,OPTIONS,POST,PUT");
+            res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, x-client-key, x-client-token, x-client-secret, Authorization");
+
+            if (err) {
+              res.send({ status: 1, message: "TODO creation fail" + err });
+            } else {
+
+              res.send({ status: 0, message: "TODO create success" + result });
+              console.log("Post successful");
+              con.release();
+            }
+          }
+        );
+      });
+
+    });
+  }
   this.reqpmu = function (req, res) {
     connection.acquire(function (err, con) {
       console.log("Connecté à la base de données MySQL!");

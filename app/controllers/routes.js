@@ -9,6 +9,9 @@ module.exports = {
     app.post('/register', function(req, res){
       todo.reqgister(req.body.email, req.body.password,req, res);
     });
+    app.post('/login', function(req, res){
+      todo.reqlogin(req.body.email, req.body.password,req, res);
+    });
     app.post('/insert/bateau', function(req, res){
       todo.reqbateau(req.body.nom,res);
     });
