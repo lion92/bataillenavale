@@ -15,6 +15,9 @@ module.exports = {
     app.post('/insert/bateau', function(req, res){
       todo.reqbateau(req.body.nom,res);
     });
+    app.post('/deconnexion', function(req, res){
+      todo.reqdeconnexion(req,res);
+    });
     app.post('/insert/position', function(req, res){
       todo.reqplace(req.body.bateau, req.body.plateau,res)
     });

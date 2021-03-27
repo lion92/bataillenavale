@@ -17,14 +17,23 @@ let transport = nodemailer.createTransport({
 });
 
 function Todo() {
+  this.reqdeconnexion = function ( req, res) {
+
+    res.clearCookie("essai");
+    res.send({ status: 200, message: "deconnexion"});
+
+  }
   this.reqlogin = function (reqemail, reqpassword, req, res) {
     let conection2 = false;
+    let email="";
     jwt.verify(req.cookies['essai'], 'secret_this_should_be_longer', function (err, decoded) {
       console.log("////////////");
       if (decoded === undefined) {
         conection2 = true;
+        
       }
       else {
+        email=decoded.email;
         conection2 = false;
       }
       //console.log(decoded.code) // bar
@@ -68,7 +77,7 @@ function Todo() {
 
 
                   const jwttoken = jwt.sign(
-                    { code: result[0].password2 },
+                    { code: result[0].password2, email:reqemail },
                     "secret_this_should_be_longer",
                     { expiresIn: "1h" }
                   );
@@ -79,7 +88,7 @@ function Todo() {
                     httpOnly: true
                   }
                   res.cookie('essai', jwttoken, cookieOption);
-                  res.send({ status: 0, message: "Connecte" + req.cookies['essai'] });
+                  res.send({ status: 0, message: "Connecte " + reqemail });
                 }
               });
             }
@@ -89,7 +98,7 @@ function Todo() {
 
     } else {
       // res.clearCookie("essai");
-      res.send({ status: 1, message: "connecter" });
+      res.send({ status: 1, message: "connecter "+email });
 
     }
   }
@@ -105,26 +114,12 @@ function Todo() {
       bcrypt.hash(reqpassword, 10, function (err, hash) {
 
 
-        con.release();
         console.log(hash);
         // Store hash in your password DB.
         hashpass = hash;
         let result3 = bcrypt.compareSync("gvuyuv", hashpass);
         console.log(result3);
-        if (result3) {
-          const jwttoken = jwt.sign(
-            { code: hash },
-            "secret_this_should_be_longer",
-            { expiresIn: "1h" }
-          );
-          const cookieOption = {
-            expiresIn: new Date(
-              Date.now() + 24 * 3600
-            ),
-            httpOnly: true
-          }
-          res.cookie('essai', jwttoken, cookieOption);
-        };
+        
         con.query(
           "insert into user (email, password2) values (?,?)", [reqemail, hashpass]
           ,
@@ -137,10 +132,10 @@ function Todo() {
             res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, x-client-key, x-client-token, x-client-secret, Authorization");
 
             if (err) {
-              res.send({ status: 1, message: "TODO creation fail" + err });
+              res.send({ status: 1, message: "Erreur de conection ou login existe" + err });
             } else {
 
-              res.send({ status: 0, message: "TODO create success" + result });
+              res.send({ status: 0, message: "TODO create success " + result });
               console.log("Post successful");
               con.release();
             }
@@ -159,9 +154,9 @@ function Todo() {
         res.header("Access-Control-Allow-Methods", "GET,HEAD,OPTIONS,POST,PUT");
         res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, x-client-key, x-client-token, x-client-secret, Authorization");
         if (err) {
-          res.send({ status: 1, message: "TODO creation fail" + err });
+          res.send({ status: 1, message: "TODO creation fail " + err });
         } else {
-          res.send({ status: 0, message: "TODO create success" + result });
+          res.send({ status: 0, message: "TODO create success " + result });
           console.log("Post successful");
         }
       });
@@ -181,9 +176,9 @@ function Todo() {
           res.header("Access-Control-Allow-Methods", "GET,HEAD,OPTIONS,POST,PUT");
           res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, x-client-key, x-client-token, x-client-secret, Authorization");
           if (err) {
-            res.send({ status: 1, message: "TODO creation fail" + err });
+            res.send({ status: 1, message: "TODO creation fail " + err });
           } else {
-            res.send({ status: 0, message: "TODO create success" + result });
+            res.send({ status: 0, message: "TODO create success " + result });
             console.log("Post successful");
           }
         }
@@ -207,9 +202,9 @@ function Todo() {
           res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, x-client-key, x-client-token, x-client-secret, Authorization");
 
           if (err) {
-            res.send({ status: 1, message: "TODO creation fail" + err });
+            res.send({ status: 1, message: "TODO creation fail " + err });
           } else {
-            res.send({ status: 0, message: "TODO create success" + result });
+            res.send({ status: 0, message: "TODO create success " + result });
             console.log("Post successful");
           }
         }
@@ -231,9 +226,9 @@ function Todo() {
           res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, x-client-key, x-client-token, x-client-secret, Authorization");
 
           if (err) {
-            res.send({ status: 1, message: "TODO creation fail" + err });
+            res.send({ status: 1, message: "TODO creation fail " + err });
           } else {
-            res.send({ status: 0, message: "TODO create success" + result });
+            res.send({ status: 0, message: "TODO create success " + result });
             console.log("Post successful");
           }
         }
@@ -255,9 +250,9 @@ function Todo() {
           res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, x-client-key, x-client-token, x-client-secret, Authorization");
 
           if (err) {
-            res.send({ status: 1, message: "TODO creation fail" + err });
+            res.send({ status: 1, message: "TODO creation fail " + err });
           } else {
-            res.send({ status: 0, message: "TODO create success" + result });
+            res.send({ status: 0, message: "TODO create success " + result });
             console.log("Post successful");
           }
         }
@@ -278,9 +273,9 @@ function Todo() {
           res.header("Access-Control-Allow-Methods", "GET,HEAD,OPTIONS,POST,PUT");
           res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, x-client-key, x-client-token, x-client-secret, Authorization");
           if (err) {
-            res.send({ status: 1, message: "TODO creation fail" + err });
+            res.send({ status: 1, message: "TODO creation fail " + err });
           } else {
-            res.send({ status: 0, message: "TODO create success" + result });
+            res.send({ status: 0, message: "TODO create success " + result });
             console.log("Post successful");
           }
         }
