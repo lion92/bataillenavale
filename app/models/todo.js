@@ -52,7 +52,7 @@ function Todo() {
             res.header("Access-Control-Allow-Methods", "GET,HEAD,OPTIONS,POST,PUT");
             res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, x-client-key, x-client-token, x-client-secret, Authorization");
             if (err) {
-              res.send({ status: 1, message: "TODO creation fail" + err });
+              res.send({ status: 1, message: "email"});
             }
 
 
@@ -63,7 +63,11 @@ function Todo() {
 
               // res.send({ status: 0, message:  result[0].password2});
               console.log("Post successful");
+              if(!result[0]){
+                res.send({ status: 1, message: "email invalid"});
 
+              } 
+                else{
 
               bcrypt.compare(reqpassword, result[0].password2, function (err, result2) {
                 // result == true
@@ -81,7 +85,7 @@ function Todo() {
 
 
                   const jwttoken = jwt.sign(
-                    { code: result[0].password2, email:reqemail },
+                    {  email:reqemail },
                     "secret_this_should_be_longer",
                     { expiresIn: "1h" }
                   );
@@ -93,8 +97,11 @@ function Todo() {
                   }
                   res.cookie('essai', jwttoken, cookieOption);
                   res.send({ status: 0, message: "Connecte " + reqemail+result2 });
+                
                 }
+                
               });
+            }
             }
           }
         );
@@ -142,12 +149,16 @@ function Todo() {
               res.send({ status: 0, message: "Utilisateur enregistrer " + reqemail});
               console.log("Post successful");
               con.release();
+            
             }
+          
           }
         );
+      
       });
-
+    
     });
+  
   }
   this.reqpmu = function (req, res) {
     connection.acquire(function (err, con) {
