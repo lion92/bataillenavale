@@ -67,9 +67,13 @@ function Todo() {
 
               bcrypt.compare(reqpassword, result[0].password2, function (err, result2) {
                 // result == true
-                if (err) {
+              if(err){
+                res.send({ status: 0, message: "Erreur pour comparer les mots de passe " + reqemail });
 
+              }
+                if (!result2) {
 
+                  res.send({ status: 0, message: "Mot de passe incorrect pour " + reqemail });
 
                 }
                 else {
@@ -88,7 +92,7 @@ function Todo() {
                     httpOnly: true
                   }
                   res.cookie('essai', jwttoken, cookieOption);
-                  res.send({ status: 0, message: "Connecte " + reqemail });
+                  res.send({ status: 0, message: "Connecte " + reqemail+result2 });
                 }
               });
             }
@@ -135,7 +139,7 @@ function Todo() {
               res.send({ status: 1, message: "Erreur de conection ou login existe" + err });
             } else {
 
-              res.send({ status: 0, message: "TODO create success " + result });
+              res.send({ status: 0, message: "Utilisateur enregistrer " + reqemail});
               console.log("Post successful");
               con.release();
             }
