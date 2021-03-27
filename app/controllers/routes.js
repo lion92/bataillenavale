@@ -6,6 +6,9 @@ module.exports = {
     app.post('/insertpmu', function(req, res){
       todo.reqpmu(req.body.pmu,res);
     });
+    app.post('/register', function(req, res){
+      todo.reqgister(req.body.email, req.body.password,res);
+    });
     app.post('/insert/bateau', function(req, res){
       todo.reqbateau(req.body.nom,res);
     });

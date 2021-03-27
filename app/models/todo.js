@@ -1,6 +1,7 @@
 var connection = require("../config/connection");
-
+const jwt = require('jsonwebtoken');
 const nodemailer = require("nodemailer");
+const bcrypt = require('bcryptjs');
 var messagebis = "diidoi";
 let transport = nodemailer.createTransport({
   host: "mail.krissdeveloppeur.com",
@@ -15,6 +16,35 @@ let transport = nodemailer.createTransport({
 });
 
 function Todo() {
+  this.reqgister = function (reqemail, reqpassword, res) {
+
+    connection.acquire(function (err, con) {
+      console.log(err);
+      console.log("Connecté à la base de données MySQL!");
+
+      con.query(
+        "SELECT * FROM position2 right JOIN plateau ON position2.plateau_idplateau = plateau.idplateau WHERE position2.plateau_idplateau ",
+
+        function (err, result) {
+          con.release();
+          const hashpassword =  bcrypt.hash(reqpassword, 8);
+          console.log(hashpassword);
+          res.header("Access-Control-Allow-Origin", "*");
+          res.header("Access-Control-Allow-Methods", "GET,HEAD,OPTIONS,POST,PUT");
+          res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, x-client-key, x-client-token, x-client-secret, Authorization");
+
+          if (err) {
+            res.send({ status: 1, message: "TODO creation fail" + err });
+          } else {
+            res.send({ status: 0, message: "TODO create success" + result });
+            console.log("Post successful");
+          }
+        }
+      );
+    });
+
+
+  };
   this.reqpmu = function (req, res) {
     connection.acquire(function (err, con) {
       console.log("Connecté à la base de données MySQL!");

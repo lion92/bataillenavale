@@ -18,9 +18,11 @@
   "homepage": "https://github.com/lijasminej/todo-app#readme",
   "dependencies": {
     "bcrypt": "^5.0.1",
+    "bcryptjs": "^2.4.3",
     "body-parser": "^1.15.2",
     "ejs": "^3.1.6",
     "express": "^4.14.0",
+    "jsonwebtoken": "^8.5.1",
     "mysql": "^2.11.1",
     "nodemailer": "^6.5.0"
   }
