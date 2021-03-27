@@ -18,118 +18,80 @@ let transport = nodemailer.createTransport({
 
 function Todo() {
   this.reqlogin = function (reqemail, reqpassword, req, res) {
-    let conection2=false;
-    jwt.verify(req.cookies['essai'], 'secret_this_should_be_longer', function(err, decoded) {
+    let conection2 = false;
+    jwt.verify(req.cookies['essai'], 'secret_this_should_be_longer', function (err, decoded) {
       console.log("////////////");
-      if(decoded===undefined){
-        conection2=true;
+      if (decoded === undefined) {
+        conection2 = true;
       }
-      else{
-        conection2=false;
+      else {
+        conection2 = false;
       }
       //console.log(decoded.code) // bar
     });
-    if(conection2 ==true){
-    connection.acquire(function (err, con) {
-      console.log(err);
-      console.log("Connecté à la base de données MySQL!");
+    if (conection2 == true) {
+      connection.acquire(function (err, con) {
+        console.log(err);
+        console.log("Connecté à la base de données MySQL!");
 
-      con.query(
-        'select password2 from user where email=?',
-        reqemail,
-        function (err, result) {
-          con.release();
-          res.header("Access-Control-Allow-Origin", "*");
-          res.header("Access-Control-Allow-Methods", "GET,HEAD,OPTIONS,POST,PUT");
-          res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, x-client-key, x-client-token, x-client-secret, Authorization");
-          if (err) {
-            res.send({ status: 1, message: "TODO creation fail" + err });
-          }
-
-
-
-          else {
+        con.query(
+          'select password2 from user where email=?',
+          reqemail,
+          function (err, result) {
+            con.release();
+            res.header("Access-Control-Allow-Origin", "*");
+            res.header("Access-Control-Allow-Methods", "GET,HEAD,OPTIONS,POST,PUT");
+            res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, x-client-key, x-client-token, x-client-secret, Authorization");
+            if (err) {
+              res.send({ status: 1, message: "TODO creation fail" + err });
+            }
 
 
 
-            // res.send({ status: 0, message:  result[0].password2});
-            console.log("Post successful");
-
-
-            bcrypt.compare(reqpassword, result[0].password2, function (err, result2) {
-              // result == true
-              if (err) {
+            else {
 
 
 
-              }
-              else {
+              // res.send({ status: 0, message:  result[0].password2});
+              console.log("Post successful");
 
-             
 
-                const jwttoken = jwt.sign(
-                  { code: result[0].password2 },
-                  "secret_this_should_be_longer",
-                  { expiresIn: "1h" }
-                );
-                const cookieOption = {
-                  expiresIn: new Date(
-                    Date.now() + 24 * 3600
-                  ),
-                  httpOnly: true
+              bcrypt.compare(reqpassword, result[0].password2, function (err, result2) {
+                // result == true
+                if (err) {
+
+
+
                 }
-                res.cookie('essai', jwttoken, cookieOption);
-                res.send({ status: 0, message: "Connecte" + req.cookies['essai'] });
-
-
-              
-
-              }
-           
+                else {
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-            });
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+                  const jwttoken = jwt.sign(
+                    { code: result[0].password2 },
+                    "secret_this_should_be_longer",
+                    { expiresIn: "1h" }
+                  );
+                  const cookieOption = {
+                    expiresIn: new Date(
+                      Date.now() + 24 * 3600
+                    ),
+                    httpOnly: true
+                  }
+                  res.cookie('essai', jwttoken, cookieOption);
+                  res.send({ status: 0, message: "Connecte" + req.cookies['essai'] });
+                }
+              });
+            }
           }
-        }
-      );
-    });
+        );
+      });
 
-  }else{
-   // res.clearCookie("essai");
-    res.send({ status: 1, message:"connecter" });
-    
-  }
+    } else {
+      // res.clearCookie("essai");
+      res.send({ status: 1, message: "connecter" });
+
+    }
   }
   this.reqgister = function (reqemail, reqpassword, req, res) {
     let hashpass = "";
