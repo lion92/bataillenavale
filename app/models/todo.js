@@ -215,15 +215,32 @@ function Todo() {
     });
   };
 
-  this.reqtir = function (posX, posY, res) {
+  this.reqtir = function (posX, posY,req, res) {
     connection.acquire(function (err, con) {
+      let conection2 = false;
+    let email="";
+    jwt.verify(req.cookies['essai'], 'secret_this_should_be_longer', function (err, decoded) {
+      console.log("////////////");
+      if (decoded === undefined) {
+        conection2 = true;
+        res.send({ status: 1, message: "veillez vous connecter " });
+      }
+      else {
+        email=decoded.email;
+        conection2 = false;
+        
+      }
+      //console.log(decoded.code) // bar
+    });
+
+    if(!(conection2==true)){
       console.log(err);
       console.log("Connecté à la base de données MySQL!");
 
       con.query(
-        "insert into plateau (placeX, placeY) values (?,?) ",
+        'insert into plateau (placeX, placeY, email) values (?,?,?) ',
         [posX,
-          posY],
+          posY,email],
         function (err, result) {
           con.release();
           res.header("Access-Control-Allow-Origin", "*");
@@ -231,13 +248,14 @@ function Todo() {
           res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, x-client-key, x-client-token, x-client-secret, Authorization");
 
           if (err) {
-            res.send({ status: 1, message: "TODO creation fail " + err });
+            res.send({ status: 1, message: "TODO creation fail " + err +email});
           } else {
-            res.send({ status: 0, message: "TODO create success " + result });
+            res.send({ status: 0, message: "TODO create success " + result +email});
             console.log("Post successful");
           }
         }
       );
+    }
     });
   };
   this.deleteplateau = function (res) {

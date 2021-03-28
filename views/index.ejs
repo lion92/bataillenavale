@@ -93,7 +93,7 @@
       }
     </script>
     <div class="container">
-      <form id="tirdessus" method="POST" action="/" target="hiddenFrame">
+      <form id="tirdessus" method="POST" action="/insert/tir" target="hiddenFrame">
         <label for="name"></label>
 
 
@@ -269,6 +269,9 @@ $.ajax({
        {
         actu();
         ///   alert(data); // show response from the php script.
+       },
+       error:function(data){
+         alert(data.message);
        }
      });
 
@@ -290,6 +293,9 @@ $.ajax({
        {
         actu();
         ///   alert(data); // show response from the php script.
+       },
+       error:function(data){
+         alert(data.message);
        }
      });
 
@@ -309,9 +315,12 @@ $.ajax({
        data: form.serialize(), // serializes the form's elements.
        success: function(data)
        {
-        
+        alert(data.message);
         actutirs();
            ///alert(data); // show response from the php script.
+       },
+       error:function(data){
+         alert(data.message);
        }
      });
 

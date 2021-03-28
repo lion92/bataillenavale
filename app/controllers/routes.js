@@ -22,7 +22,7 @@ module.exports = {
       todo.reqplace(req.body.bateau, req.body.plateau,res)
     });
     app.post('/insert/tir', function(req, res){
-      todo.reqtir(req.body.posX, req.body.posY,res)
+      todo.reqtir(req.body.posX, req.body.posY,req,res)
     });
     app.post('/deletetir', function(req, res){
       todo.deleteplateau(res)
