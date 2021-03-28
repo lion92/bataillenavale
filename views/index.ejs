@@ -126,6 +126,11 @@
         
         <input onclick="tirdelete(), actutirs()" type="submit" value="effacer tous les tirs" />
       </form>
+      <form id="email" method="Get" action="/email" target="hiddenFrame">
+        
+        
+        <input onclick="tirdelete(), actutirs()" type="submit" value="joueur inscrit" />
+      </form>
       <a href="/loginpage">login</a>
     </div>
     <div class="container">
@@ -141,6 +146,11 @@
         
 
       </form>
+      <input id="reqmail" type="text">
+      <button onclick="actutirsparemail()">Les tirs du joueur designer</button>
+
+      <h2>email personne inscrite et ayant des tirs</h2>
+      <p id="emailAff"></p>
     </div> 
     <script>
 
@@ -231,6 +241,23 @@ var posX;
         });
 
       }
+      function actutirsparemail() {
+    
+        var reqemail="/tirs/"+$("#reqmail").val();
+    $.getJSON(reqemail, function (data) {
+      for (var i = 0; i < data.length; i++) {
+      console.log(""+data[i].placeX+data[i].placeY);
+
+      $("#td"+data[i].placeX+data[i].placeY).css("background-color", "red");
+      }
+
+
+
+
+
+    });
+
+  }
 
       function actubateau() {
         
@@ -302,7 +329,37 @@ $.ajax({
 
 
 });
+$("#email").submit(function(e) {
 
+e.preventDefault(); // avoid to execute the actual submit of the form.
+
+var form = $(this);
+var url = form.attr('action');
+
+$.ajax({
+       type: "GET",
+       url: url,
+       data: form.serialize(), // serializes the form's elements.
+       success: function(data)
+       {$("#emailAff").empty();
+         for(let i=0;i<data.length;i++){
+         console.log(data[i].email);
+         $("#emailAff").append(""+data[i].email +"<br>")
+         }
+
+
+
+
+        actu();
+        ///   alert(data); // show response from the php script.
+       },
+       error:function(data){
+         alert("error");
+       }
+     });
+
+
+});
 $("#tirdessus").submit(function(e) {
 
 e.preventDefault(); // avoid to execute the actual submit of the form.

@@ -36,6 +36,12 @@ module.exports = {
     app.get('/tirs', function(req, res){
       todo.gettir(res)
     });
+    app.get('/tirs/:email', function(req, res){
+      todo.gettirparemail(req.params.email,res)
+    })
+    app.get('/email', function(req, res){
+      todo.getemail(res)
+    });
     app.get('/bateau', function(req, res){
       todo.getbateau(res)
     });

@@ -379,6 +379,40 @@ function Todo() {
       });
     });
   };
+  this.gettirparemail = function (req,res) {
+    connection.acquire(function (err, con) {
+
+      con.query("SELECT * FROM position2 right JOIN plateau ON position2.plateau_idplateau = plateau.idplateau WHERE position2.plateau_idplateau is null and email=?",req, function (err, result) {
+        con.release();
+        res.header("Access-Control-Allow-Origin", "*");
+        res.header("Access-Control-Allow-Methods", "GET,HEAD,OPTIONS,POST,PUT");
+        res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, x-client-key, x-client-token, x-client-secret, Authorization");
+
+      
+
+
+        res.send(result);
+        console.log("Get successful");
+      });
+    });
+  };
+  this.getemail = function (res) {
+    connection.acquire(function (err, con) {
+
+      con.query("select distinct(email) from plateau", function (err, result) {
+        con.release();
+        res.header("Access-Control-Allow-Origin", "*");
+        res.header("Access-Control-Allow-Methods", "GET,HEAD,OPTIONS,POST,PUT");
+        res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, x-client-key, x-client-token, x-client-secret, Authorization");
+
+
+
+
+        res.send(result);
+        console.log("Get successful");
+      });
+    });
+  };
   this.getbateau = function (res) {
     connection.acquire(function (err, con) {
 
