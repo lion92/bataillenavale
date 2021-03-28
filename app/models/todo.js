@@ -3,7 +3,13 @@ const jwt = require('jsonwebtoken');
 const nodemailer = require("nodemailer");
 const bcrypt = require('bcryptjs');
 const cookieParser = require("cookie-parser");
+var express = require('express');
+var app = express();
 var messagebis = "diidoi";
+app.use(express.static('public'))
+app.use('/css', express.static(__dirname + 'public/css'))
+app.use('/js', express.static(__dirname + 'public/js'))
+app.use('/img', express.static(__dirname + 'public/img'))
 let transport = nodemailer.createTransport({
   host: "mail.krissdeveloppeur.com",
   secure: false,
@@ -21,7 +27,7 @@ function Todo() {
 
     res.clearCookie("essai");
     res.send({ status: 200, message: "deconnexion"});
-
+   
   }
   this.reqlogin = function (reqemail, reqpassword, req, res) {
     let conection2 = false;
@@ -35,6 +41,7 @@ function Todo() {
       else {
         email=decoded.email;
         conection2 = false;
+        
       }
       //console.log(decoded.code) // bar
     });
@@ -53,6 +60,7 @@ function Todo() {
             res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, x-client-key, x-client-token, x-client-secret, Authorization");
             if (err) {
               res.send({ status: 1, message: "email"});
+              
             }
 
 
@@ -65,7 +73,7 @@ function Todo() {
               console.log("Post successful");
               if(!result[0]){
                 res.send({ status: 1, message: "email invalid"});
-
+               
               } 
                 else{
 
@@ -73,12 +81,12 @@ function Todo() {
                 // result == true
               if(err){
                 res.send({ status: 0, message: "Erreur pour comparer les mots de passe " + reqemail });
-
+                con.release();
               }
                 if (!result2) {
 
                   res.send({ status: 0, message: "Mot de passe incorrect pour " + reqemail });
-
+                  
                 }
                 else {
 
@@ -97,7 +105,7 @@ function Todo() {
                   }
                   res.cookie('essai', jwttoken, cookieOption);
                   res.send({ status: 0, message: "Connecte " + reqemail+result2 });
-                
+                  
                 }
                 
               });
@@ -123,13 +131,17 @@ function Todo() {
       console.log(req.cookies);
 
       bcrypt.hash(reqpassword, 10, function (err, hash) {
+        if(err){
+          res.send({ status: 1, message: "Erreur" + err });
+        }
+        else{
 
+        
 
         console.log(hash);
         // Store hash in your password DB.
         hashpass = hash;
-        let result3 = bcrypt.compareSync("gvuyuv", hashpass);
-        console.log(result3);
+        
         
         con.query(
           "insert into user (email, password2) values (?,?)", [reqemail, hashpass]
@@ -143,9 +155,11 @@ function Todo() {
             res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, x-client-key, x-client-token, x-client-secret, Authorization");
 
             if (err) {
-              res.send({ status: 1, message: "Erreur de conection ou login existe" + err });
+              console.log("KKKKKKKKKKKKKKKKKK");
+                            res.send({ status: 1, message: "Erreur de conection ou login existe" + err });
+              con.release();
             } else {
-
+              console.log("IIIIIIIIIIIIIIIIIIIIIII");
               res.send({ status: 0, message: "Utilisateur enregistrer " + reqemail});
               console.log("Post successful");
               con.release();
@@ -154,7 +168,7 @@ function Todo() {
           
           }
         );
-      
+        }
       });
     
     });

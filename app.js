@@ -30,6 +30,13 @@ app.get('', (req, res) => {
 app.get('/about', (req, res) => {
     res.render('about', { text: 'About Page'})
 })
+app.get('/connexion', (req, res) => {
+  res.render('connexion')
+})
+
+app.get('/loginpage', (req, res) => {
+  res.render('login')
+})
 connection.init();
 routes.configure(app);
 
