@@ -27,6 +27,9 @@ module.exports = {
     app.post('/deletetir', function(req, res){
       todo.deleteplateau(res)
     });
+    app.post('/deletetir/:email', function(req, res){
+      todo.deleteplateauemail(req.params.email,res)
+    });
     app.post('/deleteposition', function(req, res){
       todo.deleteposition(res)
     });

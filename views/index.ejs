@@ -130,7 +130,12 @@
         
         
         <input onclick="tirdelete(), actutirs()" type="submit" value="joueur inscrit" />
-      </form>
+       
+      </form> 
+      <form id="deleteparemail" method="post" action="deletetir/:email" target="hiddenFrame">
+        
+        
+          <input onclick=" actutirs()" type="submit" value="deletetir par email" />
       <a href="/loginpage">login</a>
     </div>
     <div class="container">
@@ -327,6 +332,35 @@ $.ajax({
        }
      });
 
+
+});
+$("#deleteparemail").submit(function(e) {
+  var form = $(this);
+var url = 'deletetir/'+$("#reqmail").val();
+e.preventDefault();
+if($("#reqmail").val()==""||$("#reqmail").val()===undefined){
+alert("email vide");
+}else{
+ // avoid to execute the actual submit of the form.
+
+
+
+$.ajax({
+       type: "POST",
+       url: url,
+       data: form.serialize(), // serializes the form's elements.
+       success: function(data)
+       {
+
+        actu();
+        document.location.href="/"
+        ///   alert(data); // show response from the php script.
+       },
+       error:function(data){
+         alert(data.message);
+       }
+     });
+    }
 
 });
 $("#email").submit(function(e) {

@@ -282,6 +282,30 @@ function Todo() {
       );
     });
   };
+  this.deleteplateauemail = function (req,res) {
+    connection.acquire(function (err, con) {
+      console.log(err);
+      console.log("Connecté à la base de données MySQL!");
+
+      con.query(
+        "delete from plateau where idplateau>=1 and email=?",req,
+
+        function (err, result) {
+          con.release();
+          res.header("Access-Control-Allow-Origin", "*");
+          res.header("Access-Control-Allow-Methods", "GET,HEAD,OPTIONS,POST,PUT");
+          res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, x-client-key, x-client-token, x-client-secret, Authorization");
+
+          if (err) {
+            res.send({ status: 1, message: "TODO creation fail " + err });
+          } else {
+            res.send({ status: 0, message: "TODO create success " + result });
+            console.log("Post successful");
+          }
+        }
+      );
+    });
+  };
   this.deleteposition = function (res) {
     connection.acquire(function (err, con) {
       console.log(err);
