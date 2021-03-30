@@ -318,7 +318,15 @@ function Todo() {
 
             }
             else{
-            res.send({ status: 0, message: " Touche " +email});
+              console.log(result);
+              let recu="";
+              for(let i=0; i<result.length; i++){
+                recu+="touché email : "+result[i].email;
+
+              }
+
+
+            res.send({ status: 0, message: recu });
             console.log("Post successful");
             }
           }
