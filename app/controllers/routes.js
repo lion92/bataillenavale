@@ -24,6 +24,9 @@ module.exports = {
     app.post('/insert/tir', function(req, res){
       todo.reqtir(req.body.posX, req.body.posY,req,res)
     });
+    app.post('/touche', function(req, res){
+      todo.reqtouche(req.body.posX, req.body.posY,req,res)
+    });
     app.post('/deletetir', function(req, res){
       todo.deleteplateau(res)
     });
