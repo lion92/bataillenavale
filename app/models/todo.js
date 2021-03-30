@@ -117,7 +117,7 @@ function Todo() {
 
     } else {
       // res.clearCookie("essai");
-      res.send({ status: 1, message: "connecter "+email });
+      res.send({ status: 1, message: "Connecté "+email });
 
     }
   }
@@ -268,9 +268,9 @@ function Todo() {
           res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, x-client-key, x-client-token, x-client-secret, Authorization");
 
           if (err) {
-            res.send({ status: 1, message: "TODO creation fail " + err +email});
+            res.send({ status: 1, message: "Erreur" + err +email});
           } else {
-            res.send({ status: 0, message: "TODO create success " + result +email});
+            res.send({ status: 0, message: "Tirer en POsX "+posX+" posY : "+posY  +"par "+email});
             console.log("Post successful");
           }
         }
@@ -313,8 +313,14 @@ function Todo() {
           if (err) {
             res.send({ status: 1, message: "TODO creation fail " + err +email});
           } else {
-            res.send({ status: 0, message: "Touche" + result +email});
+            if(result==""){
+              res.send({ status: 0, message:"aucun bateau touche"});
+
+            }
+            else{
+            res.send({ status: 0, message: " Touche " +email});
             console.log("Post successful");
+            }
           }
         }
       );

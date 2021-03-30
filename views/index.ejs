@@ -97,7 +97,7 @@
         <label for="name"></label>
 
 
-        <select name="posX">
+        <select id="selectX" name="posX">
         <nom>posX</nom>
         <option valeur="0">0</option>
         <option valeur="1">1</option>
@@ -107,7 +107,7 @@
       
         
         </select>
-     <select name="posY">
+     <select id="selectY" name="posY">
      <nom>posY</nom>
      <option valeur="0">0</option>
      <option valeur="1">1</option>
@@ -127,14 +127,20 @@
         
         <input onclick="tirdelete(), actutirs()" type="submit" value="effacer tous les tirs" />
       </form>
-
+<form id="email" method="Get" action="/email" target="hiddenFrame">
+        
+        
+        <input onclick="tirdelete(), actutirs()" type="submit" value="joueur inscrit" />
+       
+      </form> 
+      <p id="emailAff"></p>
       <form id="touche" method="POST" action="/touche" target="hiddenFrame">
         
         <label >posX</label>
-        <input type="text" name="posX">
+        <input id="iciX"type="text" name="posX">
         <label>posY</label>
-        <input type="text" name="posY">
-        <input type="submit" value="touvhe">
+        <input id="iciY"type="text" name="posY">
+        <input type="submit" value="touche">
         
       
       </form>
@@ -143,13 +149,7 @@
 
 
 
-      <form id="email" method="Get" action="/email" target="hiddenFrame">
-        
-        
-        <input onclick="tirdelete(), actutirs()" type="submit" value="joueur inscrit" />
-       
-      </form> 
-
+      
   
 
 
@@ -184,7 +184,7 @@
       <button onclick="actutirsparemail()">Les tirs du joueur designer</button>
 
      
-      <p id="emailAff"></p>
+     
 
       <form id="deleteparemail" method="post" action="deletetir/:email" target="hiddenFrame">
         
@@ -474,6 +474,12 @@ $.ajax({
        {
         alert(data.message);
         actutirs();
+        
+        $("#iciX").val($("#selectX").val());
+
+        $("#iciY").val($("#selectY").val());
+        $("#touche").submit();
+
            ///alert(data); // show response from the php script.
        },
        error:function(data){
@@ -499,7 +505,8 @@ $.ajax({
        data: form.serialize(), // serializes the form's elements.
        success: function(data)
        {
-        alert("toucher"+data.message);
+         console.log(data.message);
+        alert(data.message);
         actutirs();
            ///alert(data); // show response from the php script.
        },

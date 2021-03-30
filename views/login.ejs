@@ -198,8 +198,9 @@ $.ajax({
        success: function(data)
        {
         alert(data.message);
+        if((data.message).includes("Connec")){
         document.location.href="/"
-      
+        }
         ///   alert(data); // show response from the php script.
        },
        error: function (data) {
