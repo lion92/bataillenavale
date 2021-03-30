@@ -13,7 +13,7 @@ module.exports = {
       todo.reqlogin(req.body.email, req.body.password,req, res);
     });
     app.post('/insert/bateau', function(req, res){
-      todo.reqbateau(req.body.nom,res);
+      todo.reqbateau(req.body.nom,req.body.bateauX, req.body.bateauY,req,res);
     });
     app.post('/deconnexion', function(req, res){
       todo.reqdeconnexion(req,res);

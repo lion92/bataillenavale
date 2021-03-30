@@ -191,14 +191,33 @@ function Todo() {
       });
     });
   };
-  this.reqbateau = function (req, res) {
+  this.reqbateau = function (nom, bateauX, bateauY,req, res) {
+    
+    let conection2 = false;
+    let email="";
+    jwt.verify(req.cookies['essai'], 'secret_this_should_be_longer', function (err, decoded) {
+      console.log("////////////");
+      if (decoded === undefined) {
+        conection2 = true;
+        console.log("true");
+      }
+      else {
+        email=decoded.email;
+        conection2 = false;
+        console.log("!!!!!"+false);
+      }
+      //console.log(decoded.code) // bar
+    });
+
+    if(!(connection==true)){
+      console.log("!!!!!");
     connection.acquire(function (err, con) {
       console.log(err);
       console.log("Connecté à la base de données MySQL!");
 
       con.query(
-        "insert into bateau (nom) values ('?') ",
-        req,
+        "insert into bateau (nom,bateauX, bateauY, email) values (?,?,?,?) ",
+        [nom, bateauX, bateauY, email],
         function (err, result) {
           con.release();
           res.header("Access-Control-Allow-Origin", "*");
@@ -213,6 +232,7 @@ function Todo() {
         }
       );
     });
+  }
   };
 
   this.reqtir = function (posX, posY,req, res) {
@@ -335,7 +355,6 @@ function Todo() {
     connection.acquire(function (err, con) {
       console.log(err);
       console.log("Connecté à la base de données MySQL!");
-
       con.query(
         "insert into position2 (bateau_idbateau, plateau_idplateau) values (" + bateau + "," + plateau + ")",
         function (err, result) {
