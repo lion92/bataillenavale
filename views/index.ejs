@@ -126,6 +126,22 @@
         
         <input onclick="tirdelete(), actutirs()" type="submit" value="effacer tous les tirs" />
       </form>
+
+      <form id="touche" method="POST" action="/touche" target="hiddenFrame">
+        
+        <label >posX</label>
+        <input type="text" name="posX">
+        <label>posY</label>
+        <input type="text" name="posY">
+        <input type="submit" value="touvhe">
+        
+        <input type="submit" value="effacer tous les tirs" />
+      </form>
+
+
+
+
+
       <form id="email" method="Get" action="/email" target="hiddenFrame">
         
         
@@ -169,6 +185,14 @@
 
       <h2>email personne inscrite et ayant des tirs</h2>
       <p id="emailAff"></p>
+
+
+
+
+
+
+
+
     </div> 
     <script>
 
@@ -421,6 +445,33 @@ $.ajax({
        success: function(data)
        {
         alert(data.message);
+        actutirs();
+           ///alert(data); // show response from the php script.
+       },
+       error:function(data){
+         alert(data.message);
+       }
+     });
+
+
+});
+
+
+
+$("#touche").submit(function(e) {
+
+e.preventDefault(); // avoid to execute the actual submit of the form.
+
+var form = $(this);
+var url = form.attr('action');
+
+$.ajax({
+       type: "POST",
+       url: url,
+       data: form.serialize(), // serializes the form's elements.
+       success: function(data)
+       {
+        alert("toucher"+data.message);
         actutirs();
            ///alert(data); // show response from the php script.
        },
