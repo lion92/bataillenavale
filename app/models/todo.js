@@ -226,7 +226,7 @@ function Todo() {
           if (err) {
             res.send({ status: 1, message: "TODO creation fail " + err });
           } else {
-            res.send({ status: 0, message: "TODO create success " + result });
+            res.send({ status: 0, message: "bateau poser " + " PosX : "+ bateauX+ " posY : "+bateauY+ ' email: '+email });
             console.log("Post successful");
           }
         }

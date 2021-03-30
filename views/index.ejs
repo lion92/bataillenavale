@@ -68,7 +68,7 @@
 
 
 </tbody>
-  <div class="container">
+  <div id="cont1" class="container">
     <h1>bataille navale</h1>
  
 
@@ -117,10 +117,11 @@
      
      </select>
         <input onclick="tirdessus(), actutirs()" type="submit" value="tirer" />
-      </form>
+      </form>    
+      <a href="/loginpage">login</a>
     </div>
-  
-    <div class="container">
+  </div>
+    <div id="cont2" class="container">
       <form id="tirdelete" method="POST" action="/" target="hiddenFrame">
         <label for="name"></label>
         
@@ -135,7 +136,7 @@
         <input type="text" name="posY">
         <input type="submit" value="touvhe">
         
-        <input type="submit" value="effacer tous les tirs" />
+      
       </form>
 
 
@@ -148,28 +149,26 @@
         <input onclick="tirdelete(), actutirs()" type="submit" value="joueur inscrit" />
        
       </form> 
-      <form id="deleteparemail" method="post" action="deletetir/:email" target="hiddenFrame">
-        
-        
-          <input onclick=" actutirs()" type="submit" value="deletetir par email" />
-      <a href="/loginpage">login</a>
+
+  
 
 
       
     </div>
-    <div class="container">
+    <div id="cont3" class="container">
      
-       
+       <!--
          <label>InputX</label>
         <input id='inputX' type="text"  />
         <label>InputY</label>
         <input id='inputY' type="text" />
         <button onclick="poserbateau()">poser bateau</button>
-
+       -->
 
         
 
       </form>
+   
       <form id="positionbateau" method="post" action="/insert/bateau" target="hiddenFrame">
         <label>nom</label>
         <input type=text name="nom"> </input>
@@ -180,13 +179,17 @@
     
         <input onclick=" actutirs()" type="submit" value="poser bateau" />
         </form>
+       <h2>email personne inscrite et ayant des tirs</h2>
       <input id="reqmail" type="text">
       <button onclick="actutirsparemail()">Les tirs du joueur designer</button>
 
-      <h2>email personne inscrite et ayant des tirs</h2>
+     
       <p id="emailAff"></p>
 
-
+      <form id="deleteparemail" method="post" action="deletetir/:email" target="hiddenFrame">
+        
+        
+        <input onclick=" actutirs()" type="submit" value="deletetir par email" />
 
 
 
@@ -362,6 +365,31 @@ $.ajax({
        success: function(data)
        {
         actu();
+        ///   alert(data); // show response from the php script.
+       },
+       error:function(data){
+         alert(data.message);
+       }
+     });
+
+
+});
+
+$("#positionbateau").submit(function(e) {
+
+e.preventDefault(); // avoid to execute the actual submit of the form.
+
+var form = $(this);
+var url = form.attr('action');
+
+$.ajax({
+       type: "POST",
+       url: url,
+       data: form.serialize(), // serializes the form's elements.
+       success: function(data)
+       {
+        actu();
+        alert(data.message)
         ///   alert(data); // show response from the php script.
        },
        error:function(data){
