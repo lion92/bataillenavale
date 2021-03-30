@@ -137,6 +137,9 @@
         
           <input onclick=" actutirs()" type="submit" value="deletetir par email" />
       <a href="/loginpage">login</a>
+
+
+      
     </div>
     <div class="container">
      
@@ -151,6 +154,16 @@
         
 
       </form>
+      <form id="positionbateau" method="post" action="/insert/bateau" target="hiddenFrame">
+        <label>nom</label>
+        <input type=text name="nom"> </input>
+        <label>bateauX</label>
+        <input type="text" name="bateauX"></input>
+        <label>bateauY</label>
+        <input type="text" name="bateauY"> </input>
+    
+        <input onclick=" actutirs()" type="submit" value="poser bateau" />
+        </form>
       <input id="reqmail" type="text">
       <button onclick="actutirsparemail()">Les tirs du joueur designer</button>
 
