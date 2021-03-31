@@ -58,4 +58,201 @@ CREATE TABLE IF NOT EXISTS `batailleNavale`.`position2` (
     REFERENCES `batailleNavale`.`plateau` (`idplateau`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
-ENGINE = InnoDB;
+ENGINE = InnoDB;-- phpMyAdmin SQL Dump
+-- version 5.0.4
+-- https://www.phpmyadmin.net/
+--
+-- Hôte : 127.0.0.1
+-- Généré le : mer. 31 mars 2021 à 22:23
+-- Version du serveur :  10.4.17-MariaDB
+-- Version de PHP : 8.0.0
+
+SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+START TRANSACTION;
+SET time_zone = "+00:00";
+
+
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!40101 SET NAMES utf8mb4 */;
+
+--
+-- Base de données : `bataillenavale`
+--
+
+-- --------------------------------------------------------
+
+--
+-- Structure de la table `bateau`
+--
+
+CREATE TABLE `bateau` (
+  `idbateau` int(11) NOT NULL,
+  `nom` varchar(45) DEFAULT NULL,
+  `bateauX` mediumint(10) DEFAULT NULL,
+  `bateauY` mediumint(10) DEFAULT NULL,
+  `email` varchar(50) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Déchargement des données de la table `bateau`
+--
+
+INSERT INTO `bateau` (`idbateau`, `nom`, `bateauX`, `bateauY`, `email`) VALUES
+(1, 'ooo', 1, 2, 'moi2'),
+(7, 'pp', 1, 3, ''),
+(8, 'mmm', 2, 3, 'moi2'),
+(9, '', 0, 0, '');
+
+-- --------------------------------------------------------
+
+--
+-- Structure de la table `partieactu`
+--
+
+CREATE TABLE `partieactu` (
+  `idAdversaire` int(11) NOT NULL,
+  `joueur1` varchar(50) NOT NULL,
+  `joueur2` varchar(50) DEFAULT NULL,
+  `tourj1` tinyint(1) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Déchargement des données de la table `partieactu`
+--
+
+INSERT INTO `partieactu` (`idAdversaire`, `joueur1`, `joueur2`, `tourj1`) VALUES
+(1, 'jj', 'aa', 0),
+(2, '', 'aa', 0),
+(3, 'moi2', 'aa', 0);
+
+-- --------------------------------------------------------
+
+--
+-- Structure de la table `plateau`
+--
+
+CREATE TABLE `plateau` (
+  `idplateau` int(11) NOT NULL,
+  `placeX` mediumint(7) DEFAULT NULL,
+  `placeY` mediumint(7) DEFAULT NULL,
+  `email` varchar(50) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
+-- Structure de la table `position2`
+--
+
+CREATE TABLE `position2` (
+  `bateau_idbateau` int(11) NOT NULL,
+  `plateau_idplateau` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
+-- Structure de la table `user`
+--
+
+CREATE TABLE `user` (
+  `iduser` int(11) NOT NULL,
+  `password2` varchar(100) DEFAULT NULL,
+  `email` varchar(45) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Déchargement des données de la table `user`
+--
+
+INSERT INTO `user` (`iduser`, `password2`, `email`) VALUES
+(3, '$2a$10$JB6wm4GpbjJq28X2oMiuoug5sHKBdXWtAo1DVR', 'moi'),
+(5, '$2a$10$w/oIDxfuYBi7F2faHB8Rn.VMSvONgxqwOM.k7v', 'test10'),
+(6, '$2a$10$AfXrtechy4SNJSL7dfVo/u.fBmRQJ7Fi2kyiaT', 'ppp'),
+(7, '$2a$10$OyA3N6TMJKLeeeJJEpcNa.xphmgjZn44OekpNu', 'a'),
+(8, '$2a$10$rjXSMO9dIL1f5UYrANZ2e.41gRo12K.8t3OLvQ', 'e'),
+(10, '$2a$10$gm1Zj57m7IHj4k5NKqrJkepReG30Aq2kLuKVN4HjtFHX590GeYpgq', 'moi2');
+
+--
+-- Index pour les tables déchargées
+--
+
+--
+-- Index pour la table `bateau`
+--
+ALTER TABLE `bateau`
+  ADD PRIMARY KEY (`idbateau`),
+  ADD UNIQUE KEY `nom_UNIQUE` (`nom`);
+
+--
+-- Index pour la table `partieactu`
+--
+ALTER TABLE `partieactu`
+  ADD PRIMARY KEY (`idAdversaire`);
+
+--
+-- Index pour la table `plateau`
+--
+ALTER TABLE `plateau`
+  ADD PRIMARY KEY (`idplateau`);
+
+--
+-- Index pour la table `position2`
+--
+ALTER TABLE `position2`
+  ADD PRIMARY KEY (`bateau_idbateau`,`plateau_idplateau`),
+  ADD KEY `fk_bateau_has_plateau_plateau1_idx` (`plateau_idplateau`),
+  ADD KEY `fk_bateau_has_plateau_bateau_idx` (`bateau_idbateau`);
+
+--
+-- Index pour la table `user`
+--
+ALTER TABLE `user`
+  ADD PRIMARY KEY (`iduser`),
+  ADD UNIQUE KEY `email_UNIQUE` (`email`);
+
+--
+-- AUTO_INCREMENT pour les tables déchargées
+--
+
+--
+-- AUTO_INCREMENT pour la table `bateau`
+--
+ALTER TABLE `bateau`
+  MODIFY `idbateau` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+
+--
+-- AUTO_INCREMENT pour la table `partieactu`
+--
+ALTER TABLE `partieactu`
+  MODIFY `idAdversaire` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
+--
+-- AUTO_INCREMENT pour la table `plateau`
+--
+ALTER TABLE `plateau`
+  MODIFY `idplateau` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
+-- AUTO_INCREMENT pour la table `user`
+--
+ALTER TABLE `user`
+  MODIFY `iduser` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+
+--
+-- Contraintes pour les tables déchargées
+--
+
+--
+-- Contraintes pour la table `position2`
+--
+ALTER TABLE `position2`
+  ADD CONSTRAINT `fk_bateau_has_plateau_bateau` FOREIGN KEY (`bateau_idbateau`) REFERENCES `bateau` (`idbateau`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  ADD CONSTRAINT `fk_bateau_has_plateau_plateau1` FOREIGN KEY (`plateau_idplateau`) REFERENCES `plateau` (`idplateau`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+COMMIT;
+
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;

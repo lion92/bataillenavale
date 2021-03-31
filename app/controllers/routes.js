@@ -15,6 +15,12 @@ module.exports = {
     app.post('/insert/bateau', function(req, res){
       todo.reqbateau(req.body.nom,req.body.bateauX, req.body.bateauY,req,res);
     });
+    app.get('/joueur', function(req, res){
+      todo.reqjoueurencours(req,res);
+    });
+    app.post('/insert/partie', function(req, res){
+      todo.reqpartie(req.body.joueur2, req.body.tourj1,req,res);
+    });
     app.post('/deconnexion', function(req, res){
       todo.reqdeconnexion(req,res);
     });

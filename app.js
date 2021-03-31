@@ -80,7 +80,7 @@ app.post('/upload', async (req, res) => {
 
 connection.init();
 routes.configure(app);
-
+//app.listen();
 var server = app.listen(8000, function(){
   console.log('Server listening on port ' + server.address().port);
 });
