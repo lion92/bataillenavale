@@ -1047,6 +1047,28 @@ function Todo() {
       });
     }
   };
+  this.quiesttu = function (req, res) {
+    let conection2 = false;
+    let email = "";
+    jwt.verify(
+      req.cookies["essai"],
+      "secret_this_should_be_longer",
+      function (err, decoded) {
+        console.log("////////////");
+        if (decoded === undefined) {
+          conection2 = true;
+          console.log("true");
+          res.send({ status: 1, message: "Qui êtes vous? " + err });
+        } else {
+          email = decoded.email;
+          conection2 = false;
+          console.log("!!!!!" + false);
+          res.send({ status: 1, message: "Vous êtes " + email });
+        }
+        //console.log(decoded.code) // bar
+      }
+    );
+    }
 }
 
 module.exports = new Todo();

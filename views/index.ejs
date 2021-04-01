@@ -65,7 +65,7 @@
 </tbody>
 </table>
 
-
+<p id="qui" style="width:300px;margin-left: auto; margin-right: auto ; font-size: 30px;"></p>
 
 </tbody>
   <div id="cont1" class="container">
@@ -298,6 +298,17 @@ var posX;
         });
 
       }
+      function quiestu() {
+        $("#qui").empty();
+        $.getJSON('/qui', function (data) {
+          console.log(data);
+          
+          $("#qui").append(JSON.stringify(data.message));
+
+
+        });
+
+      }
 
       function actutirs() {
     
@@ -351,7 +362,7 @@ $("#td"+data[i].placeX+data[i].placeY).empty();
       }
 
       $(document).ready(function () {
-        
+        quiestu();
         actu(); 
         actubateau();
         actutirs();
@@ -440,7 +451,15 @@ $.ajax({
        data: form.serialize(), // serializes the form's elements.
        success: function(data)
        {
+         
         actu();
+        var qui=data.message;
+
+        for(var i=0; i<qui.length;i++){
+          console.log(qui[i].joueur1);
+          console.log(qui[i].joueur2);
+
+        }
         alert(JSON.stringify(data.message));
         ///   alert(data); // show response from the php script.
        },

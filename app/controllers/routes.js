@@ -60,6 +60,9 @@ module.exports = {
     app.get('/tirs', function(req, res){
       todo.gettir(res)
     });
+    app.get('/qui', function(req, res){
+      todo.quiesttu(req,res);
+    });
     app.get('/tirs/:email', function(req, res){
       todo.gettirparemail(req.params.email,res)
     })
