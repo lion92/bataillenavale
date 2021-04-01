@@ -124,7 +124,7 @@
     <input id="tourj1" name="tourj1" type="text">
       <input type="submit" value="valider tour">
     </form>
-
+    
     <form id="updatej2" method="POST" action="/updatej2">
       <input id="tourj2" name="tourj1" type="text">
         <input type="submit" value="valider tour">
@@ -141,6 +141,9 @@
         </form>
         <form id="joueuractu" action="/partieactu" method="Get">
           <input type="submit" value="partie">  
+          </form>
+          <form id="tour" action="/tour" method="GET">
+            <input type="submit" value="tour">
           </form>
 
 
@@ -401,6 +404,30 @@ $.ajax({
 
 });
 $("#joueur").submit(function(e) {
+
+e.preventDefault(); // avoid to execute the actual submit of the form.
+
+var form = $(this);
+var url = form.attr('action');
+
+$.ajax({
+       type: "Get",
+       url: url,
+       data: form.serialize(), // serializes the form's elements.
+       success: function(data)
+       {
+        actu();
+        alert(JSON.stringify(data.message));
+        ///   alert(data); // show response from the php script.
+       },
+       error:function(data){
+         alert(data.message);
+       }
+     });
+
+
+});
+$("#tour").submit(function(e) {
 
 e.preventDefault(); // avoid to execute the actual submit of the form.
 
