@@ -1,7 +1,7 @@
 var todo = require('../models/todo');
 
 module.exports = {
-
+//
   configure: function(app) {
     app.post('/insertpmu', function(req, res){
       todo.reqpmu(req.body.pmu,res);
