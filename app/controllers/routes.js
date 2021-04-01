@@ -18,8 +18,17 @@ module.exports = {
     app.get('/joueur', function(req, res){
       todo.reqjoueurencours(req,res);
     });
+    app.get('/partieactu', function(req, res){
+      todo.reqjoueurencours(req,res);
+    });
     app.post('/insert/partie', function(req, res){
       todo.reqpartie(req.body.joueur2, req.body.tourj1,req,res);
+    });
+    app.post('/updatej1', function(req, res){
+      todo.requpdatetourj1( req.body.tourj1,req,res);
+    });
+    app.post('/updatej2', function(req, res){
+      todo.requpdatetourj2( req.body.tourj1,req,res);
     });
     app.post('/deconnexion', function(req, res){
       todo.reqdeconnexion(req,res);

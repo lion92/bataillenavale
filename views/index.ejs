@@ -120,6 +120,32 @@
       </form>    
       <a href="/loginpage">login</a>
     </div>
+    <form id="updatej1"method="POST" action="/updatej1">
+    <input id="tourj1" name="tourj1" type="text">
+      <input type="submit" value="valider tour">
+    </form>
+
+    <form id="updatej2" method="POST" action="/updatej2">
+      <input id="tourj2" name="tourj2" type="text">
+        <input type="submit" value="valider tour">
+      </form>
+      <form id="partie" method="POST" action="/insert/partie">
+        <label>joueur2</label>
+        <input id="j2" name="joueur2" type="text">
+        <label>tourj1</label>
+        <input id="tourj1" name="tourj1" type="text">
+          <input type="submit" value="valider tour">
+        </form>
+        <form id="joueur" action="/joueur" method="Get">
+        <input type="submit" value="joueur avec bateau">  
+        </form>
+        <form id="joueuractu" action="/partieactu" method="Get">
+          <input type="submit" value="partie">  
+          </form>
+
+
+        </form>
+
   </div>
     <div id="cont2" class="container">
       <form id="tirdelete" method="POST" action="/" target="hiddenFrame">
@@ -374,6 +400,130 @@ $.ajax({
 
 
 });
+$("#joueur").submit(function(e) {
+
+e.preventDefault(); // avoid to execute the actual submit of the form.
+
+var form = $(this);
+var url = form.attr('action');
+
+$.ajax({
+       type: "Get",
+       url: url,
+       data: form.serialize(), // serializes the form's elements.
+       success: function(data)
+       {
+        actu();
+        alert(JSON.stringify(data.message));
+        ///   alert(data); // show response from the php script.
+       },
+       error:function(data){
+         alert(data.message);
+       }
+     });
+
+
+});
+
+$("#updatej1").submit(function(e) {
+
+e.preventDefault(); // avoid to execute the actual submit of the form.
+
+var form = $(this);
+var url = form.attr('action');
+
+$.ajax({
+       type: "POST",
+       url: url,
+       data: form.serialize(), // serializes the form's elements.
+       success: function(data)
+       {
+        actu();
+        alert(data.message);
+        ///   alert(data); // show response from the php script.
+       },
+       error:function(data){
+         alert(data.message);
+       }
+     });
+
+
+});
+$("#joueuractu").submit(function(e) {
+
+e.preventDefault(); // avoid to execute the actual submit of the form.
+
+var form = $(this);
+var url = form.attr('action');
+
+$.ajax({
+       type: "GET",
+       url: url,
+       data: form.serialize(), // serializes the form's elements.
+       success: function(data)
+       {
+        actu();
+        alert(JSON.stringify(data.message));
+        ///   alert(data); // show response from the php script.
+       },
+       error:function(data){
+         alert(data.message);
+       }
+     });
+
+
+});
+$("#updatej2").submit(function(e) {
+
+e.preventDefault(); // avoid to execute the actual submit of the form.
+
+var form = $(this);
+var url = form.attr('action');
+
+$.ajax({
+       type: "POST",
+       url: url,
+       data: form.serialize(), // serializes the form's elements.
+       success: function(data)
+       {
+        alert(data.message);
+        actu();
+        ///   alert(data); // show response from the php script.
+       },
+       error:function(data){
+         alert(data.message);
+       }
+     });
+
+
+});
+$("#partie").submit(function(e) {
+
+e.preventDefault(); // avoid to execute the actual submit of the form.
+
+var form = $(this);
+var url = form.attr('action');
+
+$.ajax({
+       type: "POST",
+       url: url,
+       data: form.serialize(), // serializes the form's elements.
+       success: function(data)
+       {
+        alert(JSON.stringify(data.message));
+        actu();
+        ///   alert(data); // show response from the php script.
+       },
+       error:function(data){
+         alert(data.message);
+       }
+     });
+
+
+});
+
+
+
 
 $("#positionbateau").submit(function(e) {
 
