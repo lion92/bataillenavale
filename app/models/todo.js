@@ -1058,7 +1058,7 @@ function Todo() {
         if (decoded === undefined) {
           conection2 = true;
           console.log("true");
-          res.send({ status: 1, message: "Qui êtes vous? " + err });
+          res.send({ status: 1, message: "Qui êtes vous?, Veuillez-vous connecter. " });
         } else {
           email = decoded.email;
           conection2 = false;
