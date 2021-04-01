@@ -880,6 +880,57 @@ function Todo() {
       });
     }
   };
+  this.selectpartie = function (req, res) {
+    let conection2 = false;
+    let email = "";
+    jwt.verify(
+      req.cookies["essai"],
+      "secret_this_should_be_longer",
+      function (err, decoded) {
+        console.log("////////////");
+        if (decoded === undefined) {
+          conection2 = true;
+          console.log("true");
+        } else {
+          email = decoded.email;
+          conection2 = false;
+          console.log("!!!!!" + false);
+        }
+        //console.log(decoded.code) // bar
+      }
+    );
+
+    if (!(connection == true)) {
+      console.log("!!!!!");
+      connection.acquire(function (err, con) {
+        console.log(err);
+        console.log("Connecté à la base de données MySQL!");
+
+        con.query(
+          "select * from partieactu where joueur1=? or joueur2=?",[email,email],
+         
+          function (err, result) {
+            con.release();
+            res.header("Access-Control-Allow-Origin", "*");
+            res.header(
+              "Access-Control-Allow-Methods",
+              "GET,HEAD,OPTIONS,POST,PUT"
+            );
+            res.header(
+              "Access-Control-Allow-Headers",
+              "Origin, X-Requested-With, Content-Type, Accept, x-client-key, x-client-token, x-client-secret, Authorization"
+            );
+            if (err) {
+              res.send({ status: 1, message: "TODO creation fail " + err });
+            } else {
+              res.send({ status: 0, message: result });
+              console.log("Post successful");
+            }
+          }
+        );
+      });
+    }
+  };
   this.requpdatetourj1 = function (tourj1,req, res) {
     let conection2 = false;
     let email = "";
@@ -965,7 +1016,7 @@ function Todo() {
         console.log("Connecté à la base de données MySQL!");
 
         con.query(
-          "update partieactu set tourj1=? where joueur2=?",[tourj1, email],
+          "update partieactu set tourj1=? where joueur1=?",[tourj1, email],
          
           function (err, result) {
             con.release();

@@ -36,6 +36,9 @@ module.exports = {
     app.post('/insert/position', function(req, res){
       todo.reqplace(req.body.bateau, req.body.plateau,res)
     });
+    app.get('/tour', function(req, res){
+      todo.selectpartie(req,res)
+    });
     app.post('/insert/tir', function(req, res){
       todo.reqtir(req.body.posX, req.body.posY,req,res)
     });
