@@ -517,10 +517,23 @@ $.ajax({
       for(var i=0; i<data.message.length;i++){
         if(quiestu==data.message[i].joueur1){
           alert("vous êtes joueur1 contre"+data.message[i].joueur2);
+          if(data.message[i].tourj1==1){
+            alert("C'est votre tour contre :"+data.message[i].joueur2)
+          }
+         else if(data.message[i].tourj1==0){
+            alert("C'est le tour de :"+data.message[i].joueur2)
+          }
+       
         }
        else if(quiestu==data.message[i].joueur2){
         alert("vous êtes joueur2 contre"+data.message[i].joueu1);
-       }
+        if(data.message[i].tourj1==0){
+            alert("C'est votre tour contre :"+data.message[i].joueur1)
+          }
+          else if(data.message[i].tourj1==1){
+            alert("C'est le tour de :"+data.message[i].joueur1)
+          }
+      }
 
       }
        
