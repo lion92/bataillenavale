@@ -508,6 +508,22 @@ $.ajax({
        data: form.serialize(), // serializes the form's elements.
        success: function(data)
        {
+        var quiestu=$("#qui").html().split("Vous êtes ")[1].replace('"',"");
+      
+      console.log(quiestu);
+      console.log(data.message);
+      console.log(data.message);
+
+      for(var i=0; i<data.message.length;i++){
+        if(quiestu==data.message[i].joueur1){
+          alert("vous êtes joueur1 contre"+data.message[i].joueur2);
+        }
+       else if(quiestu==data.message[i].joueur2){
+        alert("vous êtes joueur2 contre"+data.message[i].joueu1);
+       }
+
+      }
+       
         actu();
         alert(JSON.stringify(data.message));
         ///   alert(data); // show response from the php script.
@@ -555,8 +571,8 @@ $.ajax({
        url: url,
        data: form.serialize(), // serializes the form's elements.
        success: function(data)
-       {
-        alert(JSON.stringify(data.message));
+       { 
+        console.log(JSON.stringify(data.message));
         actu();
         ///   alert(data); // show response from the php script.
        },
