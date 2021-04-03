@@ -931,7 +931,7 @@ function Todo() {
       });
     }
   };
-  this.requpdatetourj1 = function (tourj1,req, res) {
+  this.requpdatetourj1 = function (tourj1,joueur1,req, res) {
     let conection2 = false;
     let email = "";
     jwt.verify(
@@ -958,7 +958,7 @@ function Todo() {
         console.log("Connecté à la base de données MySQL!");
 
         con.query(
-          "update partieactu set tourj1=? where joueur2=?",[tourj1, email],
+          "update partieactu set tourj1=? where joueur2=? and joueur1=?",[tourj1, email, joueur1],
          
           function (err, result) {
             con.release();
@@ -989,7 +989,7 @@ function Todo() {
       });
     }
   };
-  this.requpdatetourj2 = function (tourj1,req, res) {
+  this.requpdatetourj2 = function (tourj1, joueur2,req, res) {
     let conection2 = false;
     let email = "";
     jwt.verify(
@@ -1016,7 +1016,7 @@ function Todo() {
         console.log("Connecté à la base de données MySQL!");
 
         con.query(
-          "update partieactu set tourj1=? where joueur1=?",[tourj1, email],
+          "update partieactu set tourj1=? where joueur1=? and joueur2=?",[tourj1, joueur2,email],
          
           function (err, result) {
             con.release();
