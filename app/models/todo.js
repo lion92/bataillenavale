@@ -958,7 +958,7 @@ function Todo() {
         console.log("Connecté à la base de données MySQL!");
 
         con.query(
-          "update partieactu set tourj1=? where joueur2=? and joueur1=?",[tourj1, email, joueur1],
+          "update partieactu set tourj1=? where joueur1=? and joueur2=?",[tourj1, email, joueur1],
          
           function (err, result) {
             con.release();
@@ -975,11 +975,12 @@ function Todo() {
               res.send({ status: 1, message: "TODO creation fail " + err });
             } else {
               if(tourj1==0){
-                res.send({ status: 0, message: "c est votre tour" });
+                res.send({ status: 0, message: "c est votre tour"+JSON.stringify(result) });
                 console.log("Post successful");
+                
               }
               else{
-                res.send({ status: 0, message: "c est au tour de votre adversaire"});
+                res.send({ status: 0, message: "c est au tour de votre adversaire"+JSON.stringify(result)});
                 console.log("Post successful");
               }
             
@@ -1033,11 +1034,11 @@ function Todo() {
               res.send({ status: 1, message: "TODO creation fail " + err });
             } else {
               if(tourj1==1){
-                res.send({ status: 0, message: "c est votre tour" });
+                res.send({ status: 0, message: "c est votre tour"+JSON.stringify(result) });
                 console.log("Post successful");
               }
               else{
-                res.send({ status: 0, message: "c est au tour de votre adversaire"});
+                res.send({ status: 0, message: "c est au tour de votre adversaire"+JSON.stringify(result)});
                 console.log("Post successful");
               }
             
