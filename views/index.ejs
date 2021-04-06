@@ -71,7 +71,7 @@
   <div id="cont1" class="container">
     <h1>bataille navale</h1>
  
-
+    <a href="/loginpage">login</a>
   
     <iframe id="transit" name="hiddenFrame" width="0" height="0" border="0" style="display: none;"></iframe>
 
@@ -92,7 +92,9 @@
 
       }
     </script>
-    <div class="container">
+   <form id="joueuractu" action="/partieactu" method="Get">
+    <input type="submit" value="partie">  
+    </form>
       <form id="tirdessus" method="POST" action="/insert/tir" target="hiddenFrame">
         <label for="name"></label>
 
@@ -118,18 +120,11 @@
      </select>
         <input onclick="tirdessus(), actutirs()" type="submit" value="tirer" />
       </form>    
-      <a href="/loginpage">login</a>
-    </div>
-    <form id="updatej1"method="POST" action="/updatej1">
-    <input id="tourj1" name="tourj1" type="text">
-    <input id="joue1" name="joueur1" type="text">
-      <input type="submit" value="valider tour">
-    </form>
-    
-    <form id="updatej2" method="POST" action="/updatej2">
-      <input id="tourj2" name="tourj1" type="text">
-      <input id="joue1" name="joueur2" type="text">
-        <input type="submit" value="valider tour">
+      
+      <form id="tirdelete" method="POST" action="/" target="hiddenFrame">
+        <label for="name"></label>
+        
+        <input onclick="tirdelete(), actutirs()" type="submit" value="effacer tous les tirs" />
       </form>
       <form id="partie" method="POST" action="/insert/partie">
         <label>joueur2</label>
@@ -138,12 +133,17 @@
         <input id="tourj1" name="tourj1" type="text">
           <input type="submit" value="valider tour">
         </form>
+        <form id="updatej1"method="POST" action="/updatej1">
+          <label>joueur2</label>
+        <input id="tourj1" name="tourj1" type="text">
+        <label>choix du joueurs</label>
+        <input id="joue1" name="joueur1" type="text">
+          <input type="submit" value="valider tour">
+        </form>
         <form id="joueur" action="/joueur" method="Get">
         <input type="submit" value="joueur avec bateau">  
         </form>
-        <form id="joueuractu" action="/partieactu" method="Get">
-          <input type="submit" value="partie">  
-          </form>
+       
           <form id="tour" action="/tour" method="GET">
             <input type="submit" value="tour">
           </form>
@@ -151,13 +151,9 @@
 
         </form>
 
-  </div>
-    <div id="cont2" class="container">
-      <form id="tirdelete" method="POST" action="/" target="hiddenFrame">
-        <label for="name"></label>
-        
-        <input onclick="tirdelete(), actutirs()" type="submit" value="effacer tous les tirs" />
-      </form>
+  
+    
+     
 <form id="email" method="Get" action="/email" target="hiddenFrame">
         
         
@@ -175,6 +171,17 @@
         
       
       </form>
+   
+    
+    <form id="updatej2" method="POST" action="/updatej2">
+      <label>choix du tour</label>
+      <input id="tourj2" name="tourj1" type="text">
+      <label>choix du joueur</label> 
+      <input id="joue1" name="joueur2" type="text">
+      
+        <input type="submit" value="valider tour">
+      </form>
+     
 
 
 
@@ -185,8 +192,7 @@
 
 
       
-    </div>
-    <div id="cont3" class="container">
+
      
        <!--
          <label>InputX</label>
@@ -227,7 +233,7 @@
 
 
 
-    </div> 
+  
     <script>
 
 
