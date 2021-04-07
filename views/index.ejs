@@ -106,7 +106,7 @@
     </script>
     
    <form name="tirer" id="joueuractu" action="/partieactu" method="Get">
-    <input type="submit" value="partie">  
+    <input id="partieencours" type="submit" value="partie">  
     </form>
       <form id="tirdessus" method="POST" action="/insert/tir" target="hiddenFrame">
         <label for="name"></label>
@@ -144,16 +144,26 @@
         <input onclick="tirdelete(), actutirs()" type="submit" value="effacer tous les tirs" />
       </form>
       <form id="partie" method="POST" action="/insert/partie">
-        <label>joueur2</label>
+        <label>Inserer ue partie joueur2</label>
         <input id="j2" name="joueur2" type="text">
         <label>tourj1</label>
         <input id="tourj1" name="tourj1" type="text">
           <input type="submit" value="valider tour">
         </form>
+        <form id="updatej2" method="POST" action="/updatej2">
+          <p>Changer de tour si vous êtes joueur2</p>
+          <label>tourj1</label>
+          <input id="tourj2" name="tourj1" type="text">
+          <label>joueur1</label> 
+          <input id="joue1" name="joueur2" type="text">
+          
+            <input type="submit" value="valider tour">
+          </form>
         <form id="updatej1"method="POST" action="/updatej1">
-          <label>joueur2</label>
+          <p>Changer de tour si vous êtes joueur1</p>
+          <label>tourj1</label>
         <input id="tourj1" name="tourj1" type="text">
-        <label>choix du joueurs</label>
+        <label>joueur2</label>
         <input id="joue1" name="joueur1" type="text">
           <input type="submit" value="valider tour">
         </form>
@@ -190,14 +200,7 @@
       </form>
    
     
-    <form id="updatej2" method="POST" action="/updatej2">
-      <label>choix du tour</label>
-      <input id="tourj2" name="tourj1" type="text">
-      <label>choix du joueur</label> 
-      <input id="joue1" name="joueur2" type="text">
-      
-        <input type="submit" value="valider tour">
-      </form>
+   
      
 
 
@@ -512,6 +515,7 @@ $.ajax({
        {
         actu();
         alert(data.message);
+        $("#joueuractu").submit();
         ///   alert(data); // show response from the php script.
        },
        error:function(data){
@@ -605,6 +609,7 @@ $.ajax({
        {
         alert(data.message);
         actu();
+        $("#joueuractu").submit();
         ///   alert(data); // show response from the php script.
        },
        error:function(data){
@@ -746,6 +751,10 @@ $.ajax({
 
         $("#iciY").val($("#selectY").val());
         $("#touche").submit();
+        $("#feu").hide();
+        
+       $("#joueuractu").submit();
+  
 
            ///alert(data); // show response from the php script.
        },
@@ -806,7 +815,7 @@ $.ajax({
 
 
 });
-
+$("#joueuractu").submit();
       });
     </script>
   </div>
