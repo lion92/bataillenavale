@@ -147,7 +147,7 @@
         <label>Inserer ue partie joueur2</label>
         <input id="j2" name="joueur2" type="text">
         <label>tourj1</label>
-        <input id="tourj1" name="tourj1" type="text">
+        <input  name="tourj1" type="text">
           <input type="submit" value="valider tour">
         </form>
         <form id="updatej2" method="POST" action="/updatej2">
@@ -164,7 +164,7 @@
           <label>tourj1</label>
         <input id="tourj1" name="tourj1" type="text">
         <label>joueur2</label>
-        <input id="joue1" name="joueur1" type="text">
+        <input id="joue2" name="joueur1" type="text">
           <input type="submit" value="valider tour">
         </form>
         <form id="joueur" action="/joueur" method="Get">
@@ -751,11 +751,17 @@ $.ajax({
 
         $("#iciY").val($("#selectY").val());
         $("#touche").submit();
-        $("#feu").hide();
         
-       $("#joueuractu").submit();
-  
-
+        
+      
+       $("#joue1").val($('#quiadversaire option:selected').text());
+       $("#joue2").val($('#quiadversaire option:selected').text());
+       $("#tourj1").val(0);
+       $("#tourj2").val(1);
+       $("#updatej1").submit();
+       $("#updatej2").submit();
+        $("#joueuractu").submit();
+        $("#feu").hide();
            ///alert(data); // show response from the php script.
        },
        error:function(data){
