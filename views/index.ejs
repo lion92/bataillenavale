@@ -84,11 +84,16 @@
     function savoirsitirer(){
       $("#feu").hide();
       alert($('#quiadversaire option:selected').val());
-      if($('#quiadversaire option:selected').val()==1){
+      if($('#quiadversaire option:selected').val()=="XXXT11"){
+        $("#feu").show();
+
+      }
+      else if($('#quiadversaire option:selected').val()=="XXXT20"){
         $("#feu").show();
 
       }
       else{
+        
         $("#feu").hide();
       }
     }
@@ -556,14 +561,14 @@ $.ajax({
           
           if(data.message[i].tourj1==1){
             alert("C'est votre tour contre :"+data.message[i].joueur2)
-            generate+="  <option value="+data.message[i].tourj1+">"+data.message[i].joueur2+"</option>    ";
+            generate+="  <option value=XXXT1"+data.message[i].tourj1+">"+data.message[i].joueur2+"</option>    ";
 
     
         
           }
          else if(data.message[i].tourj1==0){
             alert("C'est le tour de :"+data.message[i].joueur2)
-          generate+="  <option value="+data.message[i].tourj1+">"+data.message[i].joueur2+"</option>    ";
+          generate+="  <option value=XXXT1"+data.message[i].tourj1+">"+data.message[i].joueur2+"</option>    ";
           }
        
         }
@@ -571,11 +576,11 @@ $.ajax({
         alert("vous êtes joueur2 contre"+data.message[i].joueu1);
         if(data.message[i].tourj1==0){
             alert("C'est votre tour contre :"+data.message[i].joueur1)
-           generate+="  <option value="+data.message[i].tourj1+">"+data.message[i].joueur1+"</option>    ";
+           generate+="  <option value=XXXT2"+data.message[i].tourj1+">"+data.message[i].joueur1+"</option>    ";
           }
           else if(data.message[i].tourj1==1){
             alert("C'est le tour de :"+data.message[i].joueur1)
-           generate+= "  <option value="+data.message[i].tourj1+">"+data.message[i].joueur1+"</option>    ";
+           generate+= "  <option value=XXXT2"+data.message[i].tourj1+">"+data.message[i].joueur1+"</option>    ";
           }
           
         }
