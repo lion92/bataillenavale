@@ -4,9 +4,10 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Prise de note kriss CLOTILDE</title>
+  <title>bataille navale</title>
   <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
   <link rel="stylesheet" href="css/main.css">
+  <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
 </head>
 
 <body>
@@ -68,10 +69,11 @@
 <p id="qui" style="width:300px;margin-left: auto; margin-right: auto ; font-size: 30px;"></p>
 
 </tbody>
+<div id="adversaire" class="container"></div>
   <div id="cont1" class="container">
     <h1>bataille navale</h1>
  
-
+    <a href="/loginpage">login</a>
   
     <iframe id="transit" name="hiddenFrame" width="0" height="0" border="0" style="display: none;"></iframe>
 
@@ -79,7 +81,22 @@
 
 
     <script>
-    
+    function savoirsitirer(){
+      $("#feu").hide();
+      console.log($('#quiadversaire option:selected').val());
+      if($('#quiadversaire option:selected').val()=="XXXT11"){
+        $("#feu").show();
+
+      }
+      else if($('#quiadversaire option:selected').val()=="XXXT20"){
+        $("#feu").show();
+
+      }
+      else{
+        
+        $("#feu").hide();
+      }
+    }
       function tirdessus() {
         
         document.getElementById("tirdessus").action = "/insert/tir" ;
@@ -92,7 +109,10 @@
 
       }
     </script>
-    <div class="container">
+    
+   <form name="tirer" id="joueuractu" action="/partieactu" method="Get">
+    <input id="partieencours" type="submit" value="partie">  
+    </form>
       <form id="tirdessus" method="POST" action="/insert/tir" target="hiddenFrame">
         <label for="name"></label>
 
@@ -116,34 +136,53 @@
      <option valeur="4">4</option>
      
      </select>
-        <input onclick="tirdessus(), actutirs()" type="submit" value="tirer" />
-      </form>    
-      <a href="/loginpage">login</a>
-    </div>
-    <form id="updatej1"method="POST" action="/updatej1">
-    <input id="tourj1" name="tourj1" type="text">
-    <input id="joue1" name="joueur1" type="text">
-      <input type="submit" value="valider tour">
-    </form>
     
-    <form id="updatej2" method="POST" action="/updatej2">
-      <input id="tourj2" name="tourj1" type="text">
-      <input id="joue1" name="joueur2" type="text">
-        <input type="submit" value="valider tour">
+     <button id="feu" type="submit"> <i style="color:red" class="fas fa-meteor" onclick="tirdessus(), actutirs(), savoirsitirer()" ></i></button>
+    </a>
+    
+        
+      </form>    
+      
+      <form id="tirdelete" method="POST" action="/" target="hiddenFrame">
+        <label for="name"></label>
+        
+        <input onclick="tirdelete(), actutirs()" type="submit" value="effacer tous les tirs" />
       </form>
       <form id="partie" method="POST" action="/insert/partie">
-        <label>joueur2</label>
+        <label>Inserer ue partie joueur2</label>
         <input id="j2" name="joueur2" type="text">
         <label>tourj1</label>
+        <input  name="tourj1" type="text">
+          <input type="submit" value="valider tour">
+        </form>
+        <style>
+          #updatej2, #updatej1{
+            visibility: hidden;
+          }
+        
+
+        </style>
+        <form id="updatej2" method="POST" action="/updatej2">
+          <p>Changer de tour si vous êtes joueur2</p>
+          <label>tourj1</label>
+          <input id="tourj2" name="tourj1" type="text">
+          <label>joueur1</label> 
+          <input id="joue1" name="joueur2" type="text">
+          
+            <input type="submit" value="valider tour">
+          </form>
+        <form id="updatej1"method="POST" action="/updatej1">
+          <p>Changer de tour si vous êtes joueur1</p>
+          <label>tourj1</label>
         <input id="tourj1" name="tourj1" type="text">
+        <label>joueur2</label>
+        <input id="joue2" name="joueur1" type="text">
           <input type="submit" value="valider tour">
         </form>
         <form id="joueur" action="/joueur" method="Get">
         <input type="submit" value="joueur avec bateau">  
         </form>
-        <form id="joueuractu" action="/partieactu" method="Get">
-          <input type="submit" value="partie">  
-          </form>
+       
           <form id="tour" action="/tour" method="GET">
             <input type="submit" value="tour">
           </form>
@@ -151,13 +190,9 @@
 
         </form>
 
-  </div>
-    <div id="cont2" class="container">
-      <form id="tirdelete" method="POST" action="/" target="hiddenFrame">
-        <label for="name"></label>
-        
-        <input onclick="tirdelete(), actutirs()" type="submit" value="effacer tous les tirs" />
-      </form>
+  
+    
+     
 <form id="email" method="Get" action="/email" target="hiddenFrame">
         
         
@@ -175,6 +210,10 @@
         
       
       </form>
+   
+    
+   
+     
 
 
 
@@ -185,8 +224,7 @@
 
 
       
-    </div>
-    <div id="cont3" class="container">
+
      
        <!--
          <label>InputX</label>
@@ -227,7 +265,7 @@
 
 
 
-    </div> 
+  
     <script>
 
 
@@ -364,6 +402,7 @@ $("#td"+data[i].placeX+data[i].placeY).empty();
       }
 
       $(document).ready(function () {
+        savoirsitirer();
         quiestu();
         actu(); 
         actubateau();
@@ -383,10 +422,10 @@ $.ajax({
        success: function(data)
        {
         actu();
-        ///   alert(data); // show response from the php script.
+        ///   console.log(data); // show response from the php script.
        },
        error:function(data){
-         alert(data.message);
+         console.log(data.message);
        }
      });
 
@@ -407,10 +446,10 @@ $.ajax({
        success: function(data)
        {
         actu();
-        ///   alert(data); // show response from the php script.
+        ///   console.log(data); // show response from the php script.
        },
        error:function(data){
-         alert(data.message);
+         console.log(data.message);
        }
      });
 
@@ -430,11 +469,11 @@ $.ajax({
        success: function(data)
        {
         actu();
-        alert(JSON.stringify(data.message));
-        ///   alert(data); // show response from the php script.
+        console.log(JSON.stringify(data.message));
+        ///   console.log(data); // show response from the php script.
        },
        error:function(data){
-         alert(data.message);
+         console.log(data.message);
        }
      });
 
@@ -462,11 +501,11 @@ $.ajax({
           console.log(qui[i].joueur2);
 
         }
-        alert(JSON.stringify(data.message));
-        ///   alert(data); // show response from the php script.
+        console.log(JSON.stringify(data.message));
+        ///   console.log(data); // show response from the php script.
        },
        error:function(data){
-         alert(data.message);
+         console.log(data.message);
        }
      });
 
@@ -487,11 +526,12 @@ $.ajax({
        success: function(data)
        {
         actu();
-        alert(data.message);
-        ///   alert(data); // show response from the php script.
+        console.log(data.message);
+        $("#joueuractu").submit();
+        ///   console.log(data); // show response from the php script.
        },
        error:function(data){
-         alert(data.message);
+         console.log(data.message);
        }
      });
 
@@ -509,42 +549,58 @@ $.ajax({
        url: url,
        data: form.serialize(), // serializes the form's elements.
        success: function(data)
-       {
+       {var quiestu1=$("#qui").html();
+         if(quiestu1!=='Qui êtes vous?, Veuillez-vous connecter.'){
+
+         
         var quiestu=$("#qui").html().split("Vous êtes ")[1].replace('"',"");
       
       console.log(quiestu);
       console.log(data.message);
       console.log(data.message);
+      var generate="";
+      $("#adversaire").empty();
+      generate+="<select onclick='savoirsitirer()' id='quiadversaire'><nom>Adversaire</nom>)";
 
       for(var i=0; i<data.message.length;i++){
         if(quiestu==data.message[i].joueur1){
-          alert("vous êtes joueur1 contre"+data.message[i].joueur2);
+          console.log("vous êtes joueur1 contre"+data.message[i].joueur2);
+          
           if(data.message[i].tourj1==1){
-            alert("C'est votre tour contre :"+data.message[i].joueur2)
+            console.log("C'est votre tour contre :"+data.message[i].joueur2)
+            generate+="  <option value=XXXT1"+data.message[i].tourj1+">"+data.message[i].joueur2+"</option>    ";
+
+    
+        
           }
          else if(data.message[i].tourj1==0){
-            alert("C'est le tour de :"+data.message[i].joueur2)
+            console.log("C'est le tour de :"+data.message[i].joueur2)
+          generate+="  <option value=XXXT1"+data.message[i].tourj1+">"+data.message[i].joueur2+"</option>    ";
           }
        
         }
        else if(quiestu==data.message[i].joueur2){
-        alert("vous êtes joueur2 contre"+data.message[i].joueu1);
+        console.log("vous êtes joueur2 contre"+data.message[i].joueu1);
         if(data.message[i].tourj1==0){
-            alert("C'est votre tour contre :"+data.message[i].joueur1)
+            console.log("C'est votre tour contre :"+data.message[i].joueur1)
+           generate+="  <option value=XXXT2"+data.message[i].tourj1+">"+data.message[i].joueur1+"</option>    ";
           }
           else if(data.message[i].tourj1==1){
-            alert("C'est le tour de :"+data.message[i].joueur1)
+            console.log("C'est le tour de :"+data.message[i].joueur1)
+           generate+= "  <option value=XXXT2"+data.message[i].tourj1+">"+data.message[i].joueur1+"</option>    ";
           }
-      }
-
+          
+        }
+        
+        $("#adversaire").empty().append(generate);
       }
        
         actu();
-        alert(JSON.stringify(data.message));
-        ///   alert(data); // show response from the php script.
-       },
+        console.log(JSON.stringify(data.message));
+        ///   console.log(data); // show response from the php script.
+         } else {console.log("Veuillez vous connecter.")}},
        error:function(data){
-         alert(data.message);
+         console.log(data.message);
        }
      });
 
@@ -563,12 +619,13 @@ $.ajax({
        data: form.serialize(), // serializes the form's elements.
        success: function(data)
        {
-        alert(data.message);
+        console.log(data.message);
         actu();
-        ///   alert(data); // show response from the php script.
+        $("#joueuractu").submit();
+        ///   console.log(data); // show response from the php script.
        },
        error:function(data){
-         alert(data.message);
+         console.log(data.message);
        }
      });
 
@@ -589,10 +646,10 @@ $.ajax({
        { 
         console.log(JSON.stringify(data.message));
         actu();
-        ///   alert(data); // show response from the php script.
+        ///   console.log(data); // show response from the php script.
        },
        error:function(data){
-         alert(data.message);
+         console.log(data.message);
        }
      });
 
@@ -616,11 +673,11 @@ $.ajax({
        success: function(data)
        {
         actu();
-        alert(data.message)
-        ///   alert(data); // show response from the php script.
+        console.log(data.message)
+        ///   console.log(data); // show response from the php script.
        },
        error:function(data){
-         alert(data.message);
+         console.log(data.message);
        }
      });
 
@@ -631,7 +688,7 @@ $("#deleteparemail").submit(function(e) {
 var url = 'deletetir/'+$("#reqmail").val();
 e.preventDefault();
 if($("#reqmail").val()==""||$("#reqmail").val()===undefined){
-alert("email vide");
+console.log("email vide");
 }else{
  // avoid to execute the actual submit of the form.
 
@@ -646,10 +703,10 @@ $.ajax({
 
         actu();
         document.location.href="/"
-        ///   alert(data); // show response from the php script.
+        ///   console.log(data); // show response from the php script.
        },
        error:function(data){
-         alert(data.message);
+         console.log(data.message);
        }
      });
     }
@@ -677,10 +734,10 @@ $.ajax({
 
 
         actu();
-        ///   alert(data); // show response from the php script.
+        ///   console.log(data); // show response from the php script.
        },
        error:function(data){
-         alert("error");
+         console.log("error");
        }
      });
 
@@ -699,18 +756,28 @@ $.ajax({
        data: form.serialize(), // serializes the form's elements.
        success: function(data)
        {
-        alert(data.message);
+        console.log(data.message);
         actutirs();
         
         $("#iciX").val($("#selectX").val());
 
         $("#iciY").val($("#selectY").val());
         $("#touche").submit();
-
-           ///alert(data); // show response from the php script.
+        
+        
+      
+       $("#joue1").val($('#quiadversaire option:selected').text());
+       $("#joue2").val($('#quiadversaire option:selected').text());
+       $("#tourj1").val(0);
+       $("#tourj2").val(1);
+       $("#updatej1").submit();
+       $("#updatej2").submit();
+        $("#joueuractu").submit();
+        $("#feu").hide();
+           ///console.log(data); // show response from the php script.
        },
        error:function(data){
-         alert(data.message);
+         console.log(data.message);
        }
      });
 
@@ -733,12 +800,12 @@ $.ajax({
        success: function(data)
        {
          console.log(data.message);
-        alert(data.message);
+        console.log(data.message);
         actutirs();
-           ///alert(data); // show response from the php script.
+           ///console.log(data); // show response from the php script.
        },
        error:function(data){
-         alert(data.message);
+         console.log(data.message);
        }
      });
 
@@ -760,13 +827,13 @@ $.ajax({
        {
         location.assign(location.href);
         actutirs();
-           ///alert(data); // show response from the php script.
+           ///console.log(data); // show response from the php script.
        }
      });
 
 
 });
-
+$("#joueuractu").submit();
       });
     </script>
   </div>
