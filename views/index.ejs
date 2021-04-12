@@ -83,7 +83,7 @@
     <script>
     function savoirsitirer(){
       $("#feu").hide();
-      alert($('#quiadversaire option:selected').val());
+      console.log($('#quiadversaire option:selected').val());
       if($('#quiadversaire option:selected').val()=="XXXT11"){
         $("#feu").show();
 
@@ -155,6 +155,13 @@
         <input  name="tourj1" type="text">
           <input type="submit" value="valider tour">
         </form>
+        <style>
+          #updatej2, #updatej1{
+            visibility: hidden;
+          }
+        
+
+        </style>
         <form id="updatej2" method="POST" action="/updatej2">
           <p>Changer de tour si vous êtes joueur2</p>
           <label>tourj1</label>
@@ -415,10 +422,10 @@ $.ajax({
        success: function(data)
        {
         actu();
-        ///   alert(data); // show response from the php script.
+        ///   console.log(data); // show response from the php script.
        },
        error:function(data){
-         alert(data.message);
+         console.log(data.message);
        }
      });
 
@@ -439,10 +446,10 @@ $.ajax({
        success: function(data)
        {
         actu();
-        ///   alert(data); // show response from the php script.
+        ///   console.log(data); // show response from the php script.
        },
        error:function(data){
-         alert(data.message);
+         console.log(data.message);
        }
      });
 
@@ -462,11 +469,11 @@ $.ajax({
        success: function(data)
        {
         actu();
-        alert(JSON.stringify(data.message));
-        ///   alert(data); // show response from the php script.
+        console.log(JSON.stringify(data.message));
+        ///   console.log(data); // show response from the php script.
        },
        error:function(data){
-         alert(data.message);
+         console.log(data.message);
        }
      });
 
@@ -494,11 +501,11 @@ $.ajax({
           console.log(qui[i].joueur2);
 
         }
-        alert(JSON.stringify(data.message));
-        ///   alert(data); // show response from the php script.
+        console.log(JSON.stringify(data.message));
+        ///   console.log(data); // show response from the php script.
        },
        error:function(data){
-         alert(data.message);
+         console.log(data.message);
        }
      });
 
@@ -519,12 +526,12 @@ $.ajax({
        success: function(data)
        {
         actu();
-        alert(data.message);
+        console.log(data.message);
         $("#joueuractu").submit();
-        ///   alert(data); // show response from the php script.
+        ///   console.log(data); // show response from the php script.
        },
        error:function(data){
-         alert(data.message);
+         console.log(data.message);
        }
      });
 
@@ -557,29 +564,29 @@ $.ajax({
 
       for(var i=0; i<data.message.length;i++){
         if(quiestu==data.message[i].joueur1){
-          alert("vous êtes joueur1 contre"+data.message[i].joueur2);
+          console.log("vous êtes joueur1 contre"+data.message[i].joueur2);
           
           if(data.message[i].tourj1==1){
-            alert("C'est votre tour contre :"+data.message[i].joueur2)
+            console.log("C'est votre tour contre :"+data.message[i].joueur2)
             generate+="  <option value=XXXT1"+data.message[i].tourj1+">"+data.message[i].joueur2+"</option>    ";
 
     
         
           }
          else if(data.message[i].tourj1==0){
-            alert("C'est le tour de :"+data.message[i].joueur2)
+            console.log("C'est le tour de :"+data.message[i].joueur2)
           generate+="  <option value=XXXT1"+data.message[i].tourj1+">"+data.message[i].joueur2+"</option>    ";
           }
        
         }
        else if(quiestu==data.message[i].joueur2){
-        alert("vous êtes joueur2 contre"+data.message[i].joueu1);
+        console.log("vous êtes joueur2 contre"+data.message[i].joueu1);
         if(data.message[i].tourj1==0){
-            alert("C'est votre tour contre :"+data.message[i].joueur1)
+            console.log("C'est votre tour contre :"+data.message[i].joueur1)
            generate+="  <option value=XXXT2"+data.message[i].tourj1+">"+data.message[i].joueur1+"</option>    ";
           }
           else if(data.message[i].tourj1==1){
-            alert("C'est le tour de :"+data.message[i].joueur1)
+            console.log("C'est le tour de :"+data.message[i].joueur1)
            generate+= "  <option value=XXXT2"+data.message[i].tourj1+">"+data.message[i].joueur1+"</option>    ";
           }
           
@@ -589,11 +596,11 @@ $.ajax({
       }
        
         actu();
-        alert(JSON.stringify(data.message));
-        ///   alert(data); // show response from the php script.
-         } else {alert("Veuillez vous connecter.")}},
+        console.log(JSON.stringify(data.message));
+        ///   console.log(data); // show response from the php script.
+         } else {console.log("Veuillez vous connecter.")}},
        error:function(data){
-         alert(data.message);
+         console.log(data.message);
        }
      });
 
@@ -612,13 +619,13 @@ $.ajax({
        data: form.serialize(), // serializes the form's elements.
        success: function(data)
        {
-        alert(data.message);
+        console.log(data.message);
         actu();
         $("#joueuractu").submit();
-        ///   alert(data); // show response from the php script.
+        ///   console.log(data); // show response from the php script.
        },
        error:function(data){
-         alert(data.message);
+         console.log(data.message);
        }
      });
 
@@ -639,10 +646,10 @@ $.ajax({
        { 
         console.log(JSON.stringify(data.message));
         actu();
-        ///   alert(data); // show response from the php script.
+        ///   console.log(data); // show response from the php script.
        },
        error:function(data){
-         alert(data.message);
+         console.log(data.message);
        }
      });
 
@@ -666,11 +673,11 @@ $.ajax({
        success: function(data)
        {
         actu();
-        alert(data.message)
-        ///   alert(data); // show response from the php script.
+        console.log(data.message)
+        ///   console.log(data); // show response from the php script.
        },
        error:function(data){
-         alert(data.message);
+         console.log(data.message);
        }
      });
 
@@ -681,7 +688,7 @@ $("#deleteparemail").submit(function(e) {
 var url = 'deletetir/'+$("#reqmail").val();
 e.preventDefault();
 if($("#reqmail").val()==""||$("#reqmail").val()===undefined){
-alert("email vide");
+console.log("email vide");
 }else{
  // avoid to execute the actual submit of the form.
 
@@ -696,10 +703,10 @@ $.ajax({
 
         actu();
         document.location.href="/"
-        ///   alert(data); // show response from the php script.
+        ///   console.log(data); // show response from the php script.
        },
        error:function(data){
-         alert(data.message);
+         console.log(data.message);
        }
      });
     }
@@ -727,10 +734,10 @@ $.ajax({
 
 
         actu();
-        ///   alert(data); // show response from the php script.
+        ///   console.log(data); // show response from the php script.
        },
        error:function(data){
-         alert("error");
+         console.log("error");
        }
      });
 
@@ -749,7 +756,7 @@ $.ajax({
        data: form.serialize(), // serializes the form's elements.
        success: function(data)
        {
-        alert(data.message);
+        console.log(data.message);
         actutirs();
         
         $("#iciX").val($("#selectX").val());
@@ -767,10 +774,10 @@ $.ajax({
        $("#updatej2").submit();
         $("#joueuractu").submit();
         $("#feu").hide();
-           ///alert(data); // show response from the php script.
+           ///console.log(data); // show response from the php script.
        },
        error:function(data){
-         alert(data.message);
+         console.log(data.message);
        }
      });
 
@@ -793,12 +800,12 @@ $.ajax({
        success: function(data)
        {
          console.log(data.message);
-        alert(data.message);
+        console.log(data.message);
         actutirs();
-           ///alert(data); // show response from the php script.
+           ///console.log(data); // show response from the php script.
        },
        error:function(data){
-         alert(data.message);
+         console.log(data.message);
        }
      });
 
@@ -820,7 +827,7 @@ $.ajax({
        {
         location.assign(location.href);
         actutirs();
-           ///alert(data); // show response from the php script.
+           ///console.log(data); // show response from the php script.
        }
      });
 

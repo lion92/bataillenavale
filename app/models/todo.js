@@ -27,6 +27,7 @@ function Todo() {
     res.clearCookie("essai");
     res.send({ status: 200, message: "deconnexion" });
   };
+  
   this.reqlogin = function (reqemail, reqpassword, req, res) {
     let conection2 = false;
     let email = "";
