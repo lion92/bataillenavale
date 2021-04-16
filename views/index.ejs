@@ -426,7 +426,7 @@ $("#td"+data[i].placeX+data[i].placeY).empty();
         
       $(document).ready(function () {
       
-        
+        $("#feu").hide();
         quiestu();
         actu(); 
         actubateau();
@@ -576,7 +576,7 @@ $.ajax({
        success: function(data)
        {if(actualiser!=JSON.stringify(data.message)){
         actualiser=JSON.stringify(data.message);
-       alert("C'est peut être votre tour :"+JSON.stringify(data.message));
+       //alert("C'est peut être votre tour :"+JSON.stringify(data.message));
          
         var quiestu1=$("#qui").html();
          if(quiestu1!=='Qui êtes vous?, Veuillez-vous connecter.'){
@@ -593,10 +593,11 @@ $.ajax({
 
       for(var i=0; i<data.message.length;i++){
         if(quiestu==data.message[i].joueur1){
+          
           console.log("vous êtes joueur1 contre"+data.message[i].joueur2);
           
           if(data.message[i].tourj1==1){
-            console.log("C'est votre tour contre :"+data.message[i].joueur2)
+            alert("C'est votre tour contre :"+data.message[i].joueur2)
             generate+="  <option value=XXXT1"+data.message[i].tourj1+">"+data.message[i].joueur2+"</option>    ";
 
     
@@ -611,7 +612,7 @@ $.ajax({
        else if(quiestu==data.message[i].joueur2){
         console.log("vous êtes joueur2 contre"+data.message[i].joueu1);
         if(data.message[i].tourj1==0){
-            console.log("C'est votre tour contre :"+data.message[i].joueur1)
+            alert("C'est votre tour contre :"+data.message[i].joueur1)
            generate+="  <option value=XXXT2"+data.message[i].tourj1+">"+data.message[i].joueur1+"</option>    ";
           }
           else if(data.message[i].tourj1==1){
