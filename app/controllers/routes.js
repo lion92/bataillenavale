@@ -48,6 +48,10 @@ module.exports = {
     app.post('/touche', function(req, res){
       todo.reqtouche(req.body.posX, req.body.posY,req,res)
     });
+    app.post('/effacerBateau', function(req, res){
+      todo.reqeffacerbateau(req,res);
+    });
+  
     app.post('/deletetir', function(req, res){
       todo.deleteplateau(res)
     });

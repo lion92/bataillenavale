@@ -367,6 +367,63 @@ function Todo() {
       }
     });
   };
+  this.reqeffacerbateau = function (req, res) {
+    connection.acquire(function (err, con) {
+      let conection2 = false;
+      let email = "";
+      jwt.verify(
+        req.cookies["essai"],
+        "secret_this_should_be_longer",
+        function (err, decoded) {
+          console.log("////////////");
+          if (decoded === undefined) {
+            conection2 = true;
+            res.send({ status: 1, message: "veillez vous connecter " });
+          } else {
+            email = decoded.email;
+            conection2 = false;
+          }
+          //console.log(decoded.code) // bar
+        }
+      );
+
+      if (!(conection2 == true)) {
+        console.log(err);
+        console.log("Connecté à la base de données MySQL!");
+
+        con.query(
+          "delete from bateau where email=?",email
+          ,
+          function (err, result) {
+            con.release();
+            res.header("Access-Control-Allow-Origin", "*");
+            res.header(
+              "Access-Control-Allow-Methods",
+              "GET,HEAD,OPTIONS,POST,PUT"
+            );
+            res.header(
+              "Access-Control-Allow-Headers",
+              "Origin, X-Requested-With, Content-Type, Accept, x-client-key, x-client-token, x-client-secret, Authorization"
+            );
+
+            if (err) {
+              res.send({
+                status: 1,
+                message: "TODO creation fail " + err + email,
+              });
+            } else {
+              if (result == "") {
+                res.send({ status: 0, message: "bateaux effacés" });
+              } else {
+                res.send({ status: 0, message: "bateaux effacés" + email });
+                console.log("Post successful");
+              }
+            }
+          }
+        );
+      }
+    });
+  };
   this.selectbateauparmail= function ( req, res) {
     connection.acquire(function (err, con) {
       let conection2 = false;

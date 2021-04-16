@@ -260,8 +260,10 @@
         
         <input onclick=" actutirs()" type="submit" value="deletetir par email" />
 
-
-
+      </form>
+        <form id="effacerbateau" action="/effacerBateau" method="post" target="hiddenFrame">
+          <input type="submit" value="Enlever vos bateau" />
+      </form>
 
 
 
@@ -862,6 +864,9 @@ $.ajax({
      });
 
 
+});
+$("#effacerbateau").submit( function(){
+  document.location.href="/";
 });
 $("#joueuractu").submit();
       });
