@@ -39,6 +39,9 @@ module.exports = {
     app.get('/tour', function(req, res){
       todo.selectpartie(req,res)
     });
+    app.get('/mesbateau', function(req, res){
+      todo.selectbateauparmail(req,res)
+    });
     app.post('/insert/tir', function(req, res){
       todo.reqtir(req.body.posX, req.body.posY,req,res)
     });

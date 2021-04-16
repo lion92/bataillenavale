@@ -358,6 +358,7 @@ var posX;
 
           $("#td"+data[i].placeX+data[i].placeY).css("background-color", "red");
           }
+          
 
 
 
@@ -366,6 +367,24 @@ var posX;
         });
 
       }
+      function actumesbateau() {
+    
+    $.getJSON('/mesbateau', function (data) {
+      console.log("/////////////////"+JSON.stringify(data));
+      for (var i = 0; i < data.message.length; i++) {
+      console.log("!!!!!!!!!!!"+data.message);
+
+      $("#td"+data.message[i].bateauX+data.message[i].bateauY).css("background-color", "green");
+      }
+      
+
+
+
+
+
+    });
+
+  }
       function actutirsparemail() {
     
         var reqemail="/tirs/"+$("#reqmail").val();
@@ -400,9 +419,14 @@ $("#td"+data[i].placeX+data[i].placeY).empty();
         });
 
       }
-
+      setInterval(function(){ savoirsitirer();
+          actumesbateau();
+        actutirs(); }, 2000);
+        setInterval(function(){ $("#joueuractu").submit()}, 2000);
+        
       $(document).ready(function () {
-        savoirsitirer();
+      
+        
         quiestu();
         actu(); 
         actubateau();
@@ -537,6 +561,7 @@ $.ajax({
 
 
 });
+var actualiser="";
 $("#joueuractu").submit(function(e) {
 
 e.preventDefault(); // avoid to execute the actual submit of the form.
@@ -549,7 +574,11 @@ $.ajax({
        url: url,
        data: form.serialize(), // serializes the form's elements.
        success: function(data)
-       {var quiestu1=$("#qui").html();
+       {if(actualiser!=JSON.stringify(data.message)){
+        actualiser=JSON.stringify(data.message);
+       alert("C'est peut être votre tour :"+JSON.stringify(data.message));
+         
+        var quiestu1=$("#qui").html();
          if(quiestu1!=='Qui êtes vous?, Veuillez-vous connecter.'){
 
          
@@ -598,7 +627,7 @@ $.ajax({
         actu();
         console.log(JSON.stringify(data.message));
         ///   console.log(data); // show response from the php script.
-         } else {console.log("Veuillez vous connecter.")}},
+         } else {console.log("Veuillez vous connecter.")}}},
        error:function(data){
          console.log(data.message);
        }
@@ -799,13 +828,13 @@ $.ajax({
        data: form.serialize(), // serializes the form's elements.
        success: function(data)
        {
-         console.log(data.message);
-        console.log(data.message);
+         //console.log(data.message);
+        alert(data.message);
         actutirs();
            ///console.log(data); // show response from the php script.
        },
        error:function(data){
-         console.log(data.message);
+         alert(data.message);
        }
      });
 

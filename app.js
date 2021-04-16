@@ -7,6 +7,8 @@ var routes = require('./app/controllers/routes');
 const todo = require('../batailleNavale/app/models/todo');
 const cookieParser=require("cookie-parser");
 var app = express();
+var http=require('http').Server(app);
+var io=require('socket.io')(http);
 app.use(bodyParser.urlencoded({extended:true}));
 app.use(bodyParser.json());
 app.use(cookieParser());
@@ -18,7 +20,13 @@ app.use(express.static('public'))
 app.use('/css', express.static(__dirname + 'public/css'))
 app.use('/js', express.static(__dirname + 'public/js'))
 app.use('/img', express.static(__dirname + 'public/img'))
-
+io.on('connection', (socket) => {
+  socket.on('chat message', msg => {
+    
+    io.emit('chat message', msg);
+    console.log(msg);
+  });
+});
 // Set Views
 app.set('views', './views')
 app.set('view engine', 'ejs')
