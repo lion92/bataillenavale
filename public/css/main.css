@@ -66,25 +66,10 @@ body {font-family: Arial, Helvetica, sans-serif;
   table{  width: 20%;
     margin: 0 auto; }
   
-  #cont1  {
-    margin-top: 100px;
-    position: absolute;
-    margin-left:100px;
+  
 
-  }
-
-  #cont2  {
-    margin-top: 100px;
-    position: absolute;
-    margin-left:800px;
-
-  }
-  #cont3  {
-    margin-top: 100px;
-    position: absolute;
-    margin-left:1500px;
-
-  }
+  
+ 
   a{
     font-size: 20px;
   }

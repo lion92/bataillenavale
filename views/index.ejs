@@ -11,21 +11,11 @@
 </head>
 
 <body>
-  
+  <a href="/loginpage">login</a>
   <style>
-  #cont1{
-    margin-left:20px;
-    width: 300px;
-    height: 400px;
-
-  }
-  #positionbateau{
-    margin-left:300px;
-    width: 300px;
-    height: 400px;
-    margin-top: 0px;
-  }
-  
+ 
+ 
+ 
   
   :root {
     --hue:275deg; /* change hue of picture (320deg) */
@@ -407,6 +397,7 @@
         <input  name="tourj1" type="text">
           <input type="submit" value="valider tour">
         </form>
+        </div>
         <style>
           #updatej2, #updatej1{
             visibility: hidden;
@@ -414,6 +405,7 @@
         
 
         </style>
+        <div id="cont2" class="container">
         <form id="updatej2" method="POST" action="/updatej2">
           <p >Changer de tour si vous êtes joueur2</p>
           <label>tourj1</label>
@@ -441,12 +433,12 @@
 
 
         </form>
-
+</div>
   
     
-     
+<div id="cont3" class="container">
 <form id="email" method="Get" action="/email" target="hiddenFrame">
-        
+         
         
         <input onclick="tirdelete(), actutirs()" type="submit" value="joueur inscrit" />
        
@@ -516,7 +508,17 @@
         <form id="effacerbateau" action="/effacerBateau" method="post" target="hiddenFrame">
           <input type="submit" value="Enlever vos bateau" />
       </form>
-
+</div>
+</body>
+<style>
+  #cont3{
+    position: absolute;
+    top: 750px;
+    left: 20px;
+    width: 1000px;
+margin-left: 700px;
+  }
+</style>
 
 
 
@@ -680,7 +682,7 @@ $("#td"+data[i].placeX+data[i].placeY).empty();
         setInterval(function(){ $("#joueuractu").submit()}, 2000);
         
       $(document).ready(function () {
-      
+      $("#cont2").hide();
         $("#feu").hide();
         quiestu();
         actu(); 
@@ -1125,8 +1127,8 @@ $("#effacerbateau").submit( function(){
 $("#joueuractu").submit();
       });
     </script>
-  </div>
+ 
 
-</body>
+
 
 </html>
