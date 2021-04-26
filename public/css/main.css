@@ -45,9 +45,7 @@ body {font-family: Arial, Helvetica, sans-serif;
     flex-direction: row;
   }
   
-#principal div {
-  margin-top: 200px;
-}
+
   .container {
     /* Ajouter box-sizing */
     box-sizing : border-box;
@@ -56,7 +54,7 @@ body {font-family: Arial, Helvetica, sans-serif;
     padding:20px;
     width: 100%;
     /* redéfinition 400 + 2*20 */
-    max-width: 440px;
+    max-width: 400px;
     margin:0 auto;
   }
   h1  {

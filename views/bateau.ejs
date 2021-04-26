@@ -1,0 +1,111 @@
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>bataille navale bateau</title>
+    <script
+      type="text/javascript"
+      src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"
+    ></script>
+
+    <script
+      src="https://kit.fontawesome.com/a076d05399.js"
+      crossorigin="anonymous"
+    ></script>
+  </head>
+
+  <body>
+    <style>
+         input[type="submit"] {
+        background-color: #4caf50; /* Green */
+        border: none;
+        color: white;
+        padding: 15px 32px;
+        text-align: center;
+        text-decoration: none;
+        display: inline-block;
+        font-size: 16px;
+      }
+      body {
+        background-color: rgba(255, 0, 234, 0.192);
+      }
+      #loginpage {
+        width: 300px;
+        margin-right: auto;
+        margin-left: auto;
+      }
+      a {
+        font-size: 200px;
+      }
+      #partieform{
+        font-size: 50px;
+        width: 500px;
+        height:400px;
+        margin-right: auto;
+        margin-left: auto;
+      }
+      input[type="text"], select, option {
+        padding: 12px 20px;
+        margin: 8px 0;
+        box-sizing: border-box;
+        font-size: 20px;
+      }
+    </style>
+
+    <div id="loginpage"><a href="/loginpage">login</a><p id="qui" style="width:300px;margin-left: 310px;margin-top:0px;font-size: 30px;"></p></div>
+   
+    <div id="partieform"> 
+        
+        <form id="positionbateau" method="post" action="/insert/bateau" target="hiddenFrame">
+            <label>nom</label>
+            <input type=text name="nom"> </input>
+            <label>bateauX</label>
+            <input type="text" name="bateauX"></input>
+            <label>bateauY</label>
+            <input type="text" name="bateauY"> </input>
+        
+            <input type="submit" value="poser bateau" />
+            </form>
+    </div>
+    <script>
+      $(document).ready(function () {
+          quiestu();
+        console.log("ready!");
+        $("#positionbateau").submit(function(e) {
+
+e.preventDefault(); // avoid to execute the actual submit of the form.
+
+var form = $(this);
+var url = form.attr('action');
+
+$.ajax({
+       type: "POST",
+       url: url,
+       data: form.serialize(), // serializes the form's elements.
+       success: function(data)
+       {
+        
+        console.log(data.message)
+        ///   console.log(data); // show response from the php script.
+       },
+       error:function(data){
+         console.log(data.message);
+       }
+     });
+
+
+    });
+});
+function quiestu() {
+        $("#qui").empty();
+        $.getJSON('/qui', function (data) {
+          console.log(data);
+          
+          $("#qui").append(JSON.stringify(data.message));
+
+
+        });
+    }
+    </script>
+  </body>
+</html>

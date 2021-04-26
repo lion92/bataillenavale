@@ -38,6 +38,12 @@ app.get('', (req, res) => {
 app.get('/about', (req, res) => {
     res.render('about', { text: 'About Page'})
 })
+app.get('/partie', (req, res) => {
+  res.render('partie')
+})
+app.get('/bateau', (req, res) => {
+  res.render('bateau')
+})
 app.get('/connexion', (req, res) => {
   res.render('connexion')
 })
