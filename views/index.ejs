@@ -229,7 +229,9 @@
     left:60%;
     transform:scale(.75) rotate(10deg);
   }</style>
+  <p id="qui" style="width:300px;margin-left: 310px;margin-top:0px;font-size: 30px;"></p>
   <div id="adversaire" style="margin-top:100px;" class="container"></div>
+  
   <div id='canvas'>
     <div class='sun'></div>
     <div class='boat'></div>
@@ -308,11 +310,12 @@
 </tbody>
 </table>
 </div>
-<p id="qui" style="width:300px;margin-left: 310px;margin-top:0px;font-size: 30px;"></p>
+
+
 
 </tbody>
-
-  <div id="cont1" class="container">
+<div id="principal">
+  <div  class="container" style="margin-top: 200px;">
     <h1>bataille navale</h1>
  
     <a href="/loginpage">login</a>
@@ -397,7 +400,7 @@
         <input  name="tourj1" type="text">
           <input type="submit" value="valider tour">
         </form>
-        </div>
+        
         <style>
           #updatej2, #updatej1{
             visibility: hidden;
@@ -405,7 +408,7 @@
         
 
         </style>
-        <div id="cont2" class="container">
+       
         <form id="updatej2" method="POST" action="/updatej2">
           <p >Changer de tour si vous êtes joueur2</p>
           <label>tourj1</label>
@@ -436,7 +439,7 @@
 </div>
   
     
-<div id="cont3" class="container">
+<div  class="container">
 <form id="email" method="Get" action="/email" target="hiddenFrame">
          
         
@@ -509,6 +512,7 @@
           <input type="submit" value="Enlever vos bateau" />
       </form>
 </div>
+<div>
 </body>
 <style>
   #cont3{
