@@ -14,7 +14,10 @@
 
   <style>
  
- 
+ select{
+   width:70px;
+   height: 60px;
+ }
  
   
   :root {
@@ -228,24 +231,38 @@
     top:60%;
     left:60%;
     transform:scale(.75) rotate(10deg);
-  }</style>
+  }
+  .container {
+    display: flex;
+  align-items: stretch;
+  align-content: stretch;
+  }
+  </style>
  
-  
+   
   <div id="principal">
-    <div  class="container" > 
+    
+    <div  class="container" >
+       
+      <div>
+        <h1>bataille navale</h1></br></br>
       <p id="qui" ></p>
-  <a href="/loginpage">login</a></br></br>
-      <h1>bataille navale</h1></br></br>
+  
+     
    
       <a href="/loginpage">login</a></br></br>
       <a href="/bateau">Bateau</a></br></br>
       <a href="/partie">partie</a></br></br>
-     <div id="adversaire"></div>
+     
 
       <iframe id="transit" name="hiddenFrame" width="0" height="0" border="0" style="display: none;"></iframe></br></br>
       <form name="tirer" id="joueuractu" action="/partieactu" method="Get">
-        <input id="partieencours" type="submit" value="partie">  
-        </form></br></br>
+        <!<input id="partieencours" type="submit" value="partie">  
+      
+
+
+      </div><div> <div id="adversaire"></div>
+      </form></br></br>
           <form id="tirdessus" method="POST" action="/insert/tir" target="hiddenFrame">
             <label for="name"></label>
           </br>
@@ -270,7 +287,7 @@
          
          </select>
         </br>
-         <button id="feu" type="submit"> <i style="color:red" class="fas fa-meteor" onclick=" actutirs(), savoirsitirer()" ></i></button>
+         <button id="feu" type="submit"> Feu<i style="color:red; width:50px" class="fas fa-meteor" onclick=" actutirs(), savoirsitirer()" ></i></button>
         </a>
         
             
@@ -289,6 +306,7 @@
           <form id="effacerbateau" action="/effacerBateau" method="post" target="hiddenFrame">
             <input type="submit" value="Enlever vos bateau" />
         </form>
+      </div>
         </div>
         </div>
   <div id='canvas'>
@@ -423,7 +441,7 @@
      
 
  
-       <!--
+       
         <form id="updatej2" method="POST" action="/updatej2">
           <p >Changer de tour si vous êtes joueur2</p>
           <label>tourj1</label>
@@ -441,6 +459,7 @@
         <input id="joue2" name="joueur1" type="text">
           <input type="submit" value="valider tour">
         </form>
+        <!--
         <form id="joueur" action="/joueur" method="Get">
         <input type="submit" value="joueur avec bateau">  
         </form>
@@ -451,8 +470,8 @@
 
 
         </form>
-      -->
-
+       -->
+     
   
     
 
@@ -890,7 +909,7 @@ $.ajax({
           }
           
         }
-        alert(generate);
+        console.log(generate);
         $("#adversaire").empty().append(generate);
       }
        
@@ -1136,7 +1155,12 @@ $("#effacerbateau").submit( function(){
   document.location.href="/";
 });
 $("#joueuractu").submit();
-      });
+     
+$("#updatej1").hide();
+       $("#updatej2").hide();
+       $("#partieencours").hide();
+
+});
     </script>
  
 
