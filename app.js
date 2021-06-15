@@ -16,10 +16,12 @@ app.get('/cookie', function(req, resp) {
   console.log(req.cookies['bataillenavale']);
   resp.send({ status: 0, message: "ok" + req.cookies['bataillenavale'] });
 })
+
 app.use(express.static('public'))
 app.use('/css', express.static(__dirname + 'public/css'))
 app.use('/js', express.static(__dirname + 'public/js'))
 app.use('/img', express.static(__dirname + 'public/img'))
+app.use('/img', express.static(__dirname + 'public/son'))
 io.on('connection', (socket) => {
   socket.on('chat message', msg => {
     
