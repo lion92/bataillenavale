@@ -20,7 +20,7 @@
         background-color: #4caf50; /* Green */
         border: none;
         color: white;
-        padding: 15px 32px;
+     
         text-align: center;
         text-decoration: none;
         display: inline-block;
@@ -45,7 +45,7 @@
         margin-left: auto;
       }
       input[type="text"], select, option {
-        padding: 12px 20px;
+       
         margin: 8px 0;
         box-sizing: border-box;
         font-size: 20px;
@@ -74,7 +74,7 @@
     <script>
       $(document).ready(function () {
           quiestu();
-        alert("ready!");
+  
         $("#positionbateau").submit(function(e) {
 
 e.preventDefault(); // avoid to execute the actual submit of the form.
@@ -106,7 +106,9 @@ function quiestu() {
           alert(JSON.stringify(data.message))
           
           $("#qui").append(JSON.stringify(data.message));
-
+          if(JSON.stringify(data.message)==='"Qui êtes vous?, Veuillez-vous connecter. "'){
+            window.location.href = "/loginpage";
+          }
 
         });
     }
