@@ -51,7 +51,7 @@
     content:'';
     position:absolute;
     left:-20px;
-    top:-20px;
+    
     width:inherit;
     height:inherit;
     border:20px solid white;
@@ -62,181 +62,8 @@
     mix-blend-mode:overlay;
     opacity:.25;
   }
-  #canvas:after { /* border-overlay */
-    content:'';
-    position:absolute;
-    left:-20px;
-    top:-20px;
-    width:inherit;
-    height:inherit;
-    border:20px solid beige;
-    box-sizing:border-box;  
-  }
-  
-  
  
   
-  .boat {
-    width:80px;
-    height:10px;
-    background:var(--black);
-    z-index:1;
-    position:absolute;
-    top:67.5%;
-    left:75%;
-    border-radius:0 25% 50% 5px;
-  }
-  .boat:after {
-    content:'';
-    width:100%;
-    height:100px;
-    background:var(--black);
-    position:absolute;
-    bottom:100%;
-    left:0;
-    clip-path:polygon(33% 0%, 50% 80%, 66% 33%, 90% 100%, 50% 95%, 45% 100%, 50% 90%, 10% 95%, 0% 100%, 10% 90%)
-  }
-  .boat_reflection {
-    width:80px;
-    height:10px;
-    background:var(--black);
-    z-index:1;
-    position:absolute;
-    top:70.5%;
-    left:75.5%;
-    border-radius:0 25% 50% 5px;
-    transform:scaleY(-1) skewX(-20deg);
-    opacity:.25;
-    filter:blur(2px);
-  }
-  .boat_reflection:after {
-    content:'';
-    width:100%;
-    height:100px;
-    background:linear-gradient(to top, var(--black), transparent);
-    position:absolute;
-    bottom:100%;
-    left:0;
-    clip-path:polygon(33% 0%, 50% 80%, 66% 33%, 90% 100%, 50% 95%, 45% 100%, 50% 90%, 10% 95%, 0% 100%, 10% 90%)
-  }
-  
-  .ground {
-    width:60%;
-    height:125px;
-    background:var(--black);
-    position:absolute;
-    bottom:0;
-    left:0;
-    clip-path:polygon(0% 0%, 25% 10%, 80% 85%, 100% 100%, 0% 100%);
-  }
-  .tree {
-    width:150px;
-    height:200px;
-    position:absolute;
-    top:25%;
-    left:-10%;
-    border-radius:50%;
-    border-right:10px solid var(--black);
-    transform:rotate(0deg);
-  }
-  
-  .leaf {
-    width:65px;
-    height:25px;
-    background:var(--black);
-    position:absolute;  
-    border-radius:75% 25% 50% 0;
-    clip-path:polygon(0% 100%, 10% 100%, 15% 50%, 20% 100%, 30% 100%, 30% 70%, 40% 100%, 100% 100%, 100% 0%, 0% 0%);
-  }
-  
-  .leaf.one {
-    left:40px;
-  }
-  .leaf.two {
-    left:95px;
-    top:-20px;
-    transform:scaleX(-1) rotate(25deg);
-  }
-  .leaf.three {
-    left:100px;
-    top:15px;
-    transform:scaleX(-1) rotate(-25deg);
-  }
-  .leaf.four {
-    left:55px;
-    top:25px;
-    transform:rotate(-45deg);
-  }
-  
-  .tree_two {
-    width:150px;
-    height:200px;
-    position:absolute;
-    top:21%;
-    left:0%;
-    border-radius:50%;
-    border-right:10px solid var(--black);
-    transform:rotate(55deg);
-  }
-  
-  .bird {
-    width:15px;
-    height:10px;
-    border-top:2px solid var(--black);
-    border-radius:50% 50% 0 0;
-    position:absolute;
-  }
-  .bird:before {
-    content:'';
-    width:4px;
-    height:4px;
-    background:var(--black);
-    position:absolute;
-    left:12px;
-    top:1px;
-    border-radius:0 0 50% 50%;
-  }
-  .bird:after {
-    content:'';
-    width:15px;
-    height:10px;
-    border-top:2px solid var(--black);
-    border-radius:50% 50% 0 0;
-    position:absolute;
-    left:13px;
-    top:-2px;
-  }
-  
-  .bird.one {
-    top:20%;
-    left:35%;
-    transform:scale(1.25) rotate(-10deg);
-  }
-  .bird.two {
-    top:35%;
-    left:85%;
-    transform:scale(1) rotate(10deg);
-  }
-  .bird.three {
-    top:55%;
-    left:18%;
-    transform:scale(.75) rotate(-10deg);
-  }
-  .bird.four {
-    top:65%;
-    left:40%;
-    transform:scale(.5);
-  }
-  .bird.five {
-    top:60%;
-    left:60%;
-    transform:scale(.75) rotate(10deg);
-  }
-  .container {
-    display: flex;
-  align-items: stretch;
-  align-content: stretch;
-  }
   </style>
  
    
@@ -245,8 +72,41 @@
     <div  class="container" >
        
       <div>
+        
         <h1>bataille navale</h1></br></br>
-      <p id="qui" ></p>
+        <div id="adversaire"></div>
+      
+      </form></br></br>
+            <form id="tirdessus" method="POST" action="/insert/tir" target="hiddenFrame">
+              <label for="name"></label>
+            </br>
+            </br></br>
+              <select id="selectX" name="posX">
+              <nom>posX</nom>
+              <option valeur="0">0</option>
+              <option valeur="1">1</option>
+              <option valeur="2">2</option>
+              <option valeur="3">3</option>
+              <option valeur="4">4</option>
+            
+              
+              </select>
+           <select id="selectY" name="posY">
+           <nom>posY</nom>
+           <option valeur="0">0</option>
+           <option valeur="1">1</option>
+           <option valeur="2">2</option>
+           <option valeur="3">3</option>
+           <option valeur="4">4</option>
+           
+           </select>
+          
+           <button id="feu" type="submit"> Feu<i style="color:red; width:50px" class="fas fa-meteor" onclick=" actutirs(), savoirsitirer()" ></i></button>
+          
+          
+              
+            </form>  
+        <p id="qui" ></p>
   
      
    
@@ -261,41 +121,14 @@
       
 
 
-      </div><div> <div id="adversaire"></div>
-      </form></br></br>
-          <form id="tirdessus" method="POST" action="/insert/tir" target="hiddenFrame">
-            <label for="name"></label>
-          </br>
-          </br></br>
-            <select id="selectX" name="posX">
-            <nom>posX</nom>
-            <option valeur="0">0</option>
-            <option valeur="1">1</option>
-            <option valeur="2">2</option>
-            <option valeur="3">3</option>
-            <option valeur="4">4</option>
-          
-            
-            </select>
-         <select id="selectY" name="posY">
-         <nom>posY</nom>
-         <option valeur="0">0</option>
-         <option valeur="1">1</option>
-         <option valeur="2">2</option>
-         <option valeur="3">3</option>
-         <option valeur="4">4</option>
-         
-         </select>
+       
         </br>
-         <button id="feu" type="submit"> Feu<i style="color:red; width:50px" class="fas fa-meteor" onclick=" actutirs(), savoirsitirer()" ></i></button>
-        </a>
+      </br>
+      </br>
+     
         
-            
-          </form>    
-        </br>
-      </br>
-      </br>
-          
+      
+      
           <form id="tirdelete" method="POST" action="/" target="hiddenFrame">
             <label for="name"></label>
             
@@ -308,29 +141,8 @@
         </form>
       </div>
         </div>
-        </div>
-  <div id='canvas'>
-    <div class='sun'></div>
-    <div class='boat'></div>
-    <div class='boat_reflection'></div>
-    <div class='ground'></div>
-    <div class='tree'>
-      <div class='leaf one'></div>
-      <div class='leaf two'></div>
-      <div class='leaf three'></div>
-      <div class='leaf four'></div>
-    </div>
-    <div class='tree_two'>
-      <div class='leaf one'></div>
-      <div class='leaf two'></div>
-      <div class='leaf three'></div>
-      <div class='leaf four'></div>
-    </div>
-    <div class='bird one'></div>
-    <div class='bird two'></div>
-    <div class='bird three'></div>
-    <div class='bird four'></div>
-    <div class='bird five'></div>
+        
+        <div id="imgjeu">
   
 <table>
   <tbody><tr>
@@ -386,11 +198,13 @@
 
 </tbody>
 </table>
+
 </div>
 
 
 
-</tbody>
+
+
 
 
 
@@ -485,18 +299,9 @@
       <p id="emailAff"></p>
 
     -->
-    <script>$("#touche").hide()</script>
+    <script></script>
 
-      <form id="touche" method="POST" action="/touche" target="hiddenFrame">
-        
-        <label >posX</label>
-        <input id="iciX"type="text" name="posX">
-        <label>posY</label>
-        <input id="iciY"type="text" name="posY">
-        <input type="submit" value="touche">
-        
       
-      </form>
 
     
    
@@ -550,7 +355,7 @@
       </form>
          -->
 </div>
-
+</div>
 </body>
 
 
@@ -698,9 +503,8 @@ var posX;
         
         $.getJSON('/bateau', function (data) {
           for (var i = 0; i < data.length; i++) {
-            console.log(""+data[i].placeX+data[i].placeY);
-
-$("#td"+data[i].placeX+data[i].placeY).empty();
+              console.log(""+data[i].placeX+data[i].placeY);
+              $("#td"+data[i].placeX+data[i].placeY).empty();
           }
 
 
@@ -716,6 +520,8 @@ $("#td"+data[i].placeX+data[i].placeY).empty();
         setInterval(function(){ $("#joueuractu").submit()}, 2000);
         
       $(document).ready(function () {
+        $("#transit").hide();
+        $("#touche").hide();
       $("#cont2").hide();
         $("#feu").hide();
         quiestu();
