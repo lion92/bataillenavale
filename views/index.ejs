@@ -65,11 +65,22 @@
  
   
   </style>
+ <script>  let plus=30;
+ function tailleplus(){
  
-   
+  ++plus;
+   $("td").width( plus);
+   $("td").height( plus);
+  }
+   function taillemoins(){
+   --plus;
+   $("td").height(  plus);}
+   </script>
+ 
   <div id="principal">
     
     <div  class="container" >
+     
        <div>
          <button id="play2">joeur musique</button>
          <button id="pause2">pause</button>
@@ -168,9 +179,12 @@
     </div>
     
     
-        
+          
         <div id="imgjeu">
-  
+        <div style="width:20%;margin:  auto;display: flex;">
+            <button onclick="tailleplus()">+</button>
+            <button onclick="taillemoins()">-</button>
+          </div>
 <table>
   <tbody><tr>
     <td id="td1">0</td>
@@ -1102,7 +1116,9 @@ $('td').mouseout(function() {
   $('#textAff').css("visibility","hidden");
 });
 });
-$("#selectX,#selectY").hide()
+$("#selectX,#selectY").hide();
+
+
     </script>
  
 
