@@ -70,12 +70,17 @@
   <div id="principal">
     
     <div  class="container" >
-       
+       <div>
+         <button id="play2">joeur musique</button>
+         <button id="pause2">pause</button>
+         <button id="restart2">recommencer la musique</button>
+       </div>
       
         <div>
         <h1>bataille navale</h1></br></br>
         </div>
         <div id="adversaire"></div>
+        <h2 id="textAff">Cliquer sur la case pour tirer si c'est votre tour.</h2>
       <div>
       </form></br></br>
             <form id="tirdessus" method="POST" action="/insert/tir" target="hiddenFrame">
@@ -1057,8 +1062,47 @@ $("#updatej1").hide();
     $('#restart').click(function() {
         audioElement.currentTime = 0;
     });
+
+    var audioElement2 = document.createElement('audio');
+    audioElement2.setAttribute('src', '/son/musiquefond.mp3');
+    
+    audioElement2.addEventListener('ended', function() {
+        this.play();
+    }, false);
+    
+    audioElement2.addEventListener("canplay",function(){
+        $("#length2").text("Duration:" + audioElement2.duration + " seconds");
+        $("#source2").text("Source:" + audioElement2.src);
+        $("#status2").text("Status: Ready to play").css("color","green");
+    });
+    
+    audioElement2.addEventListener("timeupdate",function(){
+        $("#currentTime2").text("Current second:" + audioElement2.currentTime);
+    });
+    
+    $('#play2').click(function() {
+        audioElement2.play();
+        $("#status").text("Status: Playing");
+     
+    });
+    
+    $('#pause2').click(function() {
+        audioElement2.pause();
+        $("#status2").text("Status: Paused");
+    });
+    
+    $('#restart2').click(function() {
+        audioElement2.currentTime = 0;
+    });
+    $('td').mouseover(function() {
+  $('#textAff').css("visibility","visible");
 });
 
+$('td').mouseout(function() {
+  $('#textAff').css("visibility","hidden");
+});
+});
+$("#selectX,#selectY").hide()
     </script>
  
 

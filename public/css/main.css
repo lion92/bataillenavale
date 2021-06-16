@@ -107,3 +107,6 @@ color: blue;}
 body{box-sizing: border-box;}
 div{margin: 3px;
 padding: 3px;}
+td:hover{
+  background-color: gold;
+}
