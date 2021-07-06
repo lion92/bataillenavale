@@ -335,7 +335,7 @@ function Todo() {
         console.log("Connecté à la base de données MySQL!");
 
         con.query(
-          "select email,bateauX,bateauY from bateau where bateauX=? and bateauY=? ",
+          "select nom,email,bateauX,bateauY from bateau where bateauX=? and bateauY=? ",
           [posX, posY],
           function (err, result) {
             con.release();
@@ -355,10 +355,12 @@ function Todo() {
                 message: "TODO creation fail " + err + email,
               });
             } else {
-              if (result == "") {
+              
+              if (result.lenght<1) {
+                console.log("++++++"+result);
                 res.send({ status: 0, message: "aucun bateau touche" });
               } else {
-                res.send({ status: 0, message: " Touche " + email });
+                res.send({ status: 0, message: " Touche ", qui: result });
                 console.log("Post successful");
               }
             }

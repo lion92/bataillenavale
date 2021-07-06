@@ -1,7 +1,7 @@
 var express = require('express');
 var bodyParser = require('body-parser');
 var envoi = require('../batailleNavale/app/models/todo');
-
+const cors=require('cors');
 var connection = require('./app/config/connection');
 var routes = require('./app/controllers/routes');
 const todo = require('../batailleNavale/app/models/todo');
@@ -16,7 +16,7 @@ app.get('/cookie', function(req, resp) {
   console.log(req.cookies['bataillenavale']);
   resp.send({ status: 0, message: "ok" + req.cookies['bataillenavale'] });
 })
-
+app.use(cors())
 app.use(express.static('public'))
 app.use('/css', express.static(__dirname + 'public/css'))
 app.use('/js', express.static(__dirname + 'public/js'))
@@ -97,6 +97,9 @@ app.post('/upload', async (req, res) => {
 connection.init();
 routes.configure(app);
 //app.listen();
+
+
 var server = app.listen(8000, function(){
+  
   console.log('Server listening on port ' + server.address().port);
 });
