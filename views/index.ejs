@@ -115,14 +115,14 @@
            <option valeur="2">2</option>
            <option valeur="3">3</option>
            <option valeur="4">4</option>
-           
+           <input id="adv" name="adversaire" type="text">
            </select>
           
            <button id="feu" type="submit"> Feu<i style="color:red; width:50px" class="fas fa-meteor" onclick=" actutirs(), savoirsitirer()" ></i></button>
           
           
               
-            </form>  
+        </form>  
             </div>
             <div>
             <form id="touche" method="POST" action="/touche" target="hiddenFrame">
@@ -233,7 +233,7 @@
     <script>
       function valueCase(e){
         //;
-   
+        $("#adv").val($('#quiadversaire option:selected').text());
         let idValue = e.id;
         
         $("#selectX").val(idValue.split("td")[1].substr(0, 1));
@@ -534,9 +534,9 @@ var posX;
    
    function actutirsparemail2() {
     var quiestu2=$("#qui").html().split("Vous êtes ")[1].replace('"',"");
-        
-      var reqemail="/tirs/"+quiestu2;
-       console.log("---"+quiestu2);
+        var adversaire=$('#quiadversaire option:selected').text();
+      var reqemail="/tirs/"+quiestu2+"/"+adversaire;
+       console.log("---//////"+reqemail);
        $.getJSON(reqemail, function (data) {
      for (var i = 0; i < data.length; i++) {
      console.log(""+data[i].placeX+data[i].placeY);
@@ -559,8 +559,8 @@ var posX;
     
    function actutirsparemail() {
        
-        
-        var reqemail="/tirs/"+$("#quiadversaire option:selected").text();
+    var quiestu2=$("#qui").html().split("Vous êtes ")[1].replace('"',"");
+        var reqemail="/tirs/"+$("#quiadversaire option:selected").text()+"/"+quiestu2;
         console.log("---"+reqemail);
         $.getJSON(reqemail, function (data) {
       for (var i = 0; i < data.length; i++) {
@@ -599,14 +599,14 @@ var posX;
         
       $(document).ready(function () {
         actumesbateau();
-        $("#play").hide();
+      //  $("#play").hide();
 
 
 
-        $('#touche').hide();
-        $("#transit").hide();
+       // $('#touche').hide();
+       // $("#transit").hide();
     
-      $("#cont2").hide();
+     // $("#cont2").hide();
         $("#feu").hide();
         quiestu();
         actu(); 
@@ -956,7 +956,7 @@ $.ajax({
 
 });
 $("#tirdessus").submit(function(e) {
-
+  
 e.preventDefault(); // avoid to execute the actual submit of the form.
 
 var form = $(this);

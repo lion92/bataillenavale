@@ -28,7 +28,7 @@ function Todo() {
     res.clearCookie("essai");
     res.send({ status: 200, message: "deconnexion" });
   };
-  
+
   this.reqlogin = function (reqemail, reqpassword, req, res) {
     let conection2 = false;
     let email = "";
@@ -254,7 +254,7 @@ function Todo() {
     }
   };
 
-  this.reqtir = function (posX, posY, req, res) {
+  this.reqtir = function (posX, posY, adversaire, req, res) {
     connection.acquire(function (err, con) {
       let conection2 = false;
       let email = "";
@@ -279,8 +279,8 @@ function Todo() {
         console.log("Connecté à la base de données MySQL!");
 
         con.query(
-          "insert into plateau (placeX, placeY, email) values (?,?,?) ",
-          [posX, posY, email],
+          "insert into plateau (placeX, placeY, email,adversaire) values (?,?,?,?) ",
+          [posX, posY, email, adversaire],
           function (err, result) {
             con.release();
             res.header("Access-Control-Allow-Origin", "*");
@@ -297,7 +297,6 @@ function Todo() {
               res.send({ status: 1, message: "Erreur" + err + email });
             } else {
               res.send({
-                
                 status: 0,
                 message:
                   "Tirer en POsX " + posX + " posY : " + posY + "par " + email,
@@ -309,7 +308,7 @@ function Todo() {
       }
     });
   };
-  
+
   this.reqtouche = function (posX, posY, req, res) {
     connection.acquire(function (err, con) {
       let conection2 = false;
@@ -355,9 +354,8 @@ function Todo() {
                 message: "TODO creation fail " + err + email,
               });
             } else {
-              
-              if (result.lenght<1) {
-                console.log("++++++"+result);
+              if (result.lenght < 1) {
+                console.log("++++++" + result);
                 res.send({ status: 0, message: "aucun bateau touche" });
               } else {
                 res.send({ status: 0, message: " Touche ", qui: result });
@@ -394,8 +392,8 @@ function Todo() {
         console.log("Connecté à la base de données MySQL!");
 
         con.query(
-          "delete from bateau where email=?",email
-          ,
+          "delete from bateau where email=?",
+          email,
           function (err, result) {
             con.release();
             res.header("Access-Control-Allow-Origin", "*");
@@ -426,7 +424,7 @@ function Todo() {
       }
     });
   };
-  this.selectbateauparmail= function ( req, res) {
+  this.selectbateauparmail = function (req, res) {
     connection.acquire(function (err, con) {
       let conection2 = false;
       let email = "";
@@ -474,7 +472,7 @@ function Todo() {
               if (result == "") {
                 res.send({ status: 0, message: result });
               } else {
-                res.send({ status: 0, message:result});
+                res.send({ status: 0, message: result });
                 console.log("Post successful");
               }
             }
@@ -664,11 +662,11 @@ function Todo() {
       );
     });
   };
-  this.gettirparemail = function (req, res) {
+  this.gettirparemail = function (email, adversaire, req, res) {
     connection.acquire(function (err, con) {
       con.query(
-        "SELECT * FROM position2 right JOIN plateau ON position2.plateau_idplateau = plateau.idplateau WHERE position2.plateau_idplateau is null and email=?",
-        req,
+        "SELECT * FROM position2 right JOIN plateau ON position2.plateau_idplateau = plateau.idplateau WHERE position2.plateau_idplateau is null and email=? and adversaire=?",
+        [email, adversaire],
         function (err, result) {
           con.release();
           res.header("Access-Control-Allow-Origin", "*");
@@ -926,7 +924,7 @@ function Todo() {
 
         con.query(
           "select email from bateau",
-         
+
           function (err, result) {
             con.release();
             res.header("Access-Control-Allow-Origin", "*");
@@ -977,7 +975,7 @@ function Todo() {
 
         con.query(
           "select * from partieactu",
-         
+
           function (err, result) {
             con.release();
             res.header("Access-Control-Allow-Origin", "*");
@@ -1027,8 +1025,9 @@ function Todo() {
         console.log("Connecté à la base de données MySQL!");
 
         con.query(
-          "select * from partieactu where joueur1=? or joueur2=?",[email,email],
-         
+          "select * from partieactu where joueur1=? or joueur2=?",
+          [email, email],
+
           function (err, result) {
             con.release();
             res.header("Access-Control-Allow-Origin", "*");
@@ -1051,7 +1050,7 @@ function Todo() {
       });
     }
   };
-  this.requpdatetourj1 = function (tourj1,joueur1,req, res) {
+  this.requpdatetourj1 = function (tourj1, joueur1, req, res) {
     let conection2 = false;
     let email = "";
     jwt.verify(
@@ -1078,8 +1077,9 @@ function Todo() {
         console.log("Connecté à la base de données MySQL!");
 
         con.query(
-          "update partieactu set tourj1=? where joueur1=? and joueur2=?",[tourj1, email, joueur1],
-         
+          "update partieactu set tourj1=? where joueur1=? and joueur2=?",
+          [tourj1, email, joueur1],
+
           function (err, result) {
             con.release();
             res.header("Access-Control-Allow-Origin", "*");
@@ -1094,23 +1094,28 @@ function Todo() {
             if (err) {
               res.send({ status: 1, message: "TODO creation fail " + err });
             } else {
-              if(tourj1==0){
-                res.send({ status: 0, message: "c est votre tour"+JSON.stringify(result) });
+              if (tourj1 == 0) {
+                res.send({
+                  status: 0,
+                  message: "c est votre tour" + JSON.stringify(result),
+                });
                 console.log("Post successful");
-                
-              }
-              else{
-                res.send({ status: 0, message: "c est au tour de votre adversaire"+JSON.stringify(result)});
+              } else {
+                res.send({
+                  status: 0,
+                  message:
+                    "c est au tour de votre adversaire" +
+                    JSON.stringify(result),
+                });
                 console.log("Post successful");
               }
-            
             }
           }
         );
       });
     }
   };
-  this.requpdatetourj2 = function (tourj1, joueur2,req, res) {
+  this.requpdatetourj2 = function (tourj1, joueur2, req, res) {
     let conection2 = false;
     let email = "";
     jwt.verify(
@@ -1137,8 +1142,9 @@ function Todo() {
         console.log("Connecté à la base de données MySQL!");
 
         con.query(
-          "update partieactu set tourj1=? where joueur1=? and joueur2=?",[tourj1, joueur2,email],
-         
+          "update partieactu set tourj1=? where joueur1=? and joueur2=?",
+          [tourj1, joueur2, email],
+
           function (err, result) {
             con.release();
             res.header("Access-Control-Allow-Origin", "*");
@@ -1153,15 +1159,21 @@ function Todo() {
             if (err) {
               res.send({ status: 1, message: "TODO creation fail " + err });
             } else {
-              if(tourj1==1){
-                res.send({ status: 0, message: "c est votre tour"+JSON.stringify(result) });
+              if (tourj1 == 1) {
+                res.send({
+                  status: 0,
+                  message: "c est votre tour" + JSON.stringify(result),
+                });
+                console.log("Post successful");
+              } else {
+                res.send({
+                  status: 0,
+                  message:
+                    "c est au tour de votre adversaire" +
+                    JSON.stringify(result),
+                });
                 console.log("Post successful");
               }
-              else{
-                res.send({ status: 0, message: "c est au tour de votre adversaire"+JSON.stringify(result)});
-                console.log("Post successful");
-              }
-            
             }
           }
         );
@@ -1179,7 +1191,10 @@ function Todo() {
         if (decoded === undefined) {
           conection2 = true;
           console.log("true");
-          res.send({ status: 1, message: "Qui êtes vous?, Veuillez-vous connecter. " });
+          res.send({
+            status: 1,
+            message: "Qui êtes vous?, Veuillez-vous connecter. ",
+          });
         } else {
           email = decoded.email;
           conection2 = false;
@@ -1189,7 +1204,7 @@ function Todo() {
         //console.log(decoded.code) // bar
       }
     );
-    }
+  };
 }
 
 module.exports = new Todo();
