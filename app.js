@@ -22,13 +22,7 @@ app.use('/css', express.static(__dirname + 'public/css'))
 app.use('/js', express.static(__dirname + 'public/js'))
 app.use('/img', express.static(__dirname + 'public/img'))
 app.use('/img', express.static(__dirname + 'public/son'))
-io.on('connection', (socket) => {
-  socket.on('chat message', msg => {
-    
-    io.emit('chat message', msg);
-    console.log(msg);
-  });
-});
+
 // Set Views
 app.set('views', './views')
 app.set('view engine', 'ejs')
@@ -98,8 +92,24 @@ connection.init();
 routes.configure(app);
 //app.listen();
 
+io.on('connection', function(socket){
+console.log("//////////////////CONNNECTE////");
+socket.on('disconnect', function(){
+  console.log('TTTTTTTTTTTT disco');
+})
+let transfert="";
+socket.on("chat message", function(msg){
+console.log(msg)
 
-var server = app.listen(8000, function(){
+socket.emit("chat message", msg)
+
+})
+})
+ //pass a http.Server instance
+http.listen(8000); 
+/*var server = app.listen(8000, function(){
+
+
   
   console.log('Server listening on port ' + server.address().port);
-});
+});*/

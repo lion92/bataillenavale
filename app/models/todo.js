@@ -36,20 +36,20 @@ function Todo() {
       req.cookies["essai"],
       "secret_this_should_be_longer",
       function (err, decoded) {
-        console.log("////////////");
+        //console.log("////////////");
         if (decoded === undefined) {
           conection2 = true;
         } else {
           email = decoded.email;
           conection2 = false;
         }
-        //console.log(decoded.code) // bar
+        ////console.log(decoded.code) // bar
       }
     );
     if (conection2 == true) {
       connection.acquire(function (err, con) {
-        console.log(err);
-        console.log("Connecté à la base de données MySQL!");
+        //console.log(err);
+        //console.log("Connecté à la base de données MySQL!");
 
         con.query(
           "select password2 from user where email=?",
@@ -69,7 +69,7 @@ function Todo() {
               res.send({ status: 1, message: "email" });
             } else {
               // res.send({ status: 0, message:  result[0].password2});
-              console.log("Post successful");
+              //console.log("Post successful");
               if (!result[0]) {
                 res.send({ status: 1, message: "email invalid" });
               } else {
@@ -123,16 +123,16 @@ function Todo() {
     let hashpass = "";
     let bon = "";
     connection.acquire(function (err, con) {
-      console.log(err);
-      console.log("Connecté à la base de données MySQL!");
+      //console.log(err);
+      //console.log("Connecté à la base de données MySQL!");
       req.cookies.title = "GeeksforGeeks";
-      console.log(req.cookies);
+      //console.log(req.cookies);
 
       bcrypt.hash(reqpassword, 10, function (err, hash) {
         if (err) {
           res.send({ status: 1, message: "Erreur" + err });
         } else {
-          console.log(hash);
+          //console.log(hash);
           // Store hash in your password DB.
           hashpass = hash;
 
@@ -151,19 +151,19 @@ function Todo() {
               );
 
               if (err) {
-                console.log("KKKKKKKKKKKKKKKKKK");
+                //console.log("KKKKKKKKKKKKKKKKKK");
                 res.send({
                   status: 1,
                   message: "Erreur de conection ou login existe" + err,
                 });
                 con.release();
               } else {
-                console.log("IIIIIIIIIIIIIIIIIIIIIII");
+                //console.log("IIIIIIIIIIIIIIIIIIIIIII");
                 res.send({
                   status: 0,
                   message: "Utilisateur enregistrer " + reqemail,
                 });
-                console.log("Post successful");
+                //console.log("Post successful");
                 con.release();
               }
             }
@@ -174,7 +174,7 @@ function Todo() {
   };
   this.reqpmu = function (req, res) {
     connection.acquire(function (err, con) {
-      console.log("Connecté à la base de données MySQL!");
+      //console.log("Connecté à la base de données MySQL!");
       con.query(req, function (err, result) {
         con.release();
         res.header("Access-Control-Allow-Origin", "*");
@@ -187,7 +187,7 @@ function Todo() {
           res.send({ status: 1, message: "TODO creation fail " + err });
         } else {
           res.send({ status: 0, message: "TODO create success " + result });
-          console.log("Post successful");
+          //console.log("Post successful");
         }
       });
     });
@@ -199,24 +199,24 @@ function Todo() {
       req.cookies["essai"],
       "secret_this_should_be_longer",
       function (err, decoded) {
-        console.log("////////////");
+        //console.log("////////////");
         if (decoded === undefined) {
           conection2 = true;
-          console.log("true");
+          //console.log("true");
         } else {
           email = decoded.email;
           conection2 = false;
-          console.log("!!!!!" + false);
+          //console.log("!!!!!" + false);
         }
-        //console.log(decoded.code) // bar
+        ////console.log(decoded.code) // bar
       }
     );
 
     if (!(connection == true)) {
-      console.log("!!!!!");
+      //console.log("!!!!!");
       connection.acquire(function (err, con) {
-        console.log(err);
-        console.log("Connecté à la base de données MySQL!");
+        //console.log(err);
+        //console.log("Connecté à la base de données MySQL!");
 
         con.query(
           "insert into bateau (nom,bateauX, bateauY, email) values (?,?,?,?) ",
@@ -246,7 +246,7 @@ function Todo() {
                   " email: " +
                   email,
               });
-              console.log("Post successful");
+              //console.log("Post successful");
             }
           }
         );
@@ -262,7 +262,7 @@ function Todo() {
         req.cookies["essai"],
         "secret_this_should_be_longer",
         function (err, decoded) {
-          console.log("////////////");
+          //console.log("////////////");
           if (decoded === undefined) {
             conection2 = true;
             res.send({ status: 1, message: "veillez vous connecter " });
@@ -270,13 +270,13 @@ function Todo() {
             email = decoded.email;
             conection2 = false;
           }
-          //console.log(decoded.code) // bar
+          ////console.log(decoded.code) // bar
         }
       );
 
       if (!(conection2 == true)) {
-        console.log(err);
-        console.log("Connecté à la base de données MySQL!");
+        //console.log(err);
+        //console.log("Connecté à la base de données MySQL!");
 
         con.query(
           "insert into plateau (placeX, placeY, email,adversaire) values (?,?,?,?) ",
@@ -301,7 +301,7 @@ function Todo() {
                 message:
                   "Tirer en POsX " + posX + " posY : " + posY + "par " + email,
               });
-              console.log("Post successful");
+              //console.log("Post successful");
             }
           }
         );
@@ -317,7 +317,7 @@ function Todo() {
         req.cookies["essai"],
         "secret_this_should_be_longer",
         function (err, decoded) {
-          console.log("////////////");
+          //console.log("////////////");
           if (decoded === undefined) {
             conection2 = true;
             res.send({ status: 1, message: "veillez vous connecter " });
@@ -325,13 +325,13 @@ function Todo() {
             email = decoded.email;
             conection2 = false;
           }
-          //console.log(decoded.code) // bar
+          ////console.log(decoded.code) // bar
         }
       );
 
       if (!(conection2 == true)) {
-        console.log(err);
-        console.log("Connecté à la base de données MySQL!");
+        //console.log(err);
+        //console.log("Connecté à la base de données MySQL!");
 
         con.query(
           "select nom,email,bateauX,bateauY from bateau where bateauX=? and bateauY=? ",
@@ -355,11 +355,11 @@ function Todo() {
               });
             } else {
               if (result.lenght < 1) {
-                console.log("++++++" + result);
+                //console.log("++++++" + result);
                 res.send({ status: 0, message: "aucun bateau touche" });
               } else {
                 res.send({ status: 0, message: " Touche ", qui: result });
-                console.log("Post successful");
+                //console.log("Post successful");
               }
             }
           }
@@ -375,7 +375,7 @@ function Todo() {
         req.cookies["essai"],
         "secret_this_should_be_longer",
         function (err, decoded) {
-          console.log("////////////");
+          //console.log("////////////");
           if (decoded === undefined) {
             conection2 = true;
             res.send({ status: 1, message: "veillez vous connecter " });
@@ -383,13 +383,13 @@ function Todo() {
             email = decoded.email;
             conection2 = false;
           }
-          //console.log(decoded.code) // bar
+          ////console.log(decoded.code) // bar
         }
       );
 
       if (!(conection2 == true)) {
-        console.log(err);
-        console.log("Connecté à la base de données MySQL!");
+        //console.log(err);
+        //console.log("Connecté à la base de données MySQL!");
 
         con.query(
           "delete from bateau where email=?",
@@ -416,7 +416,7 @@ function Todo() {
                 res.send({ status: 0, message: "bateaux effacés" });
               } else {
                 res.send({ status: 0, message: "bateaux effacés" + email });
-                console.log("Post successful");
+                //console.log("Post successful");
               }
             }
           }
@@ -432,7 +432,7 @@ function Todo() {
         req.cookies["essai"],
         "secret_this_should_be_longer",
         function (err, decoded) {
-          console.log("////////////");
+          //console.log("////////////");
           if (decoded === undefined) {
             conection2 = true;
             res.send({ status: 1, message: "veillez vous connecter " });
@@ -440,13 +440,13 @@ function Todo() {
             email = decoded.email;
             conection2 = false;
           }
-          //console.log(decoded.code) // bar
+          ////console.log(decoded.code) // bar
         }
       );
 
       if (!(conection2 == true)) {
-        console.log(err);
-        console.log("Connecté à la base de données MySQL!");
+        //console.log(err);
+        //console.log("Connecté à la base de données MySQL!");
 
         con.query(
           "select bateauX,bateauY from bateau where email=?",
@@ -473,7 +473,7 @@ function Todo() {
                 res.send({ status: 0, message: result });
               } else {
                 res.send({ status: 0, message: result });
-                console.log("Post successful");
+                //console.log("Post successful");
               }
             }
           }
@@ -483,8 +483,8 @@ function Todo() {
   };
   this.deleteplateau = function (res) {
     connection.acquire(function (err, con) {
-      console.log(err);
-      console.log("Connecté à la base de données MySQL!");
+      //console.log(err);
+      //console.log("Connecté à la base de données MySQL!");
 
       con.query(
         "delete from plateau where idplateau>=1 ",
@@ -505,7 +505,7 @@ function Todo() {
             res.send({ status: 1, message: "TODO creation fail " + err });
           } else {
             res.send({ status: 0, message: "TODO create success " + result });
-            console.log("Post successful");
+            //console.log("Post successful");
           }
         }
       );
@@ -513,8 +513,8 @@ function Todo() {
   };
   this.deleteplateauemail = function (req, res) {
     connection.acquire(function (err, con) {
-      console.log(err);
-      console.log("Connecté à la base de données MySQL!");
+      //console.log(err);
+      //console.log("Connecté à la base de données MySQL!");
 
       con.query(
         "delete from plateau where idplateau>=1 and email=?",
@@ -536,7 +536,7 @@ function Todo() {
             res.send({ status: 1, message: "TODO creation fail " + err });
           } else {
             res.send({ status: 0, message: "TODO create success " + result });
-            console.log("Post successful");
+            //console.log("Post successful");
           }
         }
       );
@@ -544,8 +544,8 @@ function Todo() {
   };
   this.deleteposition = function (res) {
     connection.acquire(function (err, con) {
-      console.log(err);
-      console.log("Connecté à la base de données MySQL!");
+      //console.log(err);
+      //console.log("Connecté à la base de données MySQL!");
 
       con.query(
         "delete from position2 where bateau_idbateau>=1 ",
@@ -566,7 +566,7 @@ function Todo() {
             res.send({ status: 1, message: "TODO creation fail " + err });
           } else {
             res.send({ status: 0, message: "TODO create success " + result });
-            console.log("Post successful");
+            //console.log("Post successful");
           }
         }
       );
@@ -575,8 +575,8 @@ function Todo() {
 
   this.reqplace = function (bateau, plateau, res) {
     connection.acquire(function (err, con) {
-      console.log(err);
-      console.log("Connecté à la base de données MySQL!");
+      //console.log(err);
+      //console.log("Connecté à la base de données MySQL!");
       con.query(
         "insert into position2 (bateau_idbateau, plateau_idplateau) values (" +
           bateau +
@@ -598,7 +598,7 @@ function Todo() {
             res.send({ status: 1, message: "TODO creation fail " + err });
           } else {
             res.send({ status: 0, message: "TODO create success " + result });
-            console.log("Post successful");
+            //console.log("Post successful");
           }
         }
       );
@@ -619,7 +619,7 @@ function Todo() {
           res.send({ status: 1, message: "TODO creation fail" });
         } else {
           res.send({ status: 0, message: "TODO create success" });
-          console.log("Post successful");
+          //console.log("Post successful");
         }
       });
     });
@@ -636,7 +636,7 @@ function Todo() {
         );
 
         res.send(result);
-        console.log("Get successful");
+        //console.log("Get successful");
       });
     });
   };
@@ -657,7 +657,7 @@ function Todo() {
           );
 
           res.send(result);
-          console.log("Get successful");
+          //console.log("Get successful");
         }
       );
     });
@@ -680,7 +680,7 @@ function Todo() {
           );
 
           res.send(result);
-          console.log("Get successful");
+          //console.log("Get successful");
         }
       );
     });
@@ -697,7 +697,7 @@ function Todo() {
         );
 
         res.send(result);
-        console.log("Get successful");
+        //console.log("Get successful");
       });
     });
   };
@@ -718,7 +718,7 @@ function Todo() {
           );
 
           res.send(result);
-          console.log("Get successful");
+          //console.log("Get successful");
         }
       );
     });
@@ -741,7 +741,7 @@ function Todo() {
           );
 
           res.send(result);
-          console.log("Get by ID successful");
+          //console.log("Get by ID successful");
         }
       );
     });
@@ -761,7 +761,7 @@ function Todo() {
           res.send({ status: 1, message: "TODO creation fail" });
         } else {
           res.send({ status: 0, message: "TODO create success" });
-          console.log("Post successful");
+          //console.log("Post successful");
         }
       });
     });
@@ -787,7 +787,7 @@ function Todo() {
             res.send({ status: 1, message: "TODO update fail" });
           } else {
             res.send({ status: 0, message: "TODO update success" });
-            console.log("Put successful");
+            //console.log("Put successful");
           }
         }
       );
@@ -814,7 +814,7 @@ function Todo() {
             res.send({ status: 1, message: "TODO delete fail" });
           } else {
             res.send({ status: 0, message: "TODO delete success" });
-            console.log("Delete successful");
+            //console.log("Delete successful");
           }
         }
       );
@@ -838,7 +838,7 @@ function Todo() {
           res.send({ status: 1, message: "TODO delete fail" });
         } else {
           res.send({ status: 0, message: "TODO delete success" });
-          console.log("Delete successful");
+          //console.log("Delete successful");
         }
       });
     });
@@ -850,25 +850,25 @@ function Todo() {
       req.cookies["essai"],
       "secret_this_should_be_longer",
       function (err, decoded) {
-        console.log("////////////");
+        //console.log("////////////");
         if (decoded === undefined) {
           conection2 = true;
-          console.log("true");
+          //console.log("true");
           res.send({ status: 1, message: "Veuillez vous connecter" });
         } else {
           email = decoded.email;
           conection2 = false;
-          console.log("!!!!!" + false);
+          //console.log("!!!!!" + false);
         }
-        //console.log(decoded.code) // bar
+        ////console.log(decoded.code) // bar
       }
     );
 
     if (!(conection2 == true)) {
-      console.log("!!!!!");
+      //console.log("!!!!!");
       connection.acquire(function (err, con) {
-        console.log(err);
-        console.log("Connecté à la base de données MySQL!");
+        //console.log(err);
+        //console.log("Connecté à la base de données MySQL!");
 
         con.query(
           "insert into partieactu (joueur1, joueur2, tourj1) values (?,?,?) ",
@@ -888,7 +888,7 @@ function Todo() {
               res.send({ status: 1, message: "TODO creation fail " + err });
             } else {
               res.send({ status: 0, message: "partie creer contre" + joueur2 });
-              console.log("Post successful");
+              //console.log("Post successful");
             }
           }
         );
@@ -903,24 +903,24 @@ function Todo() {
       req.cookies["essai"],
       "secret_this_should_be_longer",
       function (err, decoded) {
-        console.log("////////////");
+        //console.log("////////////");
         if (decoded === undefined) {
           conection2 = true;
-          console.log("true");
+          //console.log("true");
         } else {
           email = decoded.email;
           conection2 = false;
-          console.log("!!!!!" + false);
+          //console.log("!!!!!" + false);
         }
-        //console.log(decoded.code) // bar
+        ////console.log(decoded.code) // bar
       }
     );
 
     if (!(connection == true)) {
-      console.log("!!!!!");
+      //console.log("!!!!!");
       connection.acquire(function (err, con) {
-        console.log(err);
-        console.log("Connecté à la base de données MySQL!");
+        //console.log(err);
+        //console.log("Connecté à la base de données MySQL!");
 
         con.query(
           "select email from bateau",
@@ -940,7 +940,7 @@ function Todo() {
               res.send({ status: 1, message: "TODO creation fail " + err });
             } else {
               res.send({ status: 0, message: result });
-              console.log("Post successful");
+              //console.log("Post successful");
             }
           }
         );
@@ -954,24 +954,24 @@ function Todo() {
       req.cookies["essai"],
       "secret_this_should_be_longer",
       function (err, decoded) {
-        console.log("////////////");
+        //console.log("////////////");
         if (decoded === undefined) {
           conection2 = true;
-          console.log("true");
+          //console.log("true");
         } else {
           email = decoded.email;
           conection2 = false;
-          console.log("!!!!!" + false);
+          //console.log("!!!!!" + false);
         }
-        //console.log(decoded.code) // bar
+        ////console.log(decoded.code) // bar
       }
     );
 
     if (!(connection == true)) {
-      console.log("!!!!!");
+      //console.log("!!!!!");
       connection.acquire(function (err, con) {
-        console.log(err);
-        console.log("Connecté à la base de données MySQL!");
+        //console.log(err);
+        //console.log("Connecté à la base de données MySQL!");
 
         con.query(
           "select * from partieactu",
@@ -991,7 +991,7 @@ function Todo() {
               res.send({ status: 1, message: "TODO creation fail " + err });
             } else {
               res.send({ status: 0, message: result });
-              console.log("Post successful");
+              //console.log("Post successful");
             }
           }
         );
@@ -1005,24 +1005,24 @@ function Todo() {
       req.cookies["essai"],
       "secret_this_should_be_longer",
       function (err, decoded) {
-        console.log("////////////");
+        //console.log("////////////");
         if (decoded === undefined) {
           conection2 = true;
-          console.log("true");
+          //console.log("true");
         } else {
           email = decoded.email;
           conection2 = false;
-          console.log("!!!!!" + false);
+          //console.log("!!!!!" + false);
         }
-        //console.log(decoded.code) // bar
+        ////console.log(decoded.code) // bar
       }
     );
 
     if (!(connection == true)) {
-      console.log("!!!!!");
+      //console.log("!!!!!");
       connection.acquire(function (err, con) {
-        console.log(err);
-        console.log("Connecté à la base de données MySQL!");
+        //console.log(err);
+        //console.log("Connecté à la base de données MySQL!");
 
         con.query(
           "select * from partieactu where joueur1=? or joueur2=?",
@@ -1043,7 +1043,7 @@ function Todo() {
               res.send({ status: 1, message: "TODO creation fail " + err });
             } else {
               res.send({ status: 0, message: result });
-              console.log("Post successful");
+              //console.log("Post successful");
             }
           }
         );
@@ -1057,24 +1057,24 @@ function Todo() {
       req.cookies["essai"],
       "secret_this_should_be_longer",
       function (err, decoded) {
-        console.log("////////////");
+        //console.log("////////////");
         if (decoded === undefined) {
           conection2 = true;
-          console.log("true");
+          //console.log("true");
         } else {
           email = decoded.email;
           conection2 = false;
-          console.log("!!!!!" + false);
+          //console.log("!!!!!" + false);
         }
-        //console.log(decoded.code) // bar
+        ////console.log(decoded.code) // bar
       }
     );
 
     if (!(connection == true)) {
-      console.log("!!!!!");
+      //console.log("!!!!!");
       connection.acquire(function (err, con) {
-        console.log(err);
-        console.log("Connecté à la base de données MySQL!");
+        //console.log(err);
+        //console.log("Connecté à la base de données MySQL!");
 
         con.query(
           "update partieactu set tourj1=? where joueur1=? and joueur2=?",
@@ -1099,7 +1099,7 @@ function Todo() {
                   status: 0,
                   message: "c est votre tour" + JSON.stringify(result),
                 });
-                console.log("Post successful");
+                //console.log("Post successful");
               } else {
                 res.send({
                   status: 0,
@@ -1107,7 +1107,7 @@ function Todo() {
                     "c est au tour de votre adversaire" +
                     JSON.stringify(result),
                 });
-                console.log("Post successful");
+                //console.log("Post successful");
               }
             }
           }
@@ -1122,24 +1122,24 @@ function Todo() {
       req.cookies["essai"],
       "secret_this_should_be_longer",
       function (err, decoded) {
-        console.log("////////////");
+        //console.log("////////////");
         if (decoded === undefined) {
           conection2 = true;
-          console.log("true");
+          //console.log("true");
         } else {
           email = decoded.email;
           conection2 = false;
-          console.log("!!!!!" + false);
+          //console.log("!!!!!" + false);
         }
-        //console.log(decoded.code) // bar
+        ////console.log(decoded.code) // bar
       }
     );
 
     if (!(connection == true)) {
-      console.log("!!!!!");
+      //console.log("!!!!!");
       connection.acquire(function (err, con) {
-        console.log(err);
-        console.log("Connecté à la base de données MySQL!");
+        //console.log(err);
+        //console.log("Connecté à la base de données MySQL!");
 
         con.query(
           "update partieactu set tourj1=? where joueur1=? and joueur2=?",
@@ -1164,7 +1164,7 @@ function Todo() {
                   status: 0,
                   message: "c est votre tour" + JSON.stringify(result),
                 });
-                console.log("Post successful");
+                //console.log("Post successful");
               } else {
                 res.send({
                   status: 0,
@@ -1172,7 +1172,7 @@ function Todo() {
                     "c est au tour de votre adversaire" +
                     JSON.stringify(result),
                 });
-                console.log("Post successful");
+                //console.log("Post successful");
               }
             }
           }
@@ -1187,10 +1187,10 @@ function Todo() {
       req.cookies["essai"],
       "secret_this_should_be_longer",
       function (err, decoded) {
-        console.log("////////////");
+        //console.log("////////////");
         if (decoded === undefined) {
           conection2 = true;
-          console.log("true");
+          //console.log("true");
           res.send({
             status: 1,
             message: "Qui êtes vous?, Veuillez-vous connecter. ",
@@ -1198,10 +1198,10 @@ function Todo() {
         } else {
           email = decoded.email;
           conection2 = false;
-          console.log("!!!!!" + false);
+          //console.log("!!!!!" + false);
           res.send({ status: 1, message: "Vous êtes " + email });
         }
-        //console.log(decoded.code) // bar
+        ////console.log(decoded.code) // bar
       }
     );
   };

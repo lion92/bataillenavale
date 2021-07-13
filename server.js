@@ -3,8 +3,17 @@ const app = express()
 const bcrypt = require('bcrypt')
 
 app.use(express.json())
+let io = require('socket.io');
+  // Find an available player number
+  let playerIndex = -1;
+  for (const i in connections) {
+    if (connections[i] === null) {
+      playerIndex = i
+      break
+    }
+  }
 
-const users = []
+  const users = []
 
 app.get('/users', (req, res) => {
   res.json(users)
@@ -38,5 +47,17 @@ app.post('/users/login', async (req, res) => {
   }
 })
 
-app.listen(3000)
-console.log(3000)
+
+//app.listen(3000)
+//console.log(3000)
+
+
+let server = http.createServer(app);
+io.on('connection', function(socket){
+console.log("//////////////////CONNNECTE////");
+socket.on('disconnect', function(){
+  console.log('TTTTTTTTTTTT disco');
+})
+})
+io.listen(server);  //pass a http.Server instance
+server.listen(3000); 

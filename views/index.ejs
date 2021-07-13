@@ -11,6 +11,314 @@
 </head>
 
 <body>
+  <div class="containerbis">
+    <div class="grid-display">
+      <div class="ship destroyer-container" draggable="true"><div id="destroyer-0"></div><div id="destroyer-1"></div></div>
+      <div class="ship submarine-container" draggable="true"><div id="submarine-0"></div><div id="submarine-1"></div><div id="submarine-2"></div></div>
+      <div class="ship cruiser-container" draggable="true"><div id="cruiser-0"></div><div id="cruiser-1"></div><div id="cruiser-2"></div></div>
+      <div class="ship battleship-container" draggable="true"><div id="battleship-0"></div><div id="battleship-1"></div><div id="battleship-2"></div><div id="battleship-3"></div></div>
+      <div class="ship carrier-container" draggable="true"><div id="carrier-0"></div><div id="carrier-1"></div><div id="carrier-2"></div><div id="carrier-3"></div><div id="carrier-4"></div></div>
+    </div>
+  </div>
+  <style>
+    
+
+*, *::before, *::after {
+  font-family: 'Montserrat', sans-serif;
+  box-sizing: border-box;
+}
+
+.splash-containerbis {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 66vh;
+}
+
+.splash-title {
+  font-family: 'Bangers', cursive;
+  font-size: 10rem;
+}
+
+.splash-battleship-image {
+  position: absolute;
+  bottom: 5vh;
+  left: 20vw;
+  width: 100%;
+  transform: rotateY(180deg);
+  pointer-events: none;
+  opacity: .25;
+}
+
+.btn {
+  font-size: inherit;
+  background-color: hsl(30, 100%, 50%);
+  padding: .5em 1em;
+  outline: none;
+  border: none;
+  text-decoration: none;
+  cursor: pointer;
+  border-radius: .2em;
+  color: #333;
+}
+
+.btn:hover, .btn:focus {
+  background-color: hsl(30, 100%, 40%);
+}
+
+.splash-btn {
+  font-size: 2rem;
+  margin-left: 2rem;
+}
+
+.splash-btn:first-child {
+  margin-left: 0;
+}
+
+.containerbis {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+}
+
+.battleship-grid {
+  margin: 2vmin;
+  display: grid;
+  background-color: hsl(200, 100%, 50%);
+  grid-template-rows: repeat(10, 4.6vmin);
+  grid-template-columns: repeat(10, 4.6vmin);
+}
+
+.grid-computer > .taken,
+.grid-computer > .boom {
+  background-color: hsl(200, 100%, 50%) !important;
+  border-radius: 0 !important;
+}
+
+.taken,
+.ship {
+  position: relative;
+  background-color: hsl(0, 0%, 80%);
+}
+
+.taken.start.vertical,
+.taken.start.vertical::before {
+  border-top-left-radius: 50%;
+  border-top-right-radius: 50%;
+}
+
+.taken.end.vertical,
+.taken.end.vertical::before {
+  border-bottom-left-radius: 50%;
+  border-bottom-right-radius: 50%;
+}
+
+.taken.start.horizontal,
+.taken.start.horizontal::before {
+  border-top-left-radius: 50%;
+  border-bottom-left-radius: 50%;
+}
+
+.taken.end.horizontal,
+.taken.end.horizontal::before {
+  border-top-right-radius: 50%;
+  border-bottom-right-radius: 50%;
+}
+
+.taken.vertical::before,
+.taken.horizontal::before {
+  content: '';
+  position: absolute;
+  border: .3vmin solid white;
+  top: -1px;
+  bottom: -1px;
+  left: -1px;
+  right: -1px;
+}
+
+.taken.horizontal::before {
+  animation: ripplesY 3s linear infinite;
+  border-left: none;
+  border-right: none;
+}
+
+.taken.vertical::before {
+  animation: ripplesX 3s linear infinite;
+  border-top: none;
+  border-bottom: none;
+}
+
+@keyframes ripplesX {
+  0% {
+    opacity: 1;
+    transform: scaleX(1);
+  }
+
+  100% {
+    opacity: 0;
+    transform: scaleX(1.5);
+  }
+}
+
+@keyframes ripplesY {
+  0% {
+    opacity: 1;
+    transform: scaleY(1);
+  }
+
+  100% {
+    opacity: 0;
+    transform: scaleY(1.5);
+  }
+}
+
+.grid-display {
+  display: flex;
+}
+
+.ship > div {
+  width: 4.6vmin;
+  height: 4.6vmin;
+}
+
+.ship {
+  display: flex;
+  flex-wrap: wrap;
+  margin: 1vmin;
+  width: calc(4.6vmin * var(--width, 1));
+  height: calc(4.6vmin * var(--height, 1));
+  border-radius: 2.3vmin;
+}
+
+.battleship-grid div {
+  border: 1px solid hsla(0, 0%, 100%, .2);
+}
+
+.destroyer-containerbis {
+  --width: 2;
+}
+
+.destroyer-containerbis-vertical {
+  --height: 2;
+  --width: 1;
+}
+
+.submarine-containerbis,
+.cruiser-containerbis {
+  --width: 3;
+}
+
+.submarine-containerbis-vertical,
+.cruiser-containerbis-vertical {
+  --height: 3;
+  --width: 1;
+}
+
+.battleship-containerbis {
+  --width: 4;
+}
+
+.battleship-containerbis-vertical {
+  --height: 4;
+  --width: 1;
+}
+
+.carrier-containerbis {
+  --width: 5;
+}
+
+.carrier-containerbis-vertical {
+  --height: 5;
+  --width: 1;
+}
+
+.hidden-info {
+  font-size: 1.5rem;
+  align-items: center;
+  flex-direction: column;
+}
+
+.info-text {
+  margin: 1rem;
+}
+
+.miss,
+.boom {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.boom::after,
+.miss::after {
+  content: '';
+  position: absolute;
+  border-radius: 100%;
+  width: 2vmin;
+  height: 2vmin;
+}
+
+.miss::after {
+  background-color: white;
+}
+
+.boom::after {
+  background-color: red;
+}
+
+.miss::before {
+  content: '';
+  position: absolute;
+  animation: hit .2s ease-out forwards;
+  border: 1vmin solid white;
+  border-radius: 100%;
+  width: 2vmin;
+  height: 2vmin;
+}
+
+.boom {
+  animation: boom .2s ease-out forwards;
+}
+
+@keyframes hit {
+  0% {
+    opacity: 1;
+    transform: scale(0);
+  }
+
+  100% {
+    opacity: 0;
+    transform: scale(4);
+  }
+}
+
+@keyframes boom {
+  0% {
+    background-color: red;
+  }
+
+  100% {
+    background-color: hsl(0, 0%, 80%);
+  }
+}
+
+.player {
+  margin: 2vmin;
+}
+
+.connected, .ready {
+  font-weight: normal;
+  opacity: .25;
+  text-decoration: line-through;
+}
+
+.connected.active,
+.ready.active {
+  opacity: 1;
+  text-decoration: none;
+}
+  </style>
 
   <style>
  
@@ -76,7 +384,21 @@
    --plus;
    $("td").height(  plus);}
    </script>
- 
+   <script src='/socket.io/socket.io.js'></script>
+   <script>
+     var socket=io();
+     function send(){
+       var text=$("#envoi").val();
+       socket.emit('chat message', text)
+       $("#envoi").val("");
+     }
+  
+   
+    
+   </script>
+   <input type="text" id="envoi"/>
+   <button onclick="send()"></button>
+   <div><p id="receiveMsg"></p></div>
   <div id="principal">
     
     <div  class="container" >
@@ -1141,7 +1463,10 @@ $("#updatej1").hide();
 $('td').mouseout(function() {
   $('#textAff').css("visibility","hidden");
 });
-
+socket.on('chat message', function(msg){
+        console.log(msg)
+        $("#receiveMsg").append(msg+"</br>");
+      });
 });
 $("#selectX,#selectY").hide();
 
