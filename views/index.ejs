@@ -236,6 +236,13 @@
 
 
     <script>
+      var socket=io();
+ socket.on('untir', function(msg ){
+
+  $("#receiveMsg").append(msg.split("/:/")[0]+"a tiré sur "+msg.split("/:/")[1]+"</br>");
+  alert(msg);
+ });
+
       function valueCase(e){
         //;
         $("#adv").val($('#quiadversaire option:selected').text());
@@ -244,7 +251,11 @@
         $("#selectX").val(idValue.split("td")[1].substr(0, 1));
         $("#selectY").val(idValue.split("td")[1].substr(1, 2));
         if($("#feu").is(":visible")){
-          
+          var socket=io();
+          var adversaire=$('#quiadversaire option:selected').text();
+          var quiestu2=$("#qui").html().split("Vous êtes ")[1].replace('"',"");
+          var msg=quiestu2+"/:/"+adversaire;
+          socket.emit('untir', msg );
           $("#feu").submit();
           $("#play").click();
       }
@@ -570,10 +581,33 @@ var posX;
     });
 
   }
-   
-   function actutirsparemail2() {
+  
+  
+
+  function tempsReelQui() {
     var quiestu2=$("#qui").html().split("Vous êtes ")[1].replace('"',"");
-        var adversaire=$('#quiadversaire option:selected').text();
+     var socket=io();
+     let adversaire=$('#quiadversaire option:selected').text();
+     alert(adversaire);
+    socket.emit('actuTir', quiestu2+"/:/"+adversaire);
+  }
+  var socket=io();
+ socket.on('tir', function(msg){
+  alert('test :'+msg);
+  var quiestu2=$("#qui").html().split("Vous êtes ")[1].replace('"',"");
+  var quirecois=msg.split("/:/")[0];
+  alert(quirecois);
+  if(quirecois==quiestu2){
+   alert('test2 :'+quirecois);
+   restoreColor();
+   actutirsparemail2(msg.split("/:/")[1]);
+   actutirsparemail(msg.split("/:/")[1]);
+  }
+ });
+   function actutirsparemail2(msg) {
+    
+    var quiestu2=$("#qui").html().split("Vous êtes ")[1].replace('"',"");
+        var adversaire=msg;
       var reqemail="/tirs/"+quiestu2+"/"+adversaire;
        console.log("---//////"+reqemail);
        $.getJSON(reqemail, function (data) {
@@ -596,10 +630,10 @@ var posX;
 
 }
     
-   function actutirsparemail() {
+   function actutirsparemail(msg) {
        
     var quiestu2=$("#qui").html().split("Vous êtes ")[1].replace('"',"");
-        var reqemail="/tirs/"+$("#quiadversaire option:selected").text()+"/"+quiestu2;
+        var reqemail="/tirs/"+msg+"/"+quiestu2;
         console.log("---"+reqemail);
         $.getJSON(reqemail, function (data) {
       for (var i = 0; i < data.length; i++) {
@@ -631,9 +665,9 @@ var posX;
         });
 
       }
-      setInterval(function(){ restoreColor();savoirsitirer();
+      setInterval(function(){ savoirsitirer();
           actumesbateau();
-        actutirs();actutirsparemail();actutirsparemail2(); }, 2000);
+        actutirs() }, 2000);
         setInterval(function(){ $("#joueuractu").submit()}, 2000);
         
       $(document).ready(function () {
@@ -813,7 +847,7 @@ $.ajax({
       console.log(data.message);
       var generate="";
       $("#adversaire").empty();
-      generate+="<select onclick='savoirsitirer()'  id='quiadversaire'><nom>Adversaire</nom>)";
+      generate+="<select onclick='savoirsitirer()' onchange='tempsReelQui()' id='quiadversaire'><nom>Adversaire</nom>)";
 
       for(var i=0; i<data.message.length;i++){
         if(quiestu==data.message[i].joueur1){
@@ -1179,7 +1213,8 @@ $("#updatej1").hide();
     $('td').mouseover(function() {
   $('#textAff').css("visibility","visible");
 });
-
+   var socket=io();
+    socket.emit('actuTir', $('#quiadversaire option:selected').text())
 $('td').mouseout(function() {
   $('#textAff').css("visibility","hidden");
 });
@@ -1187,6 +1222,7 @@ socket.on('chat message', function(msg){
         console.log(msg)
         $("#receiveMsg").append(msg+"</br>");
       });
+
 });
 $("#selectX,#selectY").hide();
 

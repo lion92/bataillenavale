@@ -104,6 +104,17 @@ console.log(msg)
 io.emit("chat message", msg)
 
 })
+socket.on('actuTir', function(msg){
+  console.log("QUIIII:: "+msg);
+  io.emit('tir', msg);
+  console.log("QUIIII2:: "+msg);
+})
+
+socket.on('untir', function(msg){
+  console.log("tir:: "+msg);
+  io.emit('untir', msg);
+  console.log("QUIIII2:: "+msg);
+})
 })
  //pass a http.Server instance
 http.listen(8000); 
