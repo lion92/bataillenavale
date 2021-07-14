@@ -285,9 +285,18 @@ span {
 #imgjeu{
   display: flex;
 }
-body{
-  background-image:url("https://image.freepik.com/vecteurs-libre/quatre-scenes-bateaux-dans-ocean_1308-5471.jpg") ;
-  background-size: cover;
-  background-repeat: no-repeat;
-}
 
+.scroller {
+  width: 300px;
+  height: 100px;
+  overflow-y: scroll;
+  scrollbar-color:  white black;
+  scrollbar-width: thin;
+}
+#apparitionChat{
+  position: fixed;
+  right: 15%;
+  top: 60%;
+  width: 8em;
+  margin-top: -2.5em;
+}

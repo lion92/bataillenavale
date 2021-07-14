@@ -396,9 +396,7 @@
    
     
    </script>
-   <input type="text" id="envoi"/>
-   <button onclick="send()"></button>
-   <div><p id="receiveMsg"></p></div>
+   
   <div id="principal">
     
     <div  class="container" >
@@ -722,7 +720,39 @@
       </form>
          -->
 </div>
+<div id="apparitionChat">
+  <button id="cacheChat" class="btn live-chat-btn util-padding-horz-5 util-padding-vert-5">
+    <span class="live-chat-text util-padding-horz-10">Chat online</span>
+    <i class="fa fa-comments live-chat-icon live-chat-icon-online" data-notifications="0"></i>
+  </button>
+  <div id="ChatMessage">
+<input style="width: 300px;" type="text" id="envoi"/>
+   <button onclick="send()">envoyer</button>
+   <div class="scroller" style="background-color: rgb(118, 227, 247)"><p id="receiveMsg"></p></div>
+   </div>
+   </div>
 </div>
+<script>
+  var bol=false;
+  $("#apparitionChat").click(function() {
+    if(!bol){
+      $("#ChatMessage").show();
+      bol=true;
+    }
+    else{
+      $("#ChatMessage").hide();
+      bol=false;
+    }
+    
+});
+
+</script>
+<style>
+body{
+  background-image: url("http://localhost:8000/son/bateau.jpg");
+  background-repeat: no-repeat;
+    background-size: cover;
+}</style>
 </body>
 
 
@@ -920,6 +950,9 @@ var posX;
         setInterval(function(){ $("#joueuractu").submit()}, 2000);
         
       $(document).ready(function () {
+        $("#ChatMessage").hide();
+        $("#touche").hide();
+        $("#adv").hide();
         actumesbateau();
       //  $("#play").hide();
 
