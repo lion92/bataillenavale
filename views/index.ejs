@@ -80,17 +80,7 @@
    $("td").height(  plus);}
    </script>
    <script src='/socket.io/socket.io.js'></script>
-   <script>
-     var socket=io();
-     function send(){
-       var text=$("#envoi").val();
-       socket.emit('chat message', text)
-       $("#envoi").val("");
-     }
-  
    
-    
-   </script>
    
   <div id="principal">
     
@@ -1203,7 +1193,19 @@ $("#selectX,#selectY").hide();
 
     </script>
  
+ <script>
+  
+  var socket=io();
+  function send(){
+    var quiestu2=$("#qui").html().split("Vous êtes ")[1].replace('"',"");
+    var text=""+quiestu2+": "+$("#envoi").val();
+    socket.emit('chat message', text)
+    $("#envoi").val("");
+  }
 
+
+ 
+</script>
 
 
 </html>
