@@ -294,9 +294,9 @@ span {
   scrollbar-width: thin;
 }
 #apparitionChat{
-  position: fixed;
-  right: 15%;
-  top: 60%;
-  width: 8em;
-  margin-top: -2.5em;
+  display: grid;
+  grid-template-columns: 7fr;
+}
+#apparitionChat div{
+  grid-column-start: 7;
 }
