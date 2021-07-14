@@ -238,8 +238,13 @@
     <script>
       var socket=io();
  socket.on('untir', function(msg ){
-
-  $("#receiveMsg").append(msg.split("/:/")[0]+"a tiré sur "+msg.split("/:/")[1]+"</br>");
+  savoirsitirer();
+          actumesbateau();
+        actutirs();
+  var X=$("#selectX option:selected").text();
+  var Y=$("#selectY option:selected").text();
+  $("#receiveMsg").append(msg.split("/:/")[0]+"a tiré sur "+msg.split("/:/")[1]+" en X: "+X +" et Y :"+Y +"</br>");
+ 
   alert(msg);
  });
 
@@ -256,6 +261,7 @@
           var quiestu2=$("#qui").html().split("Vous êtes ")[1].replace('"',"");
           var msg=quiestu2+"/:/"+adversaire;
           socket.emit('untir', msg );
+     
           $("#feu").submit();
           $("#play").click();
       }
@@ -665,9 +671,9 @@ var posX;
         });
 
       }
-      setInterval(function(){ savoirsitirer();
+   /*   setInterval(function(){ savoirsitirer();
           actumesbateau();
-        actutirs() }, 2000);
+        actutirs() }, 2000);*/
         setInterval(function(){ $("#joueuractu").submit()}, 2000);
         
       $(document).ready(function () {
@@ -847,7 +853,7 @@ $.ajax({
       console.log(data.message);
       var generate="";
       $("#adversaire").empty();
-      generate+="<select onclick='savoirsitirer()' onchange='tempsReelQui()' id='quiadversaire'><nom>Adversaire</nom>)";
+      generate+="<select onclick='savoirsitirer(),tempsReelqui()' onchange='tempsReelQui()' id='quiadversaire'><nom>Adversaire</nom>)";
 
       for(var i=0; i<data.message.length;i++){
         if(quiestu==data.message[i].joueur1){
