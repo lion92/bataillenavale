@@ -172,6 +172,43 @@ function Todo() {
       });
     });
   };
+  this.enregistrerMsg = function (user, msg) {
+   
+
+    connection.acquire(function (err, con) {
+      //console.log(err);
+      //console.log("Connecté à la base de données MySQL!");
+ 
+      //console.log(req.cookies);
+
+      
+        
+    
+       
+          //console.log(hash);
+          // Store hash in your password DB.
+       
+
+          con.query(
+            "insert into message (user, message) values (?,?)",
+            [user, msg],
+            function (err, result) {
+             
+
+              if (err) {
+                //console.log("KKKKKKKKKKKKKKKKKK");
+                
+                con.release();
+              } else {
+                //console.log("IIIIIIIIIIIIIIIIIIIIIII");
+              
+                //console.log("Post successful");
+                con.release();
+              }
+            }
+          );
+        });
+  };
   this.reqpmu = function (req, res) {
     connection.acquire(function (err, con) {
       //console.log("Connecté à la base de données MySQL!");

@@ -61,6 +61,7 @@ module.exports = {
     app.post('/deleteposition', function(req, res){
       todo.deleteposition(res)
     });
+
     app.get('/select/:bateau', function(req, res){
       todo.reqselect(req.params.bateau,res)
     });

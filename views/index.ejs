@@ -246,7 +246,7 @@
         
   var X=$("#selectX option:selected").text();
   var Y=$("#selectY option:selected").text();
-  $("#receiveMsg").append(msg.split("/:/")[0]+"a tiré sur "+msg.split("/:/")[1]+" en X: "+X +" et Y :"+Y +"</br>");
+  $("#receiveMsg").append(msg.split("/:/")[0]+" a tiré sur "+msg.split("/:/")[1]+" en X: "+msg.split("/:/")[2] +" et Y :"+msg.split("/:/")[3] +"</br>");
   $("#textAff").hide();
   //alert(msg);
  });
@@ -261,8 +261,10 @@
         if($("#textAff").is(":visible")){
           var socket=io();
           var adversaire=$('#quiadversaire option:selected').text();
-          var quiestu2=$("#qui").html().split("Vous êtes ")[1].replace('"',"");
-          var msg=quiestu2+"/:/"+adversaire;
+          var quiestu2=$("#qui").html().split("Vous êtes ")[1].replace('"',"");                  
+var X=$("#selectX option:selected").text();
+  var Y=$("#selectY option:selected").text();
+          var msg=quiestu2+"/:/"+adversaire+"/:/"+X+"/:/"+Y;
           socket.emit('untir', msg );
      
           $("#feu").submit();

@@ -1,7 +1,20 @@
 var mysql = require('mysql');
 
 function Connection() {
-  this.pool = null;
+  
+  this.pool = mysql.createPool({
+      
+    host:"localhost",
+    port:"3306",
+    user:"root",
+    password:"",
+    connectionLimit:10,
+    multipleStatements:true,
+    database:"jeu"
+     //mysql connection pool length
+  //  database: "todo"
+    
+});
 
   this.init = function() {
     this.pool = mysql.createPool({
