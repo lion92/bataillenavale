@@ -248,7 +248,7 @@
   var Y=$("#selectY option:selected").text();
   $("#receiveMsg").append(msg.split("/:/")[0]+"a tiré sur "+msg.split("/:/")[1]+" en X: "+X +" et Y :"+Y +"</br>");
   $("#textAff").hide();
-  alert(msg);
+  //alert(msg);
  });
 
       function valueCase(e){
@@ -600,17 +600,17 @@ var posX;
     var quiestu2=$("#qui").html().split("Vous êtes ")[1].replace('"',"");
      var socket=io();
      let adversaire=$('#quiadversaire option:selected').text();
-     alert(adversaire);
+     //alert(adversaire);
     socket.emit('actuTir', quiestu2+"/:/"+adversaire);
   }
   var socket=io();
  socket.on('tir', function(msg){
-  alert('test :'+msg);
+ // alert('test :'+msg);
   var quiestu2=$("#qui").html().split("Vous êtes ")[1].replace('"',"");
   var quirecois=msg.split("/:/")[0];
-  alert(quirecois);
+ // alert(quirecois);
   if(quirecois==quiestu2){
-   alert('test2 :'+quirecois);
+//   alert('test2 :'+quirecois);
    restoreColor();
    actutirsparemail2(msg.split("/:/")[1]);
    actutirsparemail(msg.split("/:/")[1]);
