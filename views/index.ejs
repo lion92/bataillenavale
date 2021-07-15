@@ -191,7 +191,7 @@
             <button onclick="taillemoins()">-</button>
           </div>
 <div class="container2">
-  <div id="td00" ><span>0</span></div>
+  <div id="td00" onclick="valueCase(this)" ><span>0</span></div>
   <div id="td10"onclick="valueCase(this)"><span>1</span></div>
   <div id="td20"onclick="valueCase(this)"><span>2</span></div>
   <div id="td30"onclick="valueCase(this)"><span>3</span></div>
@@ -238,13 +238,16 @@
     <script>
       var socket=io();
  socket.on('untir', function(msg ){
+   $("#joueuractu").submit();
+
   savoirsitirer();
           actumesbateau();
         actutirs();
+        
   var X=$("#selectX option:selected").text();
   var Y=$("#selectY option:selected").text();
   $("#receiveMsg").append(msg.split("/:/")[0]+"a tiré sur "+msg.split("/:/")[1]+" en X: "+X +" et Y :"+Y +"</br>");
- 
+  $("#textAff").hide();
   alert(msg);
  });
 
@@ -255,7 +258,7 @@
         
         $("#selectX").val(idValue.split("td")[1].substr(0, 1));
         $("#selectY").val(idValue.split("td")[1].substr(1, 2));
-        if($("#feu").is(":visible")){
+        if($("#textAff").is(":visible")){
           var socket=io();
           var adversaire=$('#quiadversaire option:selected').text();
           var quiestu2=$("#qui").html().split("Vous êtes ")[1].replace('"',"");
@@ -285,14 +288,17 @@
     }
     function savoirsitirer(){
       $("#feu").hide();
+      $("#textAff").hide();
       console.log($('#quiadversaire option:selected').val());
       if($('#quiadversaire option:selected').val()=="XXXT11"){
-        $("#feu").show();
+       // $("#feu").show();
+        $("#textAff").show();
         $("#joueuractu").submit
 
       }
       else if($('#quiadversaire option:selected').val()=="XXXT20"){
-        $("#feu").show();
+       // $("#feu").show();
+        $("#textAff").show();
         $("#joueuractu").submit
 
       }
@@ -674,9 +680,10 @@ var posX;
    /*   setInterval(function(){ savoirsitirer();
           actumesbateau();
         actutirs() }, 2000);*/
-        setInterval(function(){ $("#joueuractu").submit()}, 2000);
+        //setInterval(function(){ $("#joueuractu").submit()}, 2000);
         
       $(document).ready(function () {
+        $("#textAff").hide();
         $("#ChatMessage").hide();
         $("#touche").hide();
         $("#adv").hide();
@@ -892,7 +899,12 @@ $.ajax({
         actu();
         console.log(JSON.stringify(data.message));
         ///   console.log(data); // show response from the php script.
-         } else {console.log("Veuillez vous connecter.")}}},
+         } else {console.log("Veuillez vous connecter.")}}
+         restoreColor();
+   actutirsparemail2($('#quiadversaire option:selected').text());
+   actutirsparemail($('#quiadversaire option:selected').text());
+        
+        },
        error:function(data){
          console.log(data.message);
        }
@@ -1052,7 +1064,13 @@ $.ajax({
        {
         console.log(data.message);
         actutirs();
-        
+        var socket=io();
+ 
+   restoreColor();
+   actutirsparemail2($('#quiadversaire option:selected').text());
+   actutirsparemail($('#quiadversaire option:selected').text());
+
+
         $("#iciX").val($("#selectX").val());
 
         $("#iciY").val($("#selectY").val());
@@ -1224,6 +1242,14 @@ $("#updatej1").hide();
 $('td').mouseout(function() {
   $('#textAff').css("visibility","hidden");
 });
+
+
+
+$("#joueuractu").submit();
+   $("#feu").hide();
+  savoirsitirer();
+          actumesbateau();
+        actutirs();
 socket.on('chat message', function(msg){
         console.log(msg)
         $("#receiveMsg").append(msg+"</br>");
