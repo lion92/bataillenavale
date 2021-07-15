@@ -43,7 +43,7 @@ module.exports = {
       todo.selectbateauparmail(req,res)
     });
     app.post('/insert/tir', function(req, res){
-      todo.reqtir(req.body.posX, req.body.posY,req,res)
+      todo.reqtir(req.body.posX, req.body.posY,req.body.adversaire,req,res)
     });
     app.post('/touche', function(req, res){
       todo.reqtouche(req.body.posX, req.body.posY,req,res)
@@ -70,8 +70,8 @@ module.exports = {
     app.get('/qui', function(req, res){
       todo.quiesttu(req,res);
     });
-    app.get('/tirs/:email', function(req, res){
-      todo.gettirparemail(req.params.email,res)
+    app.get('/tirs/:email/:adversaire', function(req, res){
+      todo.gettirparemail(req.params.email, req.params.adversaire,req,res)
     })
     app.get('/email', function(req, res){
       todo.getemail(res)

@@ -1,7 +1,7 @@
 var express = require('express');
 var bodyParser = require('body-parser');
 var envoi = require('../batailleNavale/app/models/todo');
-
+const cors=require('cors');
 var connection = require('./app/config/connection');
 var routes = require('./app/controllers/routes');
 const todo = require('../batailleNavale/app/models/todo');
@@ -16,17 +16,13 @@ app.get('/cookie', function(req, resp) {
   console.log(req.cookies['bataillenavale']);
   resp.send({ status: 0, message: "ok" + req.cookies['bataillenavale'] });
 })
+app.use(cors())
 app.use(express.static('public'))
 app.use('/css', express.static(__dirname + 'public/css'))
 app.use('/js', express.static(__dirname + 'public/js'))
 app.use('/img', express.static(__dirname + 'public/img'))
-io.on('connection', (socket) => {
-  socket.on('chat message', msg => {
-    
-    io.emit('chat message', msg);
-    console.log(msg);
-  });
-});
+app.use('/img', express.static(__dirname + 'public/son'))
+
 // Set Views
 app.set('views', './views')
 app.set('view engine', 'ejs')
@@ -95,6 +91,36 @@ app.post('/upload', async (req, res) => {
 connection.init();
 routes.configure(app);
 //app.listen();
-var server = app.listen(8000, function(){
+
+io.on('connection', function(socket){
+console.log("//////////////////CONNNECTE////");
+socket.on('disconnect', function(){
+  console.log('TTTTTTTTTTTT disco');
+})
+let transfert="";
+socket.on("chat message", function(msg){
+console.log(msg)
+
+io.emit("chat message", msg)
+
+})
+socket.on('actuTir', function(msg){
+  console.log("QUIIII:: "+msg);
+  io.emit('tir', msg);
+  console.log("QUIIII2:: "+msg);
+})
+
+socket.on('untir', function(msg){
+  console.log("tir:: "+msg);
+  io.emit('untir', msg);
+  console.log("QUIIII2:: "+msg);
+})
+})
+ //pass a http.Server instance
+http.listen(8000); 
+/*var server = app.listen(8000, function(){
+
+
+  
   console.log('Server listening on port ' + server.address().port);
-});
+});*/

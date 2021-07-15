@@ -11,10 +11,16 @@
 </head>
 
 <body>
+  
+    
+
 
   <style>
  
- 
+ select{
+   width:70px;
+   height: 60px;
+ }
  
   
   :root {
@@ -48,7 +54,7 @@
     content:'';
     position:absolute;
     left:-20px;
-    top:-20px;
+    
     width:inherit;
     height:inherit;
     border:20px solid white;
@@ -59,344 +65,254 @@
     mix-blend-mode:overlay;
     opacity:.25;
   }
-  #canvas:after { /* border-overlay */
-    content:'';
-    position:absolute;
-    left:-20px;
-    top:-20px;
-    width:inherit;
-    height:inherit;
-    border:20px solid beige;
-    box-sizing:border-box;  
-  }
-  
-  
  
   
-  .boat {
-    width:80px;
-    height:10px;
-    background:var(--black);
-    z-index:1;
-    position:absolute;
-    top:67.5%;
-    left:75%;
-    border-radius:0 25% 50% 5px;
-  }
-  .boat:after {
-    content:'';
-    width:100%;
-    height:100px;
-    background:var(--black);
-    position:absolute;
-    bottom:100%;
-    left:0;
-    clip-path:polygon(33% 0%, 50% 80%, 66% 33%, 90% 100%, 50% 95%, 45% 100%, 50% 90%, 10% 95%, 0% 100%, 10% 90%)
-  }
-  .boat_reflection {
-    width:80px;
-    height:10px;
-    background:var(--black);
-    z-index:1;
-    position:absolute;
-    top:70.5%;
-    left:75.5%;
-    border-radius:0 25% 50% 5px;
-    transform:scaleY(-1) skewX(-20deg);
-    opacity:.25;
-    filter:blur(2px);
-  }
-  .boat_reflection:after {
-    content:'';
-    width:100%;
-    height:100px;
-    background:linear-gradient(to top, var(--black), transparent);
-    position:absolute;
-    bottom:100%;
-    left:0;
-    clip-path:polygon(33% 0%, 50% 80%, 66% 33%, 90% 100%, 50% 95%, 45% 100%, 50% 90%, 10% 95%, 0% 100%, 10% 90%)
-  }
-  
-  .ground {
-    width:60%;
-    height:125px;
-    background:var(--black);
-    position:absolute;
-    bottom:0;
-    left:0;
-    clip-path:polygon(0% 0%, 25% 10%, 80% 85%, 100% 100%, 0% 100%);
-  }
-  .tree {
-    width:150px;
-    height:200px;
-    position:absolute;
-    top:25%;
-    left:-10%;
-    border-radius:50%;
-    border-right:10px solid var(--black);
-    transform:rotate(0deg);
-  }
-  
-  .leaf {
-    width:65px;
-    height:25px;
-    background:var(--black);
-    position:absolute;  
-    border-radius:75% 25% 50% 0;
-    clip-path:polygon(0% 100%, 10% 100%, 15% 50%, 20% 100%, 30% 100%, 30% 70%, 40% 100%, 100% 100%, 100% 0%, 0% 0%);
-  }
-  
-  .leaf.one {
-    left:40px;
-  }
-  .leaf.two {
-    left:95px;
-    top:-20px;
-    transform:scaleX(-1) rotate(25deg);
-  }
-  .leaf.three {
-    left:100px;
-    top:15px;
-    transform:scaleX(-1) rotate(-25deg);
-  }
-  .leaf.four {
-    left:55px;
-    top:25px;
-    transform:rotate(-45deg);
-  }
-  
-  .tree_two {
-    width:150px;
-    height:200px;
-    position:absolute;
-    top:21%;
-    left:0%;
-    border-radius:50%;
-    border-right:10px solid var(--black);
-    transform:rotate(55deg);
-  }
-  
-  .bird {
-    width:15px;
-    height:10px;
-    border-top:2px solid var(--black);
-    border-radius:50% 50% 0 0;
-    position:absolute;
-  }
-  .bird:before {
-    content:'';
-    width:4px;
-    height:4px;
-    background:var(--black);
-    position:absolute;
-    left:12px;
-    top:1px;
-    border-radius:0 0 50% 50%;
-  }
-  .bird:after {
-    content:'';
-    width:15px;
-    height:10px;
-    border-top:2px solid var(--black);
-    border-radius:50% 50% 0 0;
-    position:absolute;
-    left:13px;
-    top:-2px;
-  }
-  
-  .bird.one {
-    top:20%;
-    left:35%;
-    transform:scale(1.25) rotate(-10deg);
-  }
-  .bird.two {
-    top:35%;
-    left:85%;
-    transform:scale(1) rotate(10deg);
-  }
-  .bird.three {
-    top:55%;
-    left:18%;
-    transform:scale(.75) rotate(-10deg);
-  }
-  .bird.four {
-    top:65%;
-    left:40%;
-    transform:scale(.5);
-  }
-  .bird.five {
-    top:60%;
-    left:60%;
-    transform:scale(.75) rotate(10deg);
-  }</style>
+  </style>
+ <script>  let plus=30;
+ function tailleplus(){
  
-  
-  <div id="principal">
-    <div  class="container" > 
-      <p id="qui" ></p>
-  <a href="/loginpage">login</a>
-      <h1>bataille navale</h1>
+  ++plus;
+   $("td").width( plus);
+   $("td").height( plus);
+  }
+   function taillemoins(){
+   --plus;
+   $("td").height(  plus);}
+   </script>
+   <script src='/socket.io/socket.io.js'></script>
    
-      <a href="/loginpage">login</a>
+   
+  <div id="principal">
     
-      <iframe id="transit" name="hiddenFrame" width="0" height="0" border="0" style="display: none;"></iframe>
+    <div  class="container" >
+     
+       <div>
+         <button id="play2">joeur musique</button>
+         <button id="pause2">pause</button>
+         <button id="restart2">recommencer la musique</button>
+       </div>
+      
+        <div>
+        <h1>bataille navale</h1></br></br>
+        </div>
+        <div id="adversaire"></div>
+        <h2 id="textAff">Cliquer sur la case pour tirer si c'est votre tour.</h2>
+      <div>
+      </form></br></br>
+            <form id="tirdessus" method="POST" action="/insert/tir" target="hiddenFrame">
+              <label for="name"></label>
+            </br>
+            </br></br>
+              <select id="selectX" name="posX">
+              <nom>posX</nom>
+              <option valeur="0">0</option>
+              <option valeur="1">1</option>
+              <option valeur="2">2</option>
+              <option valeur="3">3</option>
+              <option valeur="4">4</option>
+            
+              
+              </select>
+           <select id="selectY" name="posY">
+           <nom>posY</nom>
+           <option valeur="0">0</option>
+           <option valeur="1">1</option>
+           <option valeur="2">2</option>
+           <option valeur="3">3</option>
+           <option valeur="4">4</option>
+           <input id="adv" name="adversaire" type="text">
+           </select>
+          
+           <button id="feu" type="submit"> Feu<i style="color:red; width:50px" class="fas fa-meteor" onclick=" actutirs(), savoirsitirer()" ></i></button>
+          
+          
+              
+        </form>  
+            </div>
+            <div>
+            <form id="touche" method="POST" action="/touche" target="hiddenFrame">
+
+              <label >posX</label>
+              <input id="iciX"type="text" name="posX">
+              <label>posY</label>
+              <input id="iciY"type="text" name="posY">
+              <input type="submit" value="touche">
+      
+      
+            </form>
+      
+      </div>
+      <div><p id="qui" ></p></div>
+        
+  
+     <div><a href="/loginpage">login</a></br></br>
+      <a href="/bateau">Bateau</a></br></br>
+      <a href="/partie">partie</a></br></br></div>
+   
+      
+     
+      <div>
+      <iframe id="transit" name="hiddenFrame" width="0" height="0" border="0" style="display: none;"></iframe></br></br>
       <form name="tirer" id="joueuractu" action="/partieactu" method="Get">
-        <input id="partieencours" type="submit" value="partie">  
+      <input id="partieencours" type="submit" value="partie">  
+      
         </form>
-          <form id="tirdessus" method="POST" action="/insert/tir" target="hiddenFrame">
-            <label for="name"></label>
-    
-    
-            <select id="selectX" name="posX">
-            <nom>posX</nom>
-            <option valeur="0">0</option>
-            <option valeur="1">1</option>
-            <option valeur="2">2</option>
-            <option valeur="3">3</option>
-            <option valeur="4">4</option>
-          
-            
-            </select>
-         <select id="selectY" name="posY">
-         <nom>posY</nom>
-         <option valeur="0">0</option>
-         <option valeur="1">1</option>
-         <option valeur="2">2</option>
-         <option valeur="3">3</option>
-         <option valeur="4">4</option>
-         
-         </select>
+
+       
+        </br>
+      </br>
+      </br>
+     
         
-         <button id="feu" type="submit"> <i style="color:red" class="fas fa-meteor" onclick="tirdessus(), actutirs(), savoirsitirer()" ></i></button>
-        </a>
-        
-            
-          </form>    
-          
-          <form id="tirdelete" method="POST" action="/" target="hiddenFrame">
-            <label for="name"></label>
-            
-            <input onclick="tirdelete(), actutirs()" type="submit" value="effacer tous les tirs" />
-          </form>
+      
+      
+         </div>
+         <div>
           <form id="effacerbateau" action="/effacerBateau" method="post" target="hiddenFrame">
             <input type="submit" value="Enlever vos bateau" />
         </form>
-        </div>
-        </div>
-  <div id='canvas'>
-    <div class='sun'></div>
-    <div class='boat'></div>
-    <div class='boat_reflection'></div>
-    <div class='ground'></div>
-    <div class='tree'>
-      <div class='leaf one'></div>
-      <div class='leaf two'></div>
-      <div class='leaf three'></div>
-      <div class='leaf four'></div>
-    </div>
-    <div class='tree_two'>
-      <div class='leaf one'></div>
-      <div class='leaf two'></div>
-      <div class='leaf three'></div>
-      <div class='leaf four'></div>
-    </div>
-    <div class='bird one'></div>
-    <div class='bird two'></div>
-    <div class='bird three'></div>
-    <div class='bird four'></div>
-    <div class='bird five'></div>
+      
+        
+        <form id="tirdelete" method="POST" action="/deletetir" target="hiddenFrame">
+          <label for="name"></label>
+          
+          <input  type="submit" value="effacer tous les tirs" />
   
-<table>
-  <tbody><tr>
-    <td id="td1">0</td>
-    <td id="td2">1</td>
-    <td id="td3">2</td>
-    <td id="td4">3</td>
-    <td id="td5">4</td>
+    </form>
+    <button id="play">jouer</button>
+    </div>
+    </div>
+    
+    
+          
+        <div id="imgjeu">
+        <div style="width:20%;margin:  auto;display: flex;">
+            <button onclick="tailleplus()">+</button>
+            <button onclick="taillemoins()">-</button>
+          </div>
+<div class="container2">
+  <div id="td00" onclick="valueCase(this)" ><span>0</span></div>
+  <div id="td10"onclick="valueCase(this)"><span>1</span></div>
+  <div id="td20"onclick="valueCase(this)"><span>2</span></div>
+  <div id="td30"onclick="valueCase(this)"><span>3</span></div>
+  <div id="td40"onclick="valueCase(this)"><span>4</span></div>
+  
+  <div id="td01"onclick="valueCase(this)"><span>1</span></div>
+  <div id="td11"onclick="valueCase(this)"><span></span></div>
+  <div id="td21"onclick="valueCase(this)"><span></span></div>
+  <div id="td31"onclick="valueCase(this)"></div>
+  <div id="td41"onclick="valueCase(this)"></div>
 
+  <div id="td02"onclick="valueCase(this)"><span>2</span></div>
+  <div id="td12"onclick="valueCase(this)"></div>
+  <div id="td22"onclick="valueCase(this)"></div>
+  <div id="td32"onclick="valueCase(this)"></div>
+  <div id="td42"onclick="valueCase(this)"></div>
 
-  </tr><tr>
-  </tr><tr id="0">
-    <td id="td00"><img id="img" +i+j="" src="https://krissclotilde.com/wp-content/uploads/2019/05/sea.png"></td>
-      <td id="td01"><img id="img" +i+j="" src="https://krissclotilde.com/wp-content/uploads/2019/05/sea.png"></td>
-        <td id="td02"><img id="img" +i+j="" src="https://krissclotilde.com/wp-content/uploads/2019/05/sea.png"></td>
-          <td id="td03"><img id="img" +i+j="" src="https://krissclotilde.com/wp-content/uploads/2019/05/sea.png"></td>
-            <td id="td04"><img id="img" +i+j="" src="https://krissclotilde.com/wp-content/uploads/2019/05/sea.png"></td>
-              <td id="td05">0</td>
-  </tr>
+  <div id="td03"onclick="valueCase(this)"><span>3</span></div>
+  <div id="td13"onclick="valueCase(this)"></div>
+  <div id="td23"onclick="valueCase(this)"></div>
+  <div id="td33"onclick="valueCase(this)"></div>
+  <div id="td43"onclick="valueCase(this)"></div>
 
-  <tr id="1">
-    <td id="td10"><img id="img" +i+j="" src="https://krissclotilde.com/wp-content/uploads/2019/05/sea.png"></td>
-      <td id="td11"><img id="img" +i+j="" src="https://krissclotilde.com/wp-content/uploads/2019/05/sea.png"></td>
-        <td id="td12"><img id="img" +i+j="" src="https://krissclotilde.com/wp-content/uploads/2019/05/sea.png"></td>
-          <td id="td13"><img id="img" +i+j="" src="https://krissclotilde.com/wp-content/uploads/2019/05/sea.png"></td>
-            <td id="td14"><img id="img" +i+j="" src="https://krissclotilde.com/wp-content/uploads/2019/05/sea.png"></td>
-              <td id="td15">1</td>
-  </tr>
-  <tr id="2">
-    <td id="td20"><img id="img" +i+j="" src="https://krissclotilde.com/wp-content/uploads/2019/05/sea.png"></td>
-      <td id="td21"><img id="img" +i+j="" src="https://krissclotilde.com/wp-content/uploads/2019/05/sea.png"></td>
-        <td id="td22"><img id="img" +i+j="" src="https://krissclotilde.com/wp-content/uploads/2019/05/sea.png"></td>
-          <td id="td23"><img id="img" +i+j="" src="https://krissclotilde.com/wp-content/uploads/2019/05/sea.png"></td>
-            <td id="td24"><img id="img" +i+j="" src="https://krissclotilde.com/wp-content/uploads/2019/05/sea.png"></td>
-              <td id="td25">2</td>
-  </tr>
-      <tr id="3">
-    <td id="td30"><img id="img" +i+j="" src="https://krissclotilde.com/wp-content/uploads/2019/05/sea.png"></td>
-      <td id="td31"><img id="img" +i+j="" src="https://krissclotilde.com/wp-content/uploads/2019/05/sea.png"></td>
-        <td id="td32"><img id="img" +i+j="" src="https://krissclotilde.com/wp-content/uploads/2019/05/sea.png"></td>
-          <td id="td33"><img id="img" +i+j="" src="https://krissclotilde.com/wp-content/uploads/2019/05/sea.png"></td>
-            <td id="td34"><img id="img" +i+j="" src="https://krissclotilde.com/wp-content/uploads/2019/05/sea.png"></td>
-              <td id="td35">3</td>
-  </tr>
-  <tr id="4">
-    <td id="td40"><img id="img" +i+j="" src="https://krissclotilde.com/wp-content/uploads/2019/05/sea.png"></td>
-      <td id="td41"><img id="img" +i+j="" src="https://krissclotilde.com/wp-content/uploads/2019/05/sea.png"></td>
-        <td id="td42"><img id="img" +i+j="" src="https://krissclotilde.com/wp-content/uploads/2019/05/sea.png"></td>
-          <td id="td43"><img id="img" +i+j="" src="https://krissclotilde.com/wp-content/uploads/2019/05/sea.png"></td>
-            <td id="td44"><img id="img" +i+j="" src="https://krissclotilde.com/wp-content/uploads/2019/05/sea.png"></td>
-              <td id="td45">4</td>
-  </tr>
+  <div id="td04"onclick="valueCase(this)"><span>4</span></div>
+  <div id="td14"onclick="valueCase(this)"></div>
+  <div id="td24"onclick="valueCase(this)"></div>
+  <div id="td34"onclick="valueCase(this)"></div>
+  <div id="td44"onclick="valueCase(this)"></div>
 
-</tbody>
-</table>
+ 
+
+</div>
+
 </div>
 
 
 
-</tbody>
+
+
 
 
 
 
     <script>
+      var socket=io();
+ socket.on('untir', function(msg ){
+   $("#joueuractu").submit();
+
+  savoirsitirer();
+          actumesbateau();
+        actutirs();
+        
+  var X=$("#selectX option:selected").text();
+  var Y=$("#selectY option:selected").text();
+  $("#receiveMsg").append(msg.split("/:/")[0]+"a tiré sur "+msg.split("/:/")[1]+" en X: "+X +" et Y :"+Y +"</br>");
+  $("#textAff").hide();
+  alert(msg);
+ });
+
+      function valueCase(e){
+        //;
+        $("#adv").val($('#quiadversaire option:selected').text());
+        let idValue = e.id;
+        
+        $("#selectX").val(idValue.split("td")[1].substr(0, 1));
+        $("#selectY").val(idValue.split("td")[1].substr(1, 2));
+        if($("#textAff").is(":visible")){
+          var socket=io();
+          var adversaire=$('#quiadversaire option:selected').text();
+          var quiestu2=$("#qui").html().split("Vous êtes ")[1].replace('"',"");
+          var msg=quiestu2+"/:/"+adversaire;
+          socket.emit('untir', msg );
+     
+          $("#feu").submit();
+          $("#play").click();
+      }
+    }
+      function quiestu2() {
+      
+        $.getJSON('/qui', function (data) {
+          if(data===undefined){
+            alert("Veuillez vous connecter.");
+            window.location.href = "/loginpage";
+          }
+          
+          
+         
+          if(JSON.stringify(data.message)==='"Qui êtes vous?, Veuillez-vous connecter. "'){
+            alert("Veuillez vous connecter.");
+            window.location.href = "/loginpage";
+          }
+
+        });
+    }
     function savoirsitirer(){
       $("#feu").hide();
+      $("#textAff").hide();
       console.log($('#quiadversaire option:selected').val());
       if($('#quiadversaire option:selected').val()=="XXXT11"){
-        $("#feu").show();
+       // $("#feu").show();
+        $("#textAff").show();
+        $("#joueuractu").submit
 
       }
       else if($('#quiadversaire option:selected').val()=="XXXT20"){
-        $("#feu").show();
+       // $("#feu").show();
+        $("#textAff").show();
+        $("#joueuractu").submit
 
       }
       else{
         
         $("#feu").hide();
+        $("#joueuractu").submit
       }
     }
       function tirdessus() {
         
         document.getElementById("tirdessus").action = "/insert/tir" ;
       }
-      function tirdelete() {
-        
-        document.getElementById("tirdelete").action = "/deletetir" ;
-        $('td, tr').css("background-color, initial");
-
-
-      }
+      
     </script>
     
    
@@ -412,7 +328,7 @@
      
 
  
-       <!--
+       
         <form id="updatej2" method="POST" action="/updatej2">
           <p >Changer de tour si vous êtes joueur2</p>
           <label>tourj1</label>
@@ -430,6 +346,7 @@
         <input id="joue2" name="joueur1" type="text">
           <input type="submit" value="valider tour">
         </form>
+        <!--
         <form id="joueur" action="/joueur" method="Get">
         <input type="submit" value="joueur avec bateau">  
         </form>
@@ -440,8 +357,8 @@
 
 
         </form>
-      -->
-
+       -->
+     
   
     
 
@@ -453,17 +370,12 @@
        
       </form> 
       <p id="emailAff"></p>
-      <form id="touche" method="POST" action="/touche" target="hiddenFrame">
-        
-        <label >posX</label>
-        <input id="iciX"type="text" name="posX">
-        <label>posY</label>
-        <input id="iciY"type="text" name="posY">
-        <input type="submit" value="touche">
-        
+
+    -->
+    <script></script>
+
       
-      </form>
-   -->
+
     
    
      
@@ -516,7 +428,41 @@
       </form>
          -->
 </div>
+<div id="apparitionChat">
+  <div>
+  <button id="cacheChat" class="btn live-chat-btn util-padding-horz-5 util-padding-vert-5">
+    <span class="live-chat-text util-padding-horz-10">Chat online</span>
+    <i class="fa fa-comments live-chat-icon live-chat-icon-online" data-notifications="0"></i>
+  </button>
+  <div id="ChatMessage">
+<input style="width: 300px;" type="text" id="envoi"/>
+   <button onclick="send()">envoyer</button>
+   <div class="scroller" style="background-color: rgb(118, 227, 247)"><p id="receiveMsg"></p></div>
+   </div>
+   </div>
+   </div>
+</div>
+<script>
+  var bol=false;
+  $("#cacheChat").click(function() {
+    if(!bol){
+      $("#ChatMessage").show();
+      bol=true;
+    }
+    else{
+      $("#ChatMessage").hide();
+      bol=false;
+    }
+    
+});
 
+</script>
+<style>
+body{
+  background-image: url("http://localhost:8000/son/bateau.jpg");
+  background-repeat: no-repeat;
+    background-size: cover;
+}</style>
 </body>
 
 
@@ -556,7 +502,7 @@ var posX;
    // $(  this).css( "background-color", "green" );
  
    $(this).css( "background-color", "green" );
-    $('#td'+hoverX+hoverY).css( "background-color", "green" );
+    $('#td'+hoverX+hoverY).css( 'border-radius', '25px' );
  //  $('#td'+(hoverX-1)+(hoverY-1)).css( "background-color", "green" );
       
     
@@ -613,9 +559,9 @@ var posX;
           for (var i = 0; i < data.length; i++) {
           console.log(""+data[i].placeX+data[i].placeY);
 
-          $("#td"+data[i].placeX+data[i].placeY).css("background-color", "red");
+          //$("#td"+data[i].placeX+data[i].placeY).css("background-color", "red");
           }
-          
+          $("#joueuractu").submit()
 
 
 
@@ -628,10 +574,15 @@ var posX;
     
     $.getJSON('/mesbateau', function (data) {
       console.log("/////////////////"+JSON.stringify(data));
+      if(data.message.length<2){
+        alert("veuillez placer deux bateaux");
+        window.location.href = '/bateau';
+      }
       for (var i = 0; i < data.message.length; i++) {
-      console.log("!!!!!!!!!!!"+data.message);
+      
+        console.log("!!!!!!!!!!!"+data.message);
 
-      $("#td"+data.message[i].bateauX+data.message[i].bateauY).css("background-color", "green");
+      $("#td"+data.message[i].bateauX+data.message[i].bateauY).css('border-radius', '0px');
       }
       
 
@@ -642,14 +593,65 @@ var posX;
     });
 
   }
-      function actutirsparemail() {
+  
+  
+
+  function tempsReelQui() {
+    var quiestu2=$("#qui").html().split("Vous êtes ")[1].replace('"',"");
+     var socket=io();
+     let adversaire=$('#quiadversaire option:selected').text();
+     alert(adversaire);
+    socket.emit('actuTir', quiestu2+"/:/"+adversaire);
+  }
+  var socket=io();
+ socket.on('tir', function(msg){
+  alert('test :'+msg);
+  var quiestu2=$("#qui").html().split("Vous êtes ")[1].replace('"',"");
+  var quirecois=msg.split("/:/")[0];
+  alert(quirecois);
+  if(quirecois==quiestu2){
+   alert('test2 :'+quirecois);
+   restoreColor();
+   actutirsparemail2(msg.split("/:/")[1]);
+   actutirsparemail(msg.split("/:/")[1]);
+  }
+ });
+   function actutirsparemail2(msg) {
     
-        var reqemail="/tirs/"+$("#reqmail").val();
-    $.getJSON(reqemail, function (data) {
+    var quiestu2=$("#qui").html().split("Vous êtes ")[1].replace('"',"");
+        var adversaire=msg;
+      var reqemail="/tirs/"+quiestu2+"/"+adversaire;
+       console.log("---//////"+reqemail);
+       $.getJSON(reqemail, function (data) {
+     for (var i = 0; i < data.length; i++) {
+     console.log(""+data[i].placeX+data[i].placeY);
+
+     $("#td"+data[i].placeX+data[i].placeY).css("opacity", "0.2");
+ 
+    }  
+  });
+}
+  function restoreColor(){
+    for(let i=0;i<5;i++){
+      for(let j=0; j<5;j++){
+        $("#td"+i+j).css("opacity", "1");
+        $("#td"+i+j).css("background-color", "blue");
+      }
+    }
+  
+
+}
+    
+   function actutirsparemail(msg) {
+       
+    var quiestu2=$("#qui").html().split("Vous êtes ")[1].replace('"',"");
+        var reqemail="/tirs/"+msg+"/"+quiestu2;
+        console.log("---"+reqemail);
+        $.getJSON(reqemail, function (data) {
       for (var i = 0; i < data.length; i++) {
       console.log(""+data[i].placeX+data[i].placeY);
 
-      $("#td"+data[i].placeX+data[i].placeY).css("background-color", "blue");
+      $("#td"+data[i].placeX+data[i].placeY).css("background-color", "yellow");
       }
 
 
@@ -664,9 +666,8 @@ var posX;
         
         $.getJSON('/bateau', function (data) {
           for (var i = 0; i < data.length; i++) {
-            console.log(""+data[i].placeX+data[i].placeY);
-
-$("#td"+data[i].placeX+data[i].placeY).empty();
+              console.log(""+data[i].placeX+data[i].placeY);
+              $("#td"+data[i].placeX+data[i].placeY).empty();
           }
 
 
@@ -676,13 +677,25 @@ $("#td"+data[i].placeX+data[i].placeY).empty();
         });
 
       }
-      setInterval(function(){ savoirsitirer();
+   /*   setInterval(function(){ savoirsitirer();
           actumesbateau();
-        actutirs(); }, 2000);
-        setInterval(function(){ $("#joueuractu").submit()}, 2000);
+        actutirs() }, 2000);*/
+        //setInterval(function(){ $("#joueuractu").submit()}, 2000);
         
       $(document).ready(function () {
-      $("#cont2").hide();
+        $("#textAff").hide();
+        $("#ChatMessage").hide();
+        $("#touche").hide();
+        $("#adv").hide();
+        actumesbateau();
+      //  $("#play").hide();
+
+
+
+       // $('#touche').hide();
+       // $("#transit").hide();
+    
+     // $("#cont2").hide();
         $("#feu").hide();
         quiestu();
         actu(); 
@@ -847,7 +860,7 @@ $.ajax({
       console.log(data.message);
       var generate="";
       $("#adversaire").empty();
-      generate+="<select onclick='savoirsitirer()'  id='quiadversaire'><nom>Adversaire</nom>)";
+      generate+="<select onclick='savoirsitirer(),tempsReelqui()' onchange='tempsReelQui()' id='quiadversaire'><nom>Adversaire</nom>)";
 
       for(var i=0; i<data.message.length;i++){
         if(quiestu==data.message[i].joueur1){
@@ -879,14 +892,19 @@ $.ajax({
           }
           
         }
-        
+        console.log(generate);
         $("#adversaire").empty().append(generate);
       }
        
         actu();
         console.log(JSON.stringify(data.message));
         ///   console.log(data); // show response from the php script.
-         } else {console.log("Veuillez vous connecter.")}}},
+         } else {console.log("Veuillez vous connecter.")}}
+         restoreColor();
+   actutirsparemail2($('#quiadversaire option:selected').text());
+   actutirsparemail($('#quiadversaire option:selected').text());
+        
+        },
        error:function(data){
          console.log(data.message);
        }
@@ -1032,7 +1050,7 @@ $.ajax({
 
 });
 $("#tirdessus").submit(function(e) {
-
+  
 e.preventDefault(); // avoid to execute the actual submit of the form.
 
 var form = $(this);
@@ -1046,7 +1064,13 @@ $.ajax({
        {
         console.log(data.message);
         actutirs();
-        
+        var socket=io();
+ 
+   restoreColor();
+   actutirsparemail2($('#quiadversaire option:selected').text());
+   actutirsparemail($('#quiadversaire option:selected').text());
+
+
         $("#iciX").val($("#selectX").val());
 
         $("#iciY").val($("#selectY").val());
@@ -1088,11 +1112,25 @@ $.ajax({
        success: function(data)
        {
          //console.log(data.message);
-        alert(data.message);
+         //console.log("--//////"+JSON.stringify(data))
+        if(data.qui!==undefined){
+          var reqemail=$("#quiadversaire option:selected").text();
+          data.qui.forEach(element => {
+          if(element.email===reqemail){
+          alert(data.message+" vous avez atteint :"+element.email+"dont le bateau est :"+element.nom);
+        }
+        });
+        
+         
+        }
+        else{
+          alert("aucun bateau touche");
+        }
         actutirs();
            ///console.log(data); // show response from the php script.
        },
        error:function(data){
+        
          alert(data.message);
        }
      });
@@ -1113,8 +1151,9 @@ $.ajax({
        data: form.serialize(), // serializes the form's elements.
        success: function(data)
        {
-        location.assign(location.href);
+        
         actutirs();
+        window.location.href="/"
            ///console.log(data); // show response from the php script.
        }
      });
@@ -1125,10 +1164,116 @@ $("#effacerbateau").submit( function(){
   document.location.href="/";
 });
 $("#joueuractu").submit();
+     
+$("#updatej1").hide();
+       $("#updatej2").hide();
+       $("#partieencours").hide();
+       quiestu2();
+       var audioElement = document.createElement('audio');
+    audioElement.setAttribute('src', '/son/tir.mp3');
+    
+    audioElement.addEventListener('ended', function() {
+        this.play();
+    }, false);
+    
+    audioElement.addEventListener("canplay",function(){
+        $("#length").text("Duration:" + audioElement.duration + " seconds");
+        $("#source").text("Source:" + audioElement.src);
+        $("#status").text("Status: Ready to play").css("color","green");
+    });
+    
+    audioElement.addEventListener("timeupdate",function(){
+        $("#currentTime").text("Current second:" + audioElement.currentTime);
+    });
+    
+    $('#play').click(function() {
+        audioElement.play();
+        $("#status").text("Status: Playing");
+      setTimeout(()=>{audioElement.pause(),
+        $("#status").text("Status: Paused")},5000)
+        
+    });
+    
+    $('#pause').click(function() {
+        audioElement.pause();
+        $("#status").text("Status: Paused");
+    });
+    
+    $('#restart').click(function() {
+        audioElement.currentTime = 0;
+    });
+
+    var audioElement2 = document.createElement('audio');
+    audioElement2.setAttribute('src', '/son/musiquefond.mp3');
+    
+    audioElement2.addEventListener('ended', function() {
+        this.play();
+    }, false);
+    
+    audioElement2.addEventListener("canplay",function(){
+        $("#length2").text("Duration:" + audioElement2.duration + " seconds");
+        $("#source2").text("Source:" + audioElement2.src);
+        $("#status2").text("Status: Ready to play").css("color","green");
+    });
+    
+    audioElement2.addEventListener("timeupdate",function(){
+        $("#currentTime2").text("Current second:" + audioElement2.currentTime);
+    });
+    
+    $('#play2').click(function() {
+        audioElement2.play();
+        $("#status").text("Status: Playing");
+     
+    });
+    
+    $('#pause2').click(function() {
+        audioElement2.pause();
+        $("#status2").text("Status: Paused");
+    });
+    
+    $('#restart2').click(function() {
+        audioElement2.currentTime = 0;
+    });
+    $('td').mouseover(function() {
+  $('#textAff').css("visibility","visible");
+});
+   var socket=io();
+    socket.emit('actuTir', $('#quiadversaire option:selected').text())
+$('td').mouseout(function() {
+  $('#textAff').css("visibility","hidden");
+});
+
+
+
+$("#joueuractu").submit();
+   $("#feu").hide();
+  savoirsitirer();
+          actumesbateau();
+        actutirs();
+socket.on('chat message', function(msg){
+        console.log(msg)
+        $("#receiveMsg").append(msg+"</br>");
       });
+
+});
+$("#selectX,#selectY").hide();
+
+
     </script>
  
+ <script>
+  
+  var socket=io();
+  function send(){
+    var quiestu2=$("#qui").html().split("Vous êtes ")[1].replace('"',"");
+    var text=""+quiestu2+": "+$("#envoi").val();
+    socket.emit('chat message', text)
+    $("#envoi").val("");
+  }
 
+
+ 
+</script>
 
 
 </html>

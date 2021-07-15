@@ -20,7 +20,7 @@
         background-color: #4caf50; /* Green */
         border: none;
         color: white;
-        padding: 15px 32px;
+     
         text-align: center;
         text-decoration: none;
         display: inline-block;
@@ -35,7 +35,7 @@
         margin-left: auto;
       }
       a {
-        font-size: 200px;
+        font-size: 100px;
       }
       #partieform{
         font-size: 50px;
@@ -45,14 +45,18 @@
         margin-left: auto;
       }
       input[type="text"], select, option {
-        padding: 12px 20px;
+       
         margin: 8px 0;
         box-sizing: border-box;
         font-size: 20px;
       }
     </style>
 
-    <div id="loginpage"><a href="/loginpage">login</a><p id="qui" style="width:300px;margin-left: 310px;margin-top:0px;font-size: 30px;"></p></div>
+    <div id="loginpage"><a href="/loginpage">login</a></br>
+     
+      <a href="/">jeu</a></br>
+      <a href="/partie">partie</a></br>
+      <p id="qui" style="width:300px;margin-left: 310px;margin-top:0px;font-size: 30px;"></p></div>
    
     <div id="partieform"> 
         
@@ -60,9 +64,27 @@
             <label>nom</label>
             <input type=text name="nom"> </input>
             <label>bateauX</label>
-            <input type="text" name="bateauX"></input>
-            <label>bateauY</label>
-            <input type="text" name="bateauY"> </input>
+
+            <select  name="bateauX">
+              <nom>posX</nom>
+              <option valeur="0">0</option>
+              <option valeur="1">1</option>
+              <option valeur="2">2</option>
+              <option valeur="3">3</option>
+              <option valeur="4">4</option>
+            
+              
+              </select>
+           <select  name="bateauY">
+           <nom>posY</nom>
+           <option valeur="0">0</option>
+           <option valeur="1">1</option>
+           <option valeur="2">2</option>
+           <option valeur="3">3</option>
+           <option valeur="4">4</option>
+           
+           </select>
+           
         
             <input type="submit" value="poser bateau" />
             </form>
@@ -70,7 +92,7 @@
     <script>
       $(document).ready(function () {
           quiestu();
-        console.log("ready!");
+  
         $("#positionbateau").submit(function(e) {
 
 e.preventDefault(); // avoid to execute the actual submit of the form.
@@ -85,11 +107,11 @@ $.ajax({
        success: function(data)
        {
         
-        console.log(data.message)
-        ///   console.log(data); // show response from the php script.
+        alert(JSON.stringify(data.message))
+        ///   alert(data); // show response from the php script.
        },
        error:function(data){
-         console.log(data.message);
+        alert(JSON.stringify(data.message))
        }
      });
 
@@ -99,10 +121,12 @@ $.ajax({
 function quiestu() {
         $("#qui").empty();
         $.getJSON('/qui', function (data) {
-          console.log(data);
+          alert(JSON.stringify(data.message))
           
           $("#qui").append(JSON.stringify(data.message));
-
+          if(JSON.stringify(data.message)==='"Qui êtes vous?, Veuillez-vous connecter. "'){
+            window.location.href = "/loginpage";
+          }
 
         });
     }

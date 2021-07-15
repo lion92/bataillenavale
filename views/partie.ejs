@@ -35,7 +35,7 @@
         margin-left: auto;
       }
       a {
-        font-size: 200px;
+        font-size: 100px;
       }
       #partieform {
         font-size: 50px;
@@ -53,7 +53,10 @@
         font-size: 20px;
       }
     </style>
-    <div id="loginpage"><a href="/">login</a></div>
+    <div id="loginpage"><a href="/">login</a></br>
+      <a href="/">jeu</a></br>
+      <a href="/bateau">bateau</a></br></div>
+      <p id="qui" style="width:300px;margin-left: 310px;margin-top:0px;font-size: 30px;"></p></div>
     <div id="partieform">
       <form id="partie" method="POST" action="/insert/partie">
         <label>Inserer une partie </label>
@@ -69,9 +72,22 @@
       </form>
     </div>
     <script>
-      $(document).ready(function () {
-        console.log("ready!");
+      function quiestu() {
+        $("#qui").empty();
+        $.getJSON('/qui', function (data) {
+          alert(JSON.stringify(data.message))
+          
+          $("#qui").append(JSON.stringify(data.message));
+          if(JSON.stringify(data.message)==='"Qui êtes vous?, Veuillez-vous connecter. "'){
+          
+            window.location.href = "/loginpage";
+          }
 
+        });
+    }
+      $(document).ready(function () {
+  
+        quiestu();
         $("#partie").submit(function (e) {
           e.preventDefault(); // avoid to execute the actual submit of the form.
 
@@ -83,12 +99,12 @@
             url: url,
             data: form.serialize(), // serializes the form's elements.
             success: function (data) {
-              console.log(JSON.stringify(data.message));
-              actu();
-              ///   console.log(data); // show response from the php script.
+              alert(JSON.stringify(data.message));
+            
+              ///   alert(data); // show response from the php script.
             },
             error: function (data) {
-              console.log(data.message);
+              alert(JSON.stringify(data.message));
             },
           });
         });
