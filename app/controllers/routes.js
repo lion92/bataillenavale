@@ -65,6 +65,9 @@ module.exports = {
     app.get('/select/:bateau', function(req, res){
       todo.reqselect(req.params.bateau,res)
     });
+    app.get('/conversation', function(req, res){
+      todo.reqconversation(req,res)
+    })
     app.get('/tirs', function(req, res){
       todo.gettir(res)
     });

@@ -722,6 +722,28 @@ function Todo() {
       );
     });
   };
+  this.reqconversation = function (req, res) {
+    connection.acquire(function (err, con) {
+      con.query(
+        "SELECT * FROM message",
+        function (err, result) {
+          con.release();
+          res.header("Access-Control-Allow-Origin", "*");
+          res.header(
+            "Access-Control-Allow-Methods",
+            "GET,HEAD,OPTIONS,POST,PUT"
+          );
+          res.header(
+            "Access-Control-Allow-Headers",
+            "Origin, X-Requested-With, Content-Type, Accept, x-client-key, x-client-token, x-client-secret, Authorization"
+          );
+
+          res.send(result);
+          //console.log("Get successful");
+        }
+      );
+    });
+  };
   this.getemail = function (res) {
     connection.acquire(function (err, con) {
       con.query("select distinct(email) from plateau", function (err, result) {

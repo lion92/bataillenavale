@@ -68,7 +68,22 @@
  
   
   </style>
- <script>  let plus=30;
+ <script>  
+ function fetchConversation() {
+    fetch("/conversation").then(function (response) {
+      // The API call was successful!
+      if (response.ok) {
+        let data = response.json().then((data) => {
+         data.forEach(element => {
+          $("#receiveMsg").append(element.user +":"+element.message+"<br>");
+           
+         });
+        });
+      }
+    });
+  }
+ 
+ let plus=30;
  function tailleplus(){
  
   ++plus;
@@ -1204,7 +1219,7 @@ $("#updatej1").hide();
     $('#restart').click(function() {
         audioElement.currentTime = 0;
     });
-
+    fetchConversation();
     var audioElement2 = document.createElement('audio');
     audioElement2.setAttribute('src', '/son/musiquefond.mp3');
     
