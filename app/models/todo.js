@@ -209,6 +209,44 @@ function Todo() {
           );
         });
   };
+
+  this.chatkriss= function (msg) {
+   
+
+    connection.acquire(function (err, con) {
+      //console.log(err);
+      //console.log("Connecté à la base de données MySQL!");
+ 
+      //console.log(req.cookies);
+
+      
+        
+    
+       
+          //console.log(hash);
+          // Store hash in your password DB.
+       
+
+          con.query(
+            "insert into chatmsg (message) values (?)",
+            [msg],
+            function (err, result) {
+             
+
+              if (err) {
+                //console.log("KKKKKKKKKKKKKKKKKK");
+                
+                con.release();
+              } else {
+                //console.log("IIIIIIIIIIIIIIIIIIIIIII");
+              
+                //console.log("Post successful");
+                con.release();
+              }
+            }
+          );
+        });
+  };
   this.reqpmu = function (req, res) {
     connection.acquire(function (err, con) {
       //console.log("Connecté à la base de données MySQL!");
@@ -758,6 +796,28 @@ function Todo() {
         res.send(result);
         //console.log("Get successful");
       });
+    });
+  };
+  this.chatkrissselect = function (req, res) {
+    connection.acquire(function (err, con) {
+      con.query(
+        "SELECT * FROM chatmsg",
+        function (err, result) {
+          con.release();
+          res.header("Access-Control-Allow-Origin", "*");
+          res.header(
+            "Access-Control-Allow-Methods",
+            "GET,HEAD,OPTIONS,POST,PUT"
+          );
+          res.header(
+            "Access-Control-Allow-Headers",
+            "Origin, X-Requested-With, Content-Type, Accept, x-client-key, x-client-token, x-client-secret, Authorization"
+          );
+
+          res.send(result);
+          //console.log("Get successful");
+        }
+      );
     });
   };
   this.getbateau = function (res) {

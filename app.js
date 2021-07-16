@@ -30,6 +30,9 @@ app.set('view engine', 'ejs')
 app.get('', (req, res) => {
     res.render('index', { text: 'This is EJS'})
 })
+app.get('/info', (req, res) => {
+  res.render('chat')
+})
 
 app.get('/about', (req, res) => {
     res.render('about', { text: 'About Page'})
@@ -106,6 +109,17 @@ todo.enregistrerMsg(user,message);
 io.emit("chat message", msg)
 
 })
+
+socket.on("information", function(msg){
+  console.log(msg)
+ 
+  todo.chatkriss(msg);
+  io.emit("chat message", msg)
+  
+  })
+
+
+
 socket.on('actuTir', function(msg){
   console.log("QUIIII:: "+msg);
   io.emit('tir', msg);

@@ -68,6 +68,9 @@ module.exports = {
     app.get('/conversation', function(req, res){
       todo.reqconversation(req,res)
     })
+    app.get('/conv', function(req, res){
+      todo.chatkrissselect(req,res)
+    })
     app.get('/tirs', function(req, res){
       todo.gettir(res)
     });
