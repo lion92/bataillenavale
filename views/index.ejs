@@ -592,18 +592,27 @@ var posX;
 
       }
       function actumesbateau() {
-    
-    $.getJSON('/mesbateau', function (data) {
+
+        for(let i=0;i<5;i++){
+      for(let j=0; j<5;j++){
+        $("#td"+i+j).empty();        
+      }
+    }
+        let adversaire=$('#quiadversaire option:selected').text();
+    $.getJSON('/mesbateau/'+adversaire, function (data) {
       console.log("/////////////////"+JSON.stringify(data));
       if(data.message.length<2){
-        alert("veuillez placer deux bateaux");
-        window.location.href = '/bateau';
+        alert("veuillez placer deux bateaux contre"+adversaire );
+        //window.location.href = '/bateau';
       }
       for (var i = 0; i < data.message.length; i++) {
       
         console.log("!!!!!!!!!!!"+data.message);
 
-      $("#td"+data.message[i].bateauX+data.message[i].bateauY).css('border-radius', '0px');
+      alert(JSON.stringify("#td"+data.message[i].bateauX+data.message[i].bateauY));
+
+      $("#td"+data.message[i].bateauX+data.message[i].bateauY).append("X");
+      
       }
       
 
@@ -657,6 +666,9 @@ var posX;
       for(let j=0; j<5;j++){
         $("#td"+i+j).css("opacity", "1");
         $("#td"+i+j).css("background-color", "blue");
+        $("#td"+i+j).empty();
+      
+        
       }
     }
   
@@ -704,11 +716,12 @@ var posX;
         //setInterval(function(){ $("#joueuractu").submit()}, 2000);
         
       $(document).ready(function () {
+     
         $("#textAff").hide();
         $("#ChatMessage").hide();
         $("#touche").hide();
         $("#adv").hide();
-        actumesbateau();
+        
       //  $("#play").hide();
 
 
@@ -869,7 +882,7 @@ $.ajax({
        {if(actualiser!=JSON.stringify(data.message)){
         actualiser=JSON.stringify(data.message);
        //alert("C'est peut être votre tour :"+JSON.stringify(data.message));
-         
+       //  alert(JSON.stringify(data.message));
         var quiestu1=$("#qui").html();
          if(quiestu1!=='Qui êtes vous?, Veuillez-vous connecter.'){
 
@@ -881,7 +894,7 @@ $.ajax({
       console.log(data.message);
       var generate="";
       $("#adversaire").empty();
-      generate+="<select onclick='savoirsitirer(),tempsReelqui()' onchange='tempsReelQui()' id='quiadversaire'><nom>Adversaire</nom>)";
+      generate+="<select onclick='savoirsitirer(),tempsReelqui()' onchange='actumesbateau(),tempsReelQui()' id='quiadversaire'><nom>Adversaire</nom>)";
 
       for(var i=0; i<data.message.length;i++){
         if(quiestu==data.message[i].joueur1){
@@ -916,7 +929,7 @@ $.ajax({
         console.log(generate);
         $("#adversaire").empty().append(generate);
       }
-       
+       actubateau();
         actu();
         console.log(JSON.stringify(data.message));
         ///   console.log(data); // show response from the php script.
@@ -927,7 +940,7 @@ $.ajax({
         
         },
        error:function(data){
-         console.log(data.message);
+        alert(JSON.stringify(data));
        }
      });
 

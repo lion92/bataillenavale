@@ -499,7 +499,7 @@ function Todo() {
       }
     });
   };
-  this.selectbateauparmail = function (req, res) {
+  this.selectbateauparmail = function (adv,req, res) {
     connection.acquire(function (err, con) {
       let conection2 = false;
       let email = "";
@@ -524,8 +524,8 @@ function Todo() {
         //console.log("Connecté à la base de données MySQL!");
 
         con.query(
-          "select bateauX,bateauY from bateau where email=?",
-          email,
+          "select * from bateau INNER JOIN partieactu ON bateau.idpartie = partieactu.idAdversaire where email=? and (joueur1=? or joueur2=?)",
+          [email, adv, adv],
           function (err, result) {
             con.release();
             res.header("Access-Control-Allow-Origin", "*");
