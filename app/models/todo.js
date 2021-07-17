@@ -1066,7 +1066,7 @@ function Todo() {
       });
     }
   };
-  this.reqjoueurencours2 = function (req, res) {
+  this.reqjoueurencours = function (req, res) {
     let conection2 = false;
     let email = "";
     jwt.verify(

@@ -16,7 +16,7 @@ module.exports = {
       todo.reqbateau(req.body.nom,req.body.bateauX, req.body.bateauY, req.body.partie,req,res);
     });
     app.get('/joueur', function(req, res){
-      todo.reqjoueurencours2(req,res);
+      todo.reqjoueurencours(req,res);
     });
     app.get('/partieactu', function(req, res){
       todo.reqjoueurencours(req,res);
