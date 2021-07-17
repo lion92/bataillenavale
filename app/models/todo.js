@@ -267,7 +267,7 @@ function Todo() {
       });
     });
   };
-  this.reqbateau = function (nom, bateauX, bateauY, req, res) {
+  this.reqbateau = function (nom, bateauX, bateauY, partie, req, res) {
     let conection2 = false;
     let email = "";
     jwt.verify(
@@ -294,8 +294,8 @@ function Todo() {
         //console.log("Connecté à la base de données MySQL!");
 
         con.query(
-          "insert into bateau (nom,bateauX, bateauY, email) values (?,?,?,?) ",
-          [nom, bateauX, bateauY, email],
+          "insert into bateau (nom,bateauX, bateauY, email,idpartie) values (?,?,?,?,?) ",
+          [nom, bateauX, bateauY, email, partie],
           function (err, result) {
             con.release();
             res.header("Access-Control-Allow-Origin", "*");
@@ -1066,7 +1066,7 @@ function Todo() {
       });
     }
   };
-  this.reqjoueurencours = function (req, res) {
+  this.reqjoueurencours2 = function (req, res) {
     let conection2 = false;
     let email = "";
     jwt.verify(

@@ -13,10 +13,10 @@ module.exports = {
       todo.reqlogin(req.body.email, req.body.password,req, res);
     });
     app.post('/insert/bateau', function(req, res){
-      todo.reqbateau(req.body.nom,req.body.bateauX, req.body.bateauY,req,res);
+      todo.reqbateau(req.body.nom,req.body.bateauX, req.body.bateauY, req.body.partie,req,res);
     });
     app.get('/joueur', function(req, res){
-      todo.reqjoueurencours(req,res);
+      todo.reqjoueurencours2(req,res);
     });
     app.get('/partieactu', function(req, res){
       todo.reqjoueurencours(req,res);
