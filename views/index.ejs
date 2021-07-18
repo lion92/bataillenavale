@@ -69,7 +69,32 @@
   
   </style>
  <script>  
-
+function effacerBateauBis() {
+  
+  var quiestu2=$("#qui").html().split("Vous êtes ")[1].replace('"',""); 
+  var adv=$('#quiadversaire option:selected').text();
+    fetch("/effacerBateau", {
+      method: "POST",
+      body: JSON.stringify({
+     adv:$('#quiadversaire option:selected').text(),
+      }),
+      headers: {
+        "Content-Type": "application/json",
+      },
+    })
+      .then((resp) => {
+        resp.json().then((data) => {
+          
+          
+            alert(JSON.stringify(data));
+          
+        });
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }
+    
  function fetchConversation() {
     fetch("/conversation").then(function (response) {
       // The API call was successful!
@@ -184,10 +209,12 @@
       
          </div>
          <div>
+<!--
           <form id="effacerbateau" action="/effacerBateau" method="post" target="hiddenFrame">
             <input type="submit" value="Enlever vos bateau" />
         </form>
-      
+      -->
+      <button onclick="restoreColor(),effacerBateauBis()">Effacer les bateux de cette partie</button>  
         
         <form id="tirdelete" method="POST" action="/deletetir" target="hiddenFrame">
           <label for="name"></label>
@@ -603,7 +630,7 @@ var posX;
       console.log("/////////////////"+JSON.stringify(data));
       if(data.message.length<2){
         alert("veuillez placer deux bateaux contre"+adversaire );
-        //window.location.href = '/bateau';
+        window.location.href = '/bateau';
       }
       for (var i = 0; i < data.message.length; i++) {
       
@@ -612,6 +639,7 @@ var posX;
       alert(JSON.stringify("#td"+data.message[i].bateauX+data.message[i].bateauY));
 
       $("#td"+data.message[i].bateauX+data.message[i].bateauY).append("X");
+      $("#td"+data.message[i].bateauX+data.message[i].bateauY).css("color","red");
       
       }
       

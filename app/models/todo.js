@@ -442,7 +442,7 @@ function Todo() {
       }
     });
   };
-  this.reqeffacerbateau = function (req, res) {
+  this.reqeffacerbateau = function (adv,req, res) {
     connection.acquire(function (err, con) {
       let conection2 = false;
       let email = "";
@@ -467,8 +467,8 @@ function Todo() {
         //console.log("Connecté à la base de données MySQL!");
 
         con.query(
-          "delete from bateau where email=?",
-          email,
+          "DELETE w FROM bateau w INNER JOIN partieactu e ON w.idpartie=e.idAdversaire WHERE email=? AND (joueur1=? or joueur2=?);",
+          [email,adv,adv],
           function (err, result) {
             con.release();
             res.header("Access-Control-Allow-Origin", "*");
