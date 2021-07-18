@@ -173,79 +173,61 @@ function Todo() {
     });
   };
   this.enregistrerMsg = function (user, msg) {
-   
-
     connection.acquire(function (err, con) {
       //console.log(err);
       //console.log("Connecté à la base de données MySQL!");
- 
+
       //console.log(req.cookies);
 
-      
-        
-    
-       
-          //console.log(hash);
-          // Store hash in your password DB.
-       
+      //console.log(hash);
+      // Store hash in your password DB.
 
-          con.query(
-            "insert into message (user, message) values (?,?)",
-            [user, msg],
-            function (err, result) {
-             
+      con.query(
+        "insert into message (user, message) values (?,?)",
+        [user, msg],
+        function (err, result) {
+          if (err) {
+            //console.log("KKKKKKKKKKKKKKKKKK");
 
-              if (err) {
-                //console.log("KKKKKKKKKKKKKKKKKK");
-                
-                con.release();
-              } else {
-                //console.log("IIIIIIIIIIIIIIIIIIIIIII");
-              
-                //console.log("Post successful");
-                con.release();
-              }
-            }
-          );
-        });
+            con.release();
+          } else {
+            //console.log("IIIIIIIIIIIIIIIIIIIIIII");
+
+            //console.log("Post successful");
+            con.release();
+          }
+        }
+      );
+    });
   };
 
-  this.chatkriss= function (msg) {
-   
-
+  this.chatkriss = function (msg) {
     connection.acquire(function (err, con) {
       //console.log(err);
       //console.log("Connecté à la base de données MySQL!");
- 
+
       //console.log(req.cookies);
 
-      
-        
-    
-       
-          //console.log(hash);
-          // Store hash in your password DB.
-       
+      //console.log(hash);
+      // Store hash in your password DB.
 
-          con.query(
-            "insert into chatmsg (message) values (?)",
-            [msg],
-            function (err, result) {
-             
+      con.query(
+        "insert into chatmsg (message) values (?)",
+        [msg],
+        function (err, result) {
+          if (err) {
+            //console.log("KKKKKKKKKKKKKKKKKK");
 
-              if (err) {
-                //console.log("KKKKKKKKKKKKKKKKKK");
-                
-                con.release();
-              } else {
-                //console.log("IIIIIIIIIIIIIIIIIIIIIII");
-              
-                //console.log("Post successful");
-                con.release();
-              }
-            }
-          );
-        });
+            con.release();
+          } else {
+            //console.log("IIIIIIIIIIIIIIIIIIIIIII");
+
+            //console.log("Post successful");
+            con.release();
+          }
+        }
+      );
+    });
   };
   this.reqpmu = function (req, res) {
     connection.acquire(function (err, con) {
@@ -442,7 +424,7 @@ function Todo() {
       }
     });
   };
-  this.reqeffacerbateau = function (adv,req, res) {
+  this.reqeffacerbateau = function (adv, req, res) {
     connection.acquire(function (err, con) {
       let conection2 = false;
       let email = "";
@@ -468,7 +450,7 @@ function Todo() {
 
         con.query(
           "DELETE w FROM bateau w INNER JOIN partieactu e ON w.idpartie=e.idAdversaire WHERE email=? AND (joueur1=? or joueur2=?);",
-          [email,adv,adv],
+          [email, adv, adv],
           function (err, result) {
             con.release();
             res.header("Access-Control-Allow-Origin", "*");
@@ -499,7 +481,7 @@ function Todo() {
       }
     });
   };
-  this.selectbateauparmail = function (adv,req, res) {
+  this.selectbateauparmail = function (adv, req, res) {
     connection.acquire(function (err, con) {
       let conection2 = false;
       let email = "";
@@ -556,14 +538,14 @@ function Todo() {
       }
     });
   };
-  this.deleteplateau = function (res) {
+  this.deleteplateau = function (email, adv,req, res) {
     connection.acquire(function (err, con) {
       //console.log(err);
       //console.log("Connecté à la base de données MySQL!");
 
       con.query(
-        "delete from plateau where idplateau>=1 ",
-
+        "delete from plateau where email=? and adversaire=? ",
+        [email, adv],
         function (err, result) {
           con.release();
           res.header("Access-Control-Allow-Origin", "*");
@@ -762,24 +744,18 @@ function Todo() {
   };
   this.reqconversation = function (req, res) {
     connection.acquire(function (err, con) {
-      con.query(
-        "SELECT * FROM message",
-        function (err, result) {
-          con.release();
-          res.header("Access-Control-Allow-Origin", "*");
-          res.header(
-            "Access-Control-Allow-Methods",
-            "GET,HEAD,OPTIONS,POST,PUT"
-          );
-          res.header(
-            "Access-Control-Allow-Headers",
-            "Origin, X-Requested-With, Content-Type, Accept, x-client-key, x-client-token, x-client-secret, Authorization"
-          );
+      con.query("SELECT * FROM message", function (err, result) {
+        con.release();
+        res.header("Access-Control-Allow-Origin", "*");
+        res.header("Access-Control-Allow-Methods", "GET,HEAD,OPTIONS,POST,PUT");
+        res.header(
+          "Access-Control-Allow-Headers",
+          "Origin, X-Requested-With, Content-Type, Accept, x-client-key, x-client-token, x-client-secret, Authorization"
+        );
 
-          res.send(result);
-          //console.log("Get successful");
-        }
-      );
+        res.send(result);
+        //console.log("Get successful");
+      });
     });
   };
   this.getemail = function (res) {
@@ -800,24 +776,18 @@ function Todo() {
   };
   this.chatkrissselect = function (req, res) {
     connection.acquire(function (err, con) {
-      con.query(
-        "SELECT * FROM chatmsg",
-        function (err, result) {
-          con.release();
-          res.header("Access-Control-Allow-Origin", "*");
-          res.header(
-            "Access-Control-Allow-Methods",
-            "GET,HEAD,OPTIONS,POST,PUT"
-          );
-          res.header(
-            "Access-Control-Allow-Headers",
-            "Origin, X-Requested-With, Content-Type, Accept, x-client-key, x-client-token, x-client-secret, Authorization"
-          );
+      con.query("SELECT * FROM chatmsg", function (err, result) {
+        con.release();
+        res.header("Access-Control-Allow-Origin", "*");
+        res.header("Access-Control-Allow-Methods", "GET,HEAD,OPTIONS,POST,PUT");
+        res.header(
+          "Access-Control-Allow-Headers",
+          "Origin, X-Requested-With, Content-Type, Accept, x-client-key, x-client-token, x-client-secret, Authorization"
+        );
 
-          res.send(result);
-          //console.log("Get successful");
-        }
-      );
+        res.send(result);
+        //console.log("Get successful");
+      });
     });
   };
   this.getbateau = function (res) {

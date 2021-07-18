@@ -53,7 +53,7 @@ module.exports = {
     });
   
     app.post('/deletetir', function(req, res){
-      todo.deleteplateau(res)
+      todo.deleteplateau(req.body.email, req.body.adversaire,req,res);
     });
     app.post('/deletetir/:email', function(req, res){
       todo.deleteplateauemail(req.params.email,res)
