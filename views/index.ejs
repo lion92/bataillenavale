@@ -69,6 +69,102 @@
   
   </style>
  <script>  
+ function getRandomInt(max) {
+  return Math.floor(Math.random() * max);
+}
+function makenom(length) {
+    var result           = '';
+    var characters       = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+    var charactersLength = characters.length;
+    for ( var i = 0; i < length; i++ ) {
+      result += characters.charAt(Math.floor(Math.random() *
+ charactersLength));
+   }
+   return result;
+}
+function postBateau() {
+  alert($("#partie").val());
+  var quiestu2="!!robot!!";
+  alert(quiestu2);
+    fetch("/insertrobot/bateau", {
+      method: "POST",
+      body: JSON.stringify({
+        nom:$( "#nom" ).val(),       
+        bateauX:$( "#posX" ).val(),
+        bateauY:$( "#posY" ).val(),
+        email: quiestu2,
+        partie: fetchPartie[0],
+      }),
+      headers: {
+        "Content-Type": "application/json",
+      },
+    })
+      .then((resp) => {
+        resp.json().then((data) => {
+          
+          
+            console.log(data);
+          
+        });
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }
+  function postpartie() {
+  alert($("#partie").val());
+  var quiestu2="!!robot!!";
+  alert(quiestu2);
+  
+  fetch("/insert/partie", {
+      method: "POST",
+      body: JSON.stringify({
+        joueur2:"!!robot!!",       
+        tourj1:getRandomInt(2),
+      }),
+      headers: {
+        "Content-Type": "application/json",
+      },
+    })
+      .then((resp) => {
+        resp.json().then((data) => {
+          
+          
+            console.log(data);
+          
+        });
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }
+
+  function fetchPartie() {
+    fetch("/joueur").then(function (response) {
+      var quiestu2="!!robot!!";
+ let list1=[];
+      // The API call was successful!
+      if (response.ok) {
+        let data = response.json().then((data) => {
+          let j1="";
+          let j2="";
+          data.message.forEach(element => {
+            j1=""+element.joueur1;
+            j2=""+element.joueur2;
+            if(j1.includes(quiestu2)||j2.includes(quiestu2)){
+        //  $("#partie").append("<option value="+element.idAdversaire+">j1: "+element.joueur1+" j2: "+element.joueur2+"</option>");
+          list1.push(element.idAdversaire);
+       
+        }
+         
+         });
+         return list1;
+        });
+
+      }
+    });
+       
+  }
 function effacerBateauBis() {
   
   var quiestu2=$("#qui").html().split("Vous êtes ")[1].replace('"',""); 
@@ -658,7 +754,11 @@ var posX;
     $.getJSON('/mesbateau/'+adversaire, function (data) {
       console.log("/////////////////"+JSON.stringify(data));
       if(data.message.length<2){
-        alert("veuillez placer deux bateaux contre"+adversaire );
+        alert("veuillez placer deux bateaux contre "+adversaire );
+         postBateau();
+        postBateau();
+
+
         window.location.href = '/bateau';
       }
       for (var i = 0; i < data.message.length; i++) {
@@ -773,7 +873,9 @@ var posX;
         //setInterval(function(){ $("#joueuractu").submit()}, 2000);
         
       $(document).ready(function () {
-     
+     if(fetchPartie.length==0){
+       postpartie();
+     }
         $("#textAff").hide();
         $("#ChatMessage").hide();
         $("#touche").hide();
