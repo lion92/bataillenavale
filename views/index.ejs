@@ -12,7 +12,7 @@
 
 <body>
   
-    <div id="rob"></div>
+   
 
 
   <style>
@@ -85,7 +85,7 @@ function makenom(length) {
 
 
 function postBateau(part) {
-  alert($("#partie").val());
+  //alert($("#partie").val());
   var quiestu2="!!robot!!";
 
   
@@ -116,10 +116,51 @@ function postBateau(part) {
         console.log(err);
       });
   }
-  function postpartie() {
-  alert($("#partie").val());
+
+  function postAqui() {
+  //alert($("#partie").val());
   var quiestu2="!!robot!!";
-  alert(quiestu2);
+
+  
+  
+  $.getJSON('/qui', function (data1) {
+          console.log(data1);
+    
+          
+          
+        
+      
+
+    
+    fetch("/updaterobotj2", {
+      
+      method: "POST",
+      body: JSON.stringify({
+        robot:"!!robot!!",       
+        joueur1:data1.message.split("Vous êtes ")[1].replace('"',""),
+        tourj1:1,
+      }),
+      headers: {
+        "Content-Type": "application/json",
+      },
+    })
+      .then((resp) => {
+        resp.json().then((data) => {
+          
+          
+            console.log(data);
+          
+        });
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+    });
+  }
+  function postpartie() {
+  //alert($("#partie").val());
+  var quiestu2="!!robot!!";
+ // alert(quiestu2);
   
   fetch("/insert/partie", {
       method: "POST",
@@ -156,7 +197,7 @@ function postBateau(part) {
         
           data.message.forEach(element => {
          
-           alert(element.idAdversaire);
+           //alert(element.idAdversaire);
         //  $("#partie").append("<option value="+element.idAdversaire+">j1: "+element.joueur1+" j2: "+element.joueur2+"</option>");
           list1.push(element.idAdversaire);
           postBateau(list1[0]);
@@ -253,7 +294,7 @@ function effacerBateauBis() {
    
    
   <div id="principal">
-    
+    <div><button onclick="postAqui()">robot</button></div>
     <div  class="container" >
      
        <div>
@@ -728,8 +769,7 @@ var posX;
           
           $("#qui").append(JSON.stringify(data.message));
           fetchPartie();
-          postBateau();
-          postBateau();
+        
       
      
 
@@ -766,11 +806,10 @@ var posX;
       console.log("/////////////////"+JSON.stringify(data));
       if(data.message.length<2){
         alert("veuillez placer deux bateaux contre "+adversaire );
-         postBateau();
-        postBateau();
+        
 
 
-        window.location.href = '/bateau';
+      
       }
       for (var i = 0; i < data.message.length; i++) {
       
@@ -789,7 +828,26 @@ var posX;
 
 
     });
+    /*
+    $.getJSON('/mesbateau/!!robot!!/'+adversaire, function (data) {
+      console.log("/////////////////"+JSON.stringify(data));
+       alert("Adversaire "+adversaire+data.message.length);
+      if(data.message.length<2){
+        alert("veuillez placer deux bateaux contre "+adversaire );
+        fetchPartie()
+        if(data.message.length<3 && data.message.length>0){
+    fetchPartie()
+        }
+       
+      }
+      
 
+
+
+
+
+    });
+*/
   }
   
   

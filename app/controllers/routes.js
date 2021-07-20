@@ -37,6 +37,10 @@ module.exports = {
     app.post('/updatej2', function(req, res){
       todo.requpdatetourj2( req.body.tourj1,req.body.joueur2,req,res);
     });
+    app.post('/updaterobotj2', function(req, res){
+      todo.requpdatetourobotj2( req.body.tourj1,req.body.joueur1, req.body.robot,req,res);
+    });
+
     app.post('/deconnexion', function(req, res){
       todo.reqdeconnexion(req,res);
     });
@@ -48,6 +52,10 @@ module.exports = {
     });
     app.get('/mesbateau/:adv', function(req, res){
       todo.selectbateauparmail(req.params.adv,req,res)
+    });
+
+    app.get('/mesbateau/:robot/:adv', function(req, res){
+      todo.selectbateauRobot(req.params.robot,req.params.adv,req,res)
     });
     app.post('/insert/tir', function(req, res){
       todo.reqtir(req.body.posX, req.body.posY,req.body.adversaire,req,res)

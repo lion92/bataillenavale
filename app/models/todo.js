@@ -620,6 +620,47 @@ function Todo() {
       }
     });
   };
+
+  this.selectbateauRobot= function (robot,adv, req, res) {
+    connection.acquire(function (err, con) {
+      
+
+     
+        //console.log(err);
+        //console.log("Connecté à la base de données MySQL!");
+
+        con.query(
+          "select * from bateau INNER JOIN partieactu ON bateau.idpartie = partieactu.idAdversaire where email=? and (joueur1=? or joueur2=?)",
+          [robot, adv, adv],
+          function (err, result) {
+            con.release();
+            res.header("Access-Control-Allow-Origin", "*");
+            res.header(
+              "Access-Control-Allow-Methods",
+              "GET,HEAD,OPTIONS,POST,PUT"
+            );
+            res.header(
+              "Access-Control-Allow-Headers",
+              "Origin, X-Requested-With, Content-Type, Accept, x-client-key, x-client-token, x-client-secret, Authorization"
+            );
+
+            if (err) {
+              res.send({
+                status: 1,
+                message: "TODO creation fail " + err + email,
+              });
+            } else {
+              if (result == "") {
+                res.send({ status: 0, message: result });
+              } else {
+                res.send({ status: 0, message: result });
+                //console.log("Post successful");
+              }
+            }
+          }
+        );
+    })
+  };
   this.deleteplateau = function (email, adv,req, res) {
     connection.acquire(function (err, con) {
       //console.log(err);
@@ -1383,6 +1424,51 @@ function Todo() {
         );
       });
     }
+  };
+  this.requpdatetourobotj2 = function (tourj1, joueur1,robot, req, res) {
+   
+      //console.log("!!!!!");
+      connection.acquire(function (err, con) {
+        //console.log(err);
+        //console.log("Connecté à la base de données MySQL!");
+
+        con.query(
+          "update partieactu set tourj1=? where joueur1=? and joueur2=?",
+          [tourj1, joueur1, robot],
+
+          function (err, result) {
+            con.release();
+            res.header("Access-Control-Allow-Origin", "*");
+            res.header(
+              "Access-Control-Allow-Methods",
+              "GET,HEAD,OPTIONS,POST,PUT"
+            );
+            res.header(
+              "Access-Control-Allow-Headers",
+              "Origin, X-Requested-With, Content-Type, Accept, x-client-key, x-client-token, x-client-secret, Authorization"
+            );
+            if (err) {
+              res.send({ status: 1, message: "TODO creation fail " + err });
+            } else {
+              if (tourj1 == 1) {
+                res.send({
+                  status: 0,
+                  message: "c est votre tour" + JSON.stringify(result),
+                });
+                //console.log("Post successful");
+              } else {
+                res.send({
+                  status: 0,
+                  message:
+                    "c est au tour de votre adversaire" +
+                    JSON.stringify(result),
+                });
+                //console.log("Post successful");
+              }
+            }
+          }
+        );
+        })
   };
   this.quiesttu = function (req, res) {
     let conection2 = false;
