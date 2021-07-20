@@ -108,7 +108,7 @@ function postBateau(part) {
         resp.json().then((data) => {
           
           
-            console.log(data);
+            alert(JSON.stringify(data));
           
         });
       })
@@ -380,6 +380,55 @@ var robot="!!robot!!";
  fetchPartie();
    }</script>
   <div id="principal">
+
+    <div id="apparitionChat">
+      <div>
+      <button id="cacheChat" class="btn live-chat-btn util-padding-horz-5 util-padding-vert-5">
+        <span class="live-chat-text util-padding-horz-10">Chat online</span>
+        <i class="fa fa-comments live-chat-icon live-chat-icon-online" data-notifications="0"></i>
+      </button>
+      <div id="ChatMessage">
+    <input style="width: 300px;" type="text" id="envoi"/>
+       <button onclick="send()">envoyer</button>
+       <div class="scroller" style="background-color: rgb(118, 227, 247)"><p id="receiveMsg"></p></div>
+       </div>
+       </div>
+       </div>
+       <div class="container2">
+        <div id="td00" onclick="valueCase(this)" ><span>0</span></div>
+        <div id="td10"onclick="valueCase(this)"><span>1</span></div>
+        <div id="td20"onclick="valueCase(this)"><span>2</span></div>
+        <div id="td30"onclick="valueCase(this)"><span>3</span></div>
+        <div id="td40"onclick="valueCase(this)"><span>4</span></div>
+        
+        <div id="td01"onclick="valueCase(this)"><span>1</span></div>
+        <div id="td11"onclick="valueCase(this)"><span></span></div>
+        <div id="td21"onclick="valueCase(this)"><span></span></div>
+        <div id="td31"onclick="valueCase(this)"></div>
+        <div id="td41"onclick="valueCase(this)"></div>
+      
+        <div id="td02"onclick="valueCase(this)"><span>2</span></div>
+        <div id="td12"onclick="valueCase(this)"></div>
+        <div id="td22"onclick="valueCase(this)"></div>
+        <div id="td32"onclick="valueCase(this)"></div>
+        <div id="td42"onclick="valueCase(this)"></div>
+      
+        <div id="td03"onclick="valueCase(this)"><span>3</span></div>
+        <div id="td13"onclick="valueCase(this)"></div>
+        <div id="td23"onclick="valueCase(this)"></div>
+        <div id="td33"onclick="valueCase(this)"></div>
+        <div id="td43"onclick="valueCase(this)"></div>
+      
+        <div id="td04"onclick="valueCase(this)"><span>4</span></div>
+        <div id="td14"onclick="valueCase(this)"></div>
+        <div id="td24"onclick="valueCase(this)"></div>
+        <div id="td34"onclick="valueCase(this)"></div>
+        <div id="td44"onclick="valueCase(this)"></div>
+      
+       
+      
+      </div>
+    <div><p id="ou"></p></div>
     <div><button onclick="postAqui()">robot</button>
       <button onclick="poserbateauRobot()">poser bateau de robot</button>
       <button onclick="effacerTirBisRobot()">effacer tir robot</button>
@@ -483,6 +532,8 @@ var robot="!!robot!!";
         
 
     </form>-->
+    <style>select{width:200px;
+      height: 150px;}</style>
     <button onclick="restoreColor(),effacerTirBis()">Effacer les tirs de cette partie</button>  
     
     <button id="play">jouer</button>
@@ -492,44 +543,8 @@ var robot="!!robot!!";
     
           
         <div id="imgjeu">
-        <div style="width:20%;margin:  auto;display: flex;">
-            <button onclick="tailleplus()">+</button>
-            <button onclick="taillemoins()">-</button>
-          </div>
-<div class="container2">
-  <div id="td00" onclick="valueCase(this)" ><span>0</span></div>
-  <div id="td10"onclick="valueCase(this)"><span>1</span></div>
-  <div id="td20"onclick="valueCase(this)"><span>2</span></div>
-  <div id="td30"onclick="valueCase(this)"><span>3</span></div>
-  <div id="td40"onclick="valueCase(this)"><span>4</span></div>
-  
-  <div id="td01"onclick="valueCase(this)"><span>1</span></div>
-  <div id="td11"onclick="valueCase(this)"><span></span></div>
-  <div id="td21"onclick="valueCase(this)"><span></span></div>
-  <div id="td31"onclick="valueCase(this)"></div>
-  <div id="td41"onclick="valueCase(this)"></div>
+        
 
-  <div id="td02"onclick="valueCase(this)"><span>2</span></div>
-  <div id="td12"onclick="valueCase(this)"></div>
-  <div id="td22"onclick="valueCase(this)"></div>
-  <div id="td32"onclick="valueCase(this)"></div>
-  <div id="td42"onclick="valueCase(this)"></div>
-
-  <div id="td03"onclick="valueCase(this)"><span>3</span></div>
-  <div id="td13"onclick="valueCase(this)"></div>
-  <div id="td23"onclick="valueCase(this)"></div>
-  <div id="td33"onclick="valueCase(this)"></div>
-  <div id="td43"onclick="valueCase(this)"></div>
-
-  <div id="td04"onclick="valueCase(this)"><span>4</span></div>
-  <div id="td14"onclick="valueCase(this)"></div>
-  <div id="td24"onclick="valueCase(this)"></div>
-  <div id="td34"onclick="valueCase(this)"></div>
-  <div id="td44"onclick="valueCase(this)"></div>
-
- 
-
-</div>
 
 </div>
 
@@ -736,22 +751,8 @@ var X=$("#selectX option:selected").text();
       </form>
          -->
 </div>
-<div>s
 
-</div>
-<div id="apparitionChat">
-  <div>
-  <button id="cacheChat" class="btn live-chat-btn util-padding-horz-5 util-padding-vert-5">
-    <span class="live-chat-text util-padding-horz-10">Chat online</span>
-    <i class="fa fa-comments live-chat-icon live-chat-icon-online" data-notifications="0"></i>
-  </button>
-  <div id="ChatMessage">
-<input style="width: 300px;" type="text" id="envoi"/>
-   <button onclick="send()">envoyer</button>
-   <div class="scroller" style="background-color: rgb(118, 227, 247)"><p id="receiveMsg"></p></div>
-   </div>
-   </div>
-   </div>
+
 </div>
 <script>
   var bol=false;
@@ -770,7 +771,7 @@ var X=$("#selectX option:selected").text();
 </script>
 <style>
 body{
-  background-image: url("http://localhost:8000/son/bateau.jpg");
+ 
   background-repeat: no-repeat;
     background-size: cover;
 }</style>
@@ -820,13 +821,13 @@ var posX;
   },
   
   function() {
-    //$(  this).css( "background-color", "cyan" );
-    //$('#td'+hoverX+hoverY).css( "background-color", "cyan" );
+    //$(  this).css( "background-color", "gray" );
+    //$('#td'+hoverX+hoverY).css( "background-color", "gray" );
    
-    $(this).css( "background-color", "cyan" );
-    $('#td'+hoverX+hoverY).css( "background-color", "cyan" );
+    $(this).css( "background-color", "gray" );
+    $('#td'+hoverX+hoverY).css( "background-color", "gray" );
    
-   // $('#td'+(hoverX-1)+(hoverY-1)).css( "background-color", "cyan" );
+   // $('#td'+(hoverX-1)+(hoverY-1)).css( "background-color", "gray" );
       }
     
   
@@ -885,10 +886,10 @@ var posX;
 
       }
       function actumesbateau() {
-
+        $("#ou").empty();
         for(let i=0;i<5;i++){
       for(let j=0; j<5;j++){
-        $("#td"+i+j).empty();        
+               
       }
     }
         let adversaire=$('#quiadversaire option:selected').text();
@@ -907,7 +908,7 @@ var posX;
 
       alert(JSON.stringify("#td"+data.message[i].bateauX+data.message[i].bateauY));
 
-      $("#td"+data.message[i].bateauX+data.message[i].bateauY).append("X");
+      $("#ou").append("bateau en X: "+data.message[i].bateauX+"Y :"+data.message[i].bateauY+"<br>");
       $("#td"+data.message[i].bateauX+data.message[i].bateauY).css("color","red");
       
       }
@@ -982,7 +983,7 @@ var posX;
       for(let j=0; j<5;j++){
         $("#td"+i+j).css("opacity", "1");
         $("#td"+i+j).css("background-color", "blue");
-        $("#td"+i+j).empty();
+        
       
         
       }
@@ -1016,7 +1017,7 @@ var posX;
         $.getJSON('/bateau', function (data) {
           for (var i = 0; i < data.length; i++) {
               console.log(""+data[i].placeX+data[i].placeY);
-              $("#td"+data[i].placeX+data[i].placeY).empty();
+             
           }
 
 

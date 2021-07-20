@@ -1,4 +1,4 @@
-body { background-color: aqua; }
+body { background-color: gray }
 
   #transit{
 
@@ -53,7 +53,7 @@ body {font-family: Arial, Helvetica, sans-serif;
     display: flex;
     box-sizing : border-box;
     border-radius:5px;
-    background-color:#f2f2f2;
+    
     opacity: 1;
     
   
@@ -101,7 +101,7 @@ color: blue;}
     font-size: 20px;
   }
 #imgjeu{
-  background-color: white;
+
   width: 500px;
   height:100%;
 }
@@ -296,7 +296,9 @@ span {
 #apparitionChat{
   display: grid;
   grid-template-columns: 7fr;
+
 }
 #apparitionChat div{
   grid-column-start: 7;
+
 }
