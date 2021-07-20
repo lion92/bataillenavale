@@ -22,6 +22,9 @@ module.exports = {
     app.get('/joueur', function(req, res){
       todo.reqjoueurencours(req,res);
     });
+    app.get('/joueur/:qui/:adv', function(req, res){
+      todo.reqjoueurRobot(req.params.qui,req.params.adv,req,res);
+    });
     app.get('/partieactu', function(req, res){
       todo.reqjoueurencours(req,res);
     });
@@ -48,6 +51,9 @@ module.exports = {
     });
     app.post('/insert/tir', function(req, res){
       todo.reqtir(req.body.posX, req.body.posY,req.body.adversaire,req,res)
+    });
+    app.post('/robot/tir', function(req, res){
+      todo.reqtirRobot(req.body.posX, req.body.posY,req.body.adversaire,req.body.email,req,res)
     });
     app.post('/touche', function(req, res){
       todo.reqtouche(req.body.posX, req.body.posY,req,res)

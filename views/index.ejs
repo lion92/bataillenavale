@@ -12,7 +12,7 @@
 
 <body>
   
-    
+    <div id="rob"></div>
 
 
   <style>
@@ -82,18 +82,23 @@ function makenom(length) {
    }
    return result;
 }
-function postBateau() {
+
+
+function postBateau(part) {
   alert($("#partie").val());
   var quiestu2="!!robot!!";
-  alert(quiestu2);
+
+  
+  
+  
     fetch("/insertrobot/bateau", {
       method: "POST",
       body: JSON.stringify({
-        nom:$( "#nom" ).val(),       
-        bateauX:$( "#posX" ).val(),
-        bateauY:$( "#posY" ).val(),
+        nom:makenom(10),       
+        bateauX:getRandomInt(6),
+        bateauY:getRandomInt(6),
         email: quiestu2,
-        partie: fetchPartie[0],
+        partie: part,
       }),
       headers: {
         "Content-Type": "application/json",
@@ -140,25 +145,27 @@ function postBateau() {
   }
 
   function fetchPartie() {
-    fetch("/joueur").then(function (response) {
-      var quiestu2="!!robot!!";
+    $("#rob").empty();
+    var quiestu2=$("#qui").html().split("Vous êtes ")[1].replace('"',""); 
+    fetch("/joueur/"+quiestu2+"/!!robot!!").then(function (response) {
+    
  let list1=[];
       // The API call was successful!
       if (response.ok) {
         let data = response.json().then((data) => {
-          let j1="";
-          let j2="";
+        
           data.message.forEach(element => {
-            j1=""+element.joueur1;
-            j2=""+element.joueur2;
-            if(j1.includes(quiestu2)||j2.includes(quiestu2)){
+         
+           alert(element.idAdversaire);
         //  $("#partie").append("<option value="+element.idAdversaire+">j1: "+element.joueur1+" j2: "+element.joueur2+"</option>");
           list1.push(element.idAdversaire);
+          postBateau(list1[0]);
        
-        }
+         
          
          });
-         return list1;
+         console.log("/////"+list1);
+       
         });
 
       }
@@ -720,7 +727,11 @@ var posX;
           console.log(data);
           
           $("#qui").append(JSON.stringify(data.message));
-
+          fetchPartie();
+          postBateau();
+          postBateau();
+      
+     
 
         });
 
@@ -873,9 +884,12 @@ var posX;
         //setInterval(function(){ $("#joueuractu").submit()}, 2000);
         
       $(document).ready(function () {
-     if(fetchPartie.length==0){
-       postpartie();
-     }
+   
+    // if(fetchPartie.length==0){
+      // postpartie();
+    // }
+
+   
         $("#textAff").hide();
         $("#ChatMessage").hide();
         $("#touche").hide();
@@ -891,6 +905,7 @@ var posX;
      // $("#cont2").hide();
         $("#feu").hide();
         quiestu();
+
         actu(); 
         actubateau();
         actutirs();
@@ -1447,7 +1462,7 @@ socket.on('chat message', function(msg){
         console.log(msg)
         $("#receiveMsg").append(msg+"</br>");
       });
-
+      
 });
 $("#selectX,#selectY").hide();
 

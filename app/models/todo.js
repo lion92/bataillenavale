@@ -410,6 +410,44 @@ function Todo() {
     });
   };
 
+  
+  this.reqtirRobot = function (posX, posY, adversaire, email, req, res) {
+    connection.acquire(function (err, con) {
+     
+        //console.log(err);
+        //console.log("Connecté à la base de données MySQL!");
+
+        con.query(
+          "insert into plateau (placeX, placeY, email,adversaire) values (?,?,?,?) ",
+          [posX, posY, email, adversaire],
+          function (err, result) {
+            con.release();
+            res.header("Access-Control-Allow-Origin", "*");
+            res.header(
+              "Access-Control-Allow-Methods",
+              "GET,HEAD,OPTIONS,POST,PUT"
+            );
+            res.header(
+              "Access-Control-Allow-Headers",
+              "Origin, X-Requested-With, Content-Type, Accept, x-client-key, x-client-token, x-client-secret, Authorization"
+            );
+
+            if (err) {
+              res.send({ status: 1, message: "Erreur" + err + email });
+            } else {
+              res.send({
+                status: 0,
+                message:
+                  "Tirer en POsX " + posX + " posY : " + posY + "par " + email,
+              });
+              //console.log("Post successful");
+            }
+          }
+        );
+        })
+
+  };
+
   this.reqtouche = function (posX, posY, req, res) {
     connection.acquire(function (err, con) {
       let conection2 = false;
@@ -1130,6 +1168,39 @@ function Todo() {
         );
       });
     }
+  };
+
+  this.reqjoueurRobot = function (qui,adv,req, res) {
+   
+      //console.log("!!!!!");
+      connection.acquire(function (err, con) {
+        //console.log(err);
+        //console.log("Connecté à la base de données MySQL!");
+
+        con.query(
+          "select * from partieactu where joueur1=? and joueur2=?",[qui,adv],
+
+          function (err, result) {
+            con.release();
+            res.header("Access-Control-Allow-Origin", "*");
+            res.header(
+              "Access-Control-Allow-Methods",
+              "GET,HEAD,OPTIONS,POST,PUT"
+            );
+            res.header(
+              "Access-Control-Allow-Headers",
+              "Origin, X-Requested-With, Content-Type, Accept, x-client-key, x-client-token, x-client-secret, Authorization"
+            );
+            if (err) {
+              res.send({ status: 1, message: "TODO creation fail " + err });
+            } else {
+              res.send({ status: 0, message: result });
+              //console.log("Post successful");
+            }
+          }
+        );
+      });
+    
   };
   this.selectpartie = function (req, res) {
     let conection2 = false;
