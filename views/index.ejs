@@ -95,8 +95,8 @@ function postBateau(part) {
       method: "POST",
       body: JSON.stringify({
         nom:makenom(10),       
-        bateauX:getRandomInt(6),
-        bateauY:getRandomInt(6),
+        bateauX:getRandomInt(5),
+        bateauY:getRandomInt(5),
         email: quiestu2,
         partie: part,
       }),
@@ -146,9 +146,10 @@ function postBateau(part) {
     })
       .then((resp) => {
         resp.json().then((data) => {
-          
-          
-            console.log(data);
+           console.log(data);
+          tirrobot();
+       
+           
           
         });
       })
@@ -213,6 +214,7 @@ function postBateau(part) {
     });
        
   }
+  
 function effacerBateauBis() {
   
   var quiestu2=$("#qui").html().split("Vous êtes ")[1].replace('"',""); 
@@ -238,6 +240,34 @@ function effacerBateauBis() {
         console.log(err);
       });
   }
+  function effacerBateauBisRobot() {
+  
+  var quiestu2=$("#qui").html().split("Vous êtes ")[1].replace('"',""); 
+var robot="!!robot!!";
+  var adv=$('#quiadversaire option:selected').text();
+    fetch("/effacerBateauRobot", {
+      method: "POST",
+      body: JSON.stringify({
+        robot:robot,
+     adv:quiestu2,
+      }),
+      headers: {
+        "Content-Type": "application/json",
+      },
+    })
+      .then((resp) => {
+        resp.json().then((data) => {
+          
+          
+            alert(JSON.stringify(data));
+          
+        });
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }
+    
     
   function effacerTirBis() {
   
@@ -259,6 +289,60 @@ function effacerBateauBis() {
           
             alert(JSON.stringify(data));
           
+        });
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }
+  function effacerTirBisRobot() {
+  
+  var quiestu2=$("#qui").html().split("Vous êtes ")[1].replace('"',""); 
+  var adv=$('#quiadversaire option:selected').text();
+    fetch("/deletetir", {
+      method: "POST",
+      body: JSON.stringify({
+        email:"!!robot!!",
+     adversaire:quiestu2,
+      }),
+      headers: {
+        "Content-Type": "application/json",
+      },
+    })
+      .then((resp) => {
+        resp.json().then((data) => {
+          
+          
+            alert(JSON.stringify(data));
+          
+        });
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }
+  function tirrobot() {
+  
+  var quiestu2=$("#qui").html().split("Vous êtes ")[1].replace('"',""); 
+  var adv=$('#quiadversaire option:selected').text();
+    fetch("/robot/tir", {
+      method: "POST",
+      body: JSON.stringify({
+        email:"!!robot!!",
+     adversaire:quiestu2,
+     posX:getRandomInt(5),
+     posY:getRandomInt(5),
+      }),
+      headers: {
+        "Content-Type": "application/json",
+      },
+    })
+      .then((resp) => {
+        resp.json().then((data) => {
+          
+          
+            //alert("tir robot :"+JSON.stringify(data));
+            window.location.href = "/";
         });
       })
       .catch((err) => {
@@ -292,9 +376,15 @@ function effacerBateauBis() {
    </script>
    <script src='/socket.io/socket.io.js'></script>
    
-   
+   <script>function poserbateauRobot(){
+ fetchPartie();
+   }</script>
   <div id="principal">
-    <div><button onclick="postAqui()">robot</button></div>
+    <div><button onclick="postAqui()">robot</button>
+      <button onclick="poserbateauRobot()">poser bateau de robot</button>
+      <button onclick="effacerTirBisRobot()">effacer tir robot</button>
+      <button onclick=" effacerBateauBisRobot()">effacer bateau robot</button></div>
+     
     <div  class="container" >
      
        <div>
@@ -768,7 +858,7 @@ var posX;
           console.log(data);
           
           $("#qui").append(JSON.stringify(data.message));
-          fetchPartie();
+         
         
       
      
@@ -806,8 +896,8 @@ var posX;
       console.log("/////////////////"+JSON.stringify(data));
       if(data.message.length<2){
         alert("veuillez placer deux bateaux contre "+adversaire );
-        
-
+        window.location.href="/bateau";
+       
 
       
       }
@@ -1126,7 +1216,7 @@ $.ajax({
       console.log(data.message);
       var generate="";
       $("#adversaire").empty();
-      generate+="<select onclick='savoirsitirer(),tempsReelqui()' onchange='actumesbateau(),tempsReelQui()' id='quiadversaire'><nom>Adversaire</nom>)";
+      generate+="<select  multiple='oui'  onclick='savoirsitirer(),tempsReelqui()' onchange='actumesbateau(),tempsReelQui()' id='quiadversaire'><nom>Adversaire</nom>)";
 
       for(var i=0; i<data.message.length;i++){
         if(quiestu==data.message[i].joueur1){

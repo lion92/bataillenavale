@@ -69,6 +69,9 @@ module.exports = {
     app.post('/effacerBateau', function(req, res){
       todo.reqeffacerbateau(req.body.adv,req,res);
     });
+    app.post('/effacerBateauRobot', function(req, res){
+      todo.reqeffacerbateaurobot(req.body.robot,req.body.adv,req,res);
+    });
   
     app.post('/deletetir', function(req, res){
       todo.deleteplateau(req.body.email, req.body.adversaire,req,res);
