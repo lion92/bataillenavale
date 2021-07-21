@@ -218,11 +218,11 @@ function postBateau(part) {
 function effacerBateauBis() {
   
   var quiestu2=$("#qui").html().split("Vous êtes ")[1].replace('"',""); 
-  var adv=$('#quiadversaire option:selected').text();
+  var adv=$("#contreadv").html();
     fetch("/effacerBateau", {
       method: "POST",
       body: JSON.stringify({
-     adv:$('#quiadversaire option:selected').text(),
+     adv:$("#contreadv").html(),
       }),
       headers: {
         "Content-Type": "application/json",
@@ -244,7 +244,7 @@ function effacerBateauBis() {
   
   var quiestu2=$("#qui").html().split("Vous êtes ")[1].replace('"',""); 
 var robot="!!robot!!";
-  var adv=$('#quiadversaire option:selected').text();
+  var adv=$("#contreadv").html();
     fetch("/effacerBateauRobot", {
       method: "POST",
       body: JSON.stringify({
@@ -272,12 +272,12 @@ var robot="!!robot!!";
   function effacerTirBis() {
   
   var quiestu2=$("#qui").html().split("Vous êtes ")[1].replace('"',""); 
-  var adv=$('#quiadversaire option:selected').text();
+  var adv=$("#contreadv").html();
     fetch("/deletetir", {
       method: "POST",
       body: JSON.stringify({
         email:quiestu2,
-     adversaire:$('#quiadversaire option:selected').text(),
+     adversaire:$("#contreadv").html(),
       }),
       headers: {
         "Content-Type": "application/json",
@@ -298,7 +298,7 @@ var robot="!!robot!!";
   function effacerTirBisRobot() {
   
   var quiestu2=$("#qui").html().split("Vous êtes ")[1].replace('"',""); 
-  var adv=$('#quiadversaire option:selected').text();
+  var adv=$("#contreadv").html();;
     fetch("/deletetir", {
       method: "POST",
       body: JSON.stringify({
@@ -324,7 +324,7 @@ var robot="!!robot!!";
   function tirrobot() {
   
   var quiestu2=$("#qui").html().split("Vous êtes ")[1].replace('"',""); 
-  var adv=$('#quiadversaire option:selected').text();
+  var adv=$("#contreadv").html();
     fetch("/robot/tir", {
       method: "POST",
       body: JSON.stringify({
@@ -342,7 +342,10 @@ var robot="!!robot!!";
           
           
             //alert("tir robot :"+JSON.stringify(data));
-            window.location.href = "/";
+           
+  savoirsitirer();
+          actumesbateau();
+        actutirs();
         });
       })
       .catch((err) => {
@@ -380,7 +383,7 @@ var robot="!!robot!!";
  fetchPartie();
    }</script>
   <div id="principal">
-
+    <div><p id="contreadv"></p></div>
     <div id="apparitionChat">
       <div>
       <button id="cacheChat" class="btn live-chat-btn util-padding-horz-5 util-padding-vert-5">
@@ -574,14 +577,14 @@ var robot="!!robot!!";
 
       function valueCase(e){
         //;
-        $("#adv").val($('#quiadversaire option:selected').text());
+ 
         let idValue = e.id;
         
         $("#selectX").val(idValue.split("td")[1].substr(0, 1));
         $("#selectY").val(idValue.split("td")[1].substr(1, 2));
         if($("#textAff").is(":visible")){
           var socket=io();
-          var adversaire=$('#quiadversaire option:selected').text();
+          var adversaire=$("#contreadv").html();
           var quiestu2=$("#qui").html().split("Vous êtes ")[1].replace('"',"");                  
 var X=$("#selectX option:selected").text();
   var Y=$("#selectY option:selected").text();
@@ -612,7 +615,7 @@ var X=$("#selectX option:selected").text();
     function savoirsitirer(){
       $("#feu").hide();
       $("#textAff").hide();
-      console.log($('#quiadversaire option:selected').val());
+      console.log($("#contreadv").html());
       if($('#quiadversaire option:selected').val()=="XXXT11"){
        // $("#feu").show();
         $("#textAff").show();
@@ -869,7 +872,8 @@ var posX;
       }
 
       function actutirs() {
-    
+        actutirsparemail2($('#quiadversaire option:selected').text());
+   actutirsparemail($('#quiadversaire option:selected').text());
         $.getJSON('/tirs', function (data) {
           for (var i = 0; i < data.length; i++) {
           console.log(""+data[i].placeX+data[i].placeY);
@@ -892,7 +896,8 @@ var posX;
                
       }
     }
-        let adversaire=$('#quiadversaire option:selected').text();
+    $("#contreadv").empty().append($('#quiadversaire option:selected').text());
+        let adversaire=$("#contreadv").html();
     $.getJSON('/mesbateau/'+adversaire, function (data) {
       console.log("/////////////////"+JSON.stringify(data));
       if(data.message.length<2){
@@ -946,7 +951,8 @@ var posX;
   function tempsReelQui() {
     var quiestu2=$("#qui").html().split("Vous êtes ")[1].replace('"',"");
      var socket=io();
-     let adversaire=$('#quiadversaire option:selected').text();
+     $("#contreadv").empty().append($('#quiadversaire option:selected').text());
+     let adversaire=$("#contreadv").html();
      //alert(adversaire);
     socket.emit('actuTir', quiestu2+"/:/"+adversaire);
   }
@@ -1188,7 +1194,7 @@ $.ajax({
 
 
 });
-
+var chargeone=1;
 var actualiser="";
 $("#joueuractu").submit(function(e) {
 
@@ -1202,7 +1208,7 @@ $.ajax({
        url: url,
        data: form.serialize(), // serializes the form's elements.
        success: function(data)
-       {if(actualiser!=JSON.stringify(data.message)){
+       {if(actualiser!=JSON.stringify(data.message) && chargeone==1){
         actualiser=JSON.stringify(data.message);
        //alert("C'est peut être votre tour :"+JSON.stringify(data.message));
        //  alert(JSON.stringify(data.message));
@@ -1256,11 +1262,72 @@ $.ajax({
         actu();
         console.log(JSON.stringify(data.message));
         ///   console.log(data); // show response from the php script.
-         } else {console.log("Veuillez vous connecter.")}}
-         restoreColor();
-   actutirsparemail2($('#quiadversaire option:selected').text());
-   actutirsparemail($('#quiadversaire option:selected').text());
+         } else {console.log("Veuillez vous connecter.")}}else{
+          actualiser=JSON.stringify(data.message);
+       //alert("C'est peut être votre tour :"+JSON.stringify(data.message));
+       //  alert(JSON.stringify(data.message));
+        var quiestu1=$("#qui").html();
+         if(quiestu1!=='Qui êtes vous?, Veuillez-vous connecter.'){
+
+         
+        var quiestu=$("#qui").html().split("Vous êtes ")[1].replace('"',"");
+      
+      console.log(quiestu);
+      console.log(data.message);
+      //console.log(data.message);
+      var generate="";
+     // $("#adversaire").empty();
+     // generate+="<select  multiple='oui'  onclick='savoirsitirer(),tempsReelqui()' onchange='actumesbateau(),tempsReelQui()' id='quiadversaire'><nom>Adversaire</nom>)";
+
+      for(var i=0; i<data.message.length;i++){
+        if(quiestu==data.message[i].joueur1){
+          
+          console.log("vous êtes joueur1 contre"+data.message[i].joueur2);
+          
+          if(data.message[i].tourj1==1){
+            alert("C'est votre tour contre :"+data.message[i].joueur2)
+            //generate+="  <option value=XXXT1"+data.message[i].tourj1+">"+data.message[i].joueur2+"</option>    ";
+            $('#adversaire').find('option[text="'+new String(data.message[i].joueur2)+'"]').attr( "value", "XXXT1"+data.message[i].tourj1 );
+           
+
         
+          }
+         else if(data.message[i].tourj1==0){
+            console.log("C'est le tour de :"+data.message[i].joueur2)
+         // generate+="  <option value=XXXT1"+data.message[i].tourj1+">"+data.message[i].joueur2+"</option>    ";
+         $('#adversaire').find('option[text="'+new String(data.message[i].joueur2)+'"]').attr( "value", "XXXT1"+data.message[i].tourj1 ); 
+        }
+       
+        }
+       else if(quiestu==data.message[i].joueur2){
+        console.log("vous êtes joueur2 contre"+data.message[i].joueu1);
+        if(data.message[i].tourj1==0){
+            alert("C'est votre tour contre :"+data.message[i].joueur1)
+           //generate+="  <option value=XXXT2"+data.message[i].tourj1+">"+data.message[i].joueur1+"</option>    ";
+           $('#adversaire').find('option[text="'+new String(data.message[i].joueur1)+'"]').attr( "value", "XXXT2"+data.message[i].tourj1 );
+          
+          }
+          else if(data.message[i].tourj1==1){
+            console.log("C'est le tour de :"+""+data.message[i].joueur1)
+           //generate+= "  <option value=XXXT2"+data.message[i].tourj1+">"+data.message[i].joueur1+"</option>    ";
+           $('#adversaire').find('option[text="'+new String(data.message[i].joueur1)+'"]').attr( "value", "XXXT2"+data.message[i].tourj1 );
+          }
+          
+        }
+        console.log(generate);
+        //$("#adversaire").empty().append(generate);
+      }
+       actubateau();
+        actu();
+        console.log(JSON.stringify(data.message));
+        ///   console.log(data); // show response from the php script.
+         } else {console.log("Veuillez vous connecter.")}
+         }
+         restoreColor();
+   actutirsparemail2($("#contreadv").html());
+   actutirsparemail($("#contreadv").html());
+   
+   chargeone=2;
         },
        error:function(data){
         alert(JSON.stringify(data));
@@ -1424,8 +1491,8 @@ $.ajax({
         var socket=io();
  
    restoreColor();
-   actutirsparemail2($('#quiadversaire option:selected').text());
-   actutirsparemail($('#quiadversaire option:selected').text());
+   actutirsparemail2($("#contreadv").html());
+   actutirsparemail($("#contreadv").html());
 
 
         $("#iciX").val($("#selectX").val());
@@ -1435,8 +1502,8 @@ $.ajax({
         
         
       
-       $("#joue1").val($('#quiadversaire option:selected').text());
-       $("#joue2").val($('#quiadversaire option:selected').text());
+       $("#joue1").val($("#contreadv").html());
+       $("#joue2").val($("#contreadv").html());
        $("#tourj1").val(0);
        $("#tourj2").val(1);
        $("#updatej1").submit();
@@ -1471,7 +1538,7 @@ $.ajax({
          //console.log(data.message);
          //console.log("--//////"+JSON.stringify(data))
         if(data.qui!==undefined){
-          var reqemail=$("#quiadversaire option:selected").text();
+          var reqemail=$("#contreadv").html();
           data.qui.forEach(element => {
           if(element.email===reqemail){
           alert(data.message+" vous avez atteint :"+element.email+"dont le bateau est :"+element.nom);
@@ -1510,7 +1577,10 @@ $.ajax({
        {
         
         actutirs();
-        window.location.href="/"
+
+        savoirsitirer();
+          actumesbateau();
+        actutirs();
            ///console.log(data); // show response from the php script.
        }
      });
@@ -1595,7 +1665,7 @@ $("#updatej1").hide();
   $('#textAff').css("visibility","visible");
 });
    var socket=io();
-    socket.emit('actuTir', $('#quiadversaire option:selected').text())
+    socket.emit('actuTir', $("#contreadv").html())
 $('td').mouseout(function() {
   $('#textAff').css("visibility","hidden");
 });
