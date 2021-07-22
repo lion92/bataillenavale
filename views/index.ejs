@@ -314,6 +314,9 @@ var robot="!!robot!!";
           
           
             alert(JSON.stringify(data));
+            restoreColor();
+   actutirsparemail2($("#contreadv").html());
+   actutirsparemail($("#contreadv").html());
           
         });
       })
@@ -325,13 +328,15 @@ var robot="!!robot!!";
   
   var quiestu2=$("#qui").html().split("Vous êtes ")[1].replace('"',""); 
   var adv=$("#contreadv").html();
+  var posXenvoi=getRandomInt(5);
+  var posYenvoi=getRandomInt(5);
     fetch("/robot/tir", {
       method: "POST",
       body: JSON.stringify({
         email:"!!robot!!",
      adversaire:quiestu2,
-     posX:getRandomInt(5),
-     posY:getRandomInt(5),
+     posX:posXenvoi,
+     posY:posYenvoi,
       }),
       headers: {
         "Content-Type": "application/json",
@@ -340,6 +345,8 @@ var robot="!!robot!!";
       .then((resp) => {
         resp.json().then((data) => {
           
+  var socket=io();
+    socket.emit('chat message',"!!robot!! tire sur "+quiestu2+"en X: "+posXenvoi+"et en Y: "+posYenvoi  );
           
             //alert("tir robot :"+JSON.stringify(data));
            
@@ -431,7 +438,9 @@ var robot="!!robot!!";
        
       
       </div>
-    <div><p id="ou"></p></div>
+    <div>
+      <div ><p id="changeone"></p></div>
+      <p id="ou"></p></div>
     <div><button onclick="postAqui()">robot</button>
       <button onclick="poserbateauRobot()">poser bateau de robot</button>
       <button onclick="effacerTirBisRobot()">effacer tir robot</button>
@@ -872,8 +881,7 @@ var posX;
       }
 
       function actutirs() {
-        actutirsparemail2($('#quiadversaire option:selected').text());
-   actutirsparemail($('#quiadversaire option:selected').text());
+      
         $.getJSON('/tirs', function (data) {
           for (var i = 0; i < data.length; i++) {
           console.log(""+data[i].placeX+data[i].placeY);
@@ -970,7 +978,6 @@ var posX;
   }
  });
    function actutirsparemail2(msg) {
-    
     var quiestu2=$("#qui").html().split("Vous êtes ")[1].replace('"',"");
         var adversaire=msg;
       var reqemail="/tirs/"+quiestu2+"/"+adversaire;
@@ -1039,7 +1046,7 @@ var posX;
         //setInterval(function(){ $("#joueuractu").submit()}, 2000);
         
       $(document).ready(function () {
-   
+   $("#changeone").hide();
     // if(fetchPartie.length==0){
       // postpartie();
     // }
@@ -1194,7 +1201,8 @@ $.ajax({
 
 
 });
-var chargeone=1;
+$("#changeone").text(1);
+
 var actualiser="";
 $("#joueuractu").submit(function(e) {
 
@@ -1208,7 +1216,7 @@ $.ajax({
        url: url,
        data: form.serialize(), // serializes the form's elements.
        success: function(data)
-       {if(actualiser!=JSON.stringify(data.message) && chargeone==1){
+       {if(actualiser!=JSON.stringify(data.message) && $("#changeone").html()==1){
         actualiser=JSON.stringify(data.message);
        //alert("C'est peut être votre tour :"+JSON.stringify(data.message));
        //  alert(JSON.stringify(data.message));
@@ -1327,7 +1335,7 @@ $.ajax({
    actutirsparemail2($("#contreadv").html());
    actutirsparemail($("#contreadv").html());
    
-   chargeone=2;
+   $("#changeone").text(2);
         },
        error:function(data){
         alert(JSON.stringify(data));
@@ -1474,7 +1482,8 @@ $.ajax({
 
 });
 $("#tirdessus").submit(function(e) {
-  
+  $("#adv").val("");
+  $("#adv").val($("#contreadv").html());
 e.preventDefault(); // avoid to execute the actual submit of the form.
 
 var form = $(this);
@@ -1491,8 +1500,7 @@ $.ajax({
         var socket=io();
  
    restoreColor();
-   actutirsparemail2($("#contreadv").html());
-   actutirsparemail($("#contreadv").html());
+ 
 
 
         $("#iciX").val($("#selectX").val());
@@ -1680,6 +1688,9 @@ $("#joueuractu").submit();
 socket.on('chat message', function(msg){
         console.log(msg)
         $("#receiveMsg").append(msg+"</br>");
+        restoreColor();
+   actutirsparemail2($("#contreadv").html());
+   actutirsparemail($("#contreadv").html());
       });
       
 });
