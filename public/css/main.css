@@ -1,4 +1,5 @@
-body { background-color: gray }
+body { background-image: url('/son/batnav3.svg');
+  background-size: 100%, 100%}
 
   #transit{
 
@@ -66,8 +67,8 @@ body {font-family: Arial, Helvetica, sans-serif;
   }
 
   h1  {
-    color: #ffc800;
-    width: 100%;
+    color: cornflowerblue;
+
   }
   tr,td,img{
     width: 30px;
@@ -301,4 +302,54 @@ span {
 #apparitionChat div{
   grid-column-start: 7;
 
+}
+select {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  -ms-appearance: none;
+  appearance: none;
+  outline: 0;
+  box-shadow: none;
+  border: 0 !important;
+  background: #2c3e50;
+  background-image: none;
+}
+/* Remove IE arrow */
+select::-ms-expand {
+  display: none;
+}
+/* Custom Select */
+.select {
+  position: relative;
+  display: flex;
+  width: 20em;
+  height: 3em;
+  line-height: 3;
+  background: #2c3e50;
+  overflow: hidden;
+  border-radius: .25em;
+}
+select {
+  flex: 1;
+  padding: 0 .5em;
+  color: #fff;
+  cursor: pointer;
+}
+/* Arrow */
+.select::after {
+  content: '\25BC';
+  position: absolute;
+  top: 0;
+  right: 0;
+  padding: 0 1em;
+  background: #34495e;
+  cursor: pointer;
+  pointer-events: none;
+  -webkit-transition: .25s all ease;
+  -o-transition: .25s all ease;
+  transition: .25s all ease;
+}
+/* Transition */
+.select:hover::after {
+  color: #f39c12;
 }
