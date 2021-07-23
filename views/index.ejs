@@ -41,7 +41,7 @@
   #canvas {
     position:relative;
     width:600px;
-    height:400px;
+    height:300px;
     background:linear-gradient(to bottom, var(--darkorange) 25%, var(--yellow) 70%, var(--orange) 70%, var(--orangered));
     filter:hue-rotate(var(--hue));
     transform-origin:top center;
@@ -107,8 +107,8 @@ function postBateau(part) {
       .then((resp) => {
         resp.json().then((data) => {
           
-          
-            alert(JSON.stringify(data));
+          $("#info").append("<span>"+JSON.stringify(data)+"</br></span>");
+           // alert(JSON.stringify(data));
           
         });
       })
@@ -187,6 +187,7 @@ function postBateau(part) {
   }
 
   function fetchPartie() {
+   try{
     $("#rob").empty();
     var quiestu2=$("#qui").html().split("Vous êtes ")[1].replace('"',""); 
     fetch("/joueur/"+quiestu2+"/!!robot!!").then(function (response) {
@@ -212,11 +213,13 @@ function postBateau(part) {
 
       }
     });
-       
+  }catch(error){
+    window.location.href = "/";
+  }
   }
   
 function effacerBateauBis() {
-  
+  try{
   var quiestu2=$("#qui").html().split("Vous êtes ")[1].replace('"',""); 
   var adv=$("#contreadv").html();
     fetch("/effacerBateau", {
@@ -231,17 +234,20 @@ function effacerBateauBis() {
       .then((resp) => {
         resp.json().then((data) => {
           
-          
-            alert(JSON.stringify(data));
+          $("#info").append("<span>"+JSON.stringify(data)+"</br></span>");
+            //alert(JSON.stringify(data));
           
         });
       })
       .catch((err) => {
         console.log(err);
       });
+    }catch(error){
+    window.location.href = "/";
+  }
   }
   function effacerBateauBisRobot() {
-  
+  try{
   var quiestu2=$("#qui").html().split("Vous êtes ")[1].replace('"',""); 
 var robot="!!robot!!";
   var adv=$("#contreadv").html();
@@ -258,19 +264,21 @@ var robot="!!robot!!";
       .then((resp) => {
         resp.json().then((data) => {
           
-          
-            alert(JSON.stringify(data));
+          $("#info").append("<span>"+JSON.stringify(data)+"</br></span>");
+           //alert(JSON.stringify(data));
           
         });
       })
       .catch((err) => {
         console.log(err);
-      });
+      });}catch(error){
+    window.location.href = "/";
+  }
   }
     
     
   function effacerTirBis() {
-  
+  try{
   var quiestu2=$("#qui").html().split("Vous êtes ")[1].replace('"',""); 
   var adv=$("#contreadv").html();
     fetch("/deletetir", {
@@ -286,17 +294,20 @@ var robot="!!robot!!";
       .then((resp) => {
         resp.json().then((data) => {
           
-          
-            alert(JSON.stringify(data));
+          $("#info").append("<span>"+JSON.stringify(data)+"</br></span>");
+           // alert(JSON.stringify(data));
           
         });
       })
       .catch((err) => {
         console.log(err);
       });
+    }catch(error){
+    window.location.href = "/";
+  }
   }
   function effacerTirBisRobot() {
-  
+  try{
   var quiestu2=$("#qui").html().split("Vous êtes ")[1].replace('"',""); 
   var adv=$("#contreadv").html();;
     fetch("/deletetir", {
@@ -312,8 +323,8 @@ var robot="!!robot!!";
       .then((resp) => {
         resp.json().then((data) => {
           
-          
-            alert(JSON.stringify(data));
+          $("#info").append("<span>"+JSON.stringify(data)+"</br></span>");
+          // alert(JSON.stringify(data));
             restoreColor();
    actutirsparemail2($("#contreadv").html());
    actutirsparemail($("#contreadv").html());
@@ -323,9 +334,12 @@ var robot="!!robot!!";
       .catch((err) => {
         console.log(err);
       });
+    }catch(error){
+    window.location.href = "/";
+  }
   }
   function tirrobot() {
-  
+  try{
   var quiestu2=$("#qui").html().split("Vous êtes ")[1].replace('"',""); 
   var adv=$("#contreadv").html();
   var posXenvoi=getRandomInt(5);
@@ -357,7 +371,9 @@ var robot="!!robot!!";
       })
       .catch((err) => {
         console.log(err);
-      });
+      });}catch(error){
+    window.location.href = "/";
+  }
   }
  function fetchConversation() {
     fetch("/conversation").then(function (response) {
@@ -388,8 +404,15 @@ var robot="!!robot!!";
    
    <script>function poserbateauRobot(){
  fetchPartie();
-   }</script>
-  <div id="principal">
+   }
+   function cleaninfo(){
+     $("#info").empty();
+   }
+   </script>
+  <div id="principal" >
+    
+  
+    <span>bataille navale</span>
     <div><p id="contreadv"></p></div>
     <div id="apparitionChat">
       <div>
@@ -403,8 +426,11 @@ var robot="!!robot!!";
        <div class="scroller" style="background-color: rgb(118, 227, 247)"><p id="receiveMsg"></p></div>
        </div>
        </div>
-       </div>
-       <div class="container2">
+       </div>   
+
+       <div class="gradientDiv">
+     
+       <div  class="container2">
         <div id="td00" onclick="valueCase(this)" ><span>0</span></div>
         <div id="td10"onclick="valueCase(this)"><span>1</span></div>
         <div id="td20"onclick="valueCase(this)"><span>2</span></div>
@@ -438,67 +464,101 @@ var robot="!!robot!!";
        
       
       </div>
+      
+      </div>
+      <div>
+      <div id="adversaire"></div>
+      <button onclick="cleaninfo()">effacer les infos</button>
+      <div><span>Console</span><div  class="scroller" id="info"></div>></div>
+
+
+
+      </div>
     <div>
       <div ><p id="changeone"></p></div>
       <p id="ou"></p></div>
-    <div><button onclick="postAqui()">robot</button>
-      <button onclick="poserbateauRobot()">poser bateau de robot</button>
-      <button onclick="effacerTirBisRobot()">effacer tir robot</button>
-      <button onclick=" effacerBateauBisRobot()">effacer bateau robot</button></div>
-     <div>
-        <h1>bataille navale</h1></br></br>
-        </div>
-        
-     <div><a href="/loginpage">login</a></br></br>
-      <a href="/bateau">Bateau</a></br></br>
-      <a href="/partie">partie</a></br></br></div>
    
       
-     
-      <div>
+        </div>
     <div  class="container" >
-     
+    
+      <div><p id="qui" ></p></div>
+      <div>   <div><a href="/loginpage">login</a></br></br>
+        <a href="/bateau">Bateau</a></br></br>
+        <a href="/partie">partie</a></br></br></div></div>
+     <div>
        <div>
-         <button id="play2">joeur musique</button>
+         <button id="play2">jouer musique</button>
          <button id="pause2">pause</button>
          <button id="restart2">recommencer la musique</button>
        </div>
-      
-        
-        <div id="adversaire"></div>
-        <h2 id="textAff">Cliquer sur la case pour tirer si c'est votre tour.</h2>
-      <div>
-      </form></br></br>
-            <form id="tirdessus" method="POST" action="/insert/tir" target="hiddenFrame">
-              <label for="name"></label>
-            </br>
-            </br></br>
-              <select id="selectX" name="posX">
-              <nom>posX</nom>
-              <option valeur="0">0</option>
-              <option valeur="1">1</option>
-              <option valeur="2">2</option>
-              <option valeur="3">3</option>
-              <option valeur="4">4</option>
+       <div><button onclick="postAqui()">robot</button>
+        <button onclick="poserbateauRobot()">poser bateau de robot</button>
+        <button onclick="effacerTirBisRobot()">effacer tir robot</button>
+        <button onclick=" effacerBateauBisRobot()">effacer bateau robot</button></div>
+       
+        <div>
+          <div>
+            <!--
+                      <form id="effacerbateau" action="/effacerBateau" method="post" target="hiddenFrame">
+                        <input type="submit" value="Enlever vos bateau" />
+                    </form>
+                  -->
+                  <button onclick="restoreColor(),effacerBateauBis()">Effacer les bateux de cette partie</button>  
+                    <!--
+                    <form id="tirdelete" method="POST" action="/deletetir" target="hiddenFrame">
+                      <label for="name"></label>
+                      
+                      <input  type="submit" value="effacer tous les tirs" />
+                    
             
+                </form>-->
+                <style>select{width:200px;
+                  height: 150px;}</style>
+                <button onclick="restoreColor(),effacerTirBis()">Effacer les tirs de cette partie</button>  
+                
+                <button id="play">jouer</button>
+                </div>
+
+
+
+          <div>
+          </form></br></br>
+                <form id="tirdessus" method="POST" action="/insert/tir" target="hiddenFrame">
+                  <label for="name"></label>
+                </br>
+                </br></br>
+                  <select id="selectX" name="posX">
+                  <nom>posX</nom>
+                  <option valeur="0">0</option>
+                  <option valeur="1">1</option>
+                  <option valeur="2">2</option>
+                  <option valeur="3">3</option>
+                  <option valeur="4">4</option>
+                
+                  
+                  </select>
+               <select id="selectY" name="posY">
+               <nom>posY</nom>
+               <option valeur="0">0</option>
+               <option valeur="1">1</option>
+               <option valeur="2">2</option>
+               <option valeur="3">3</option>
+               <option valeur="4">4</option>
+               <input id="adv" name="adversaire" type="text">
+               </select>
               
-              </select>
-           <select id="selectY" name="posY">
-           <nom>posY</nom>
-           <option valeur="0">0</option>
-           <option valeur="1">1</option>
-           <option valeur="2">2</option>
-           <option valeur="3">3</option>
-           <option valeur="4">4</option>
-           <input id="adv" name="adversaire" type="text">
-           </select>
-          
-           <button id="feu" type="submit"> Feu<i style="color:red; width:50px" class="fas fa-meteor" onclick=" actutirs(), savoirsitirer()" ></i></button>
-          
-          
+               <button id="feu" type="submit"> Feu<i style="color:red; width:50px" class="fas fa-meteor" onclick=" actutirs(), savoirsitirer()" ></i></button>
               
-        </form>  
-            </div>
+              
+                  
+            </form>  
+                </div>
+
+        </div>
+        
+       <div> <h2 id="textAff">Cliquer sur la case pour tirer si c'est votre tour.</h2></div>
+      
             <div>
             <form id="touche" method="POST" action="/touche" target="hiddenFrame">
 
@@ -512,7 +572,7 @@ var robot="!!robot!!";
             </form>
       
       </div>
-      <div><p id="qui" ></p></div>
+
         
   
       <iframe id="transit" name="hiddenFrame" width="0" height="0" border="0" style="display: none;"></iframe></br></br>
@@ -530,27 +590,7 @@ var robot="!!robot!!";
       
       
          </div>
-         <div>
-<!--
-          <form id="effacerbateau" action="/effacerBateau" method="post" target="hiddenFrame">
-            <input type="submit" value="Enlever vos bateau" />
-        </form>
-      -->
-      <button onclick="restoreColor(),effacerBateauBis()">Effacer les bateux de cette partie</button>  
-        <!--
-        <form id="tirdelete" method="POST" action="/deletetir" target="hiddenFrame">
-          <label for="name"></label>
-          
-          <input  type="submit" value="effacer tous les tirs" />
-        
-
-    </form>-->
-    <style>select{width:200px;
-      height: 150px;}</style>
-    <button onclick="restoreColor(),effacerTirBis()">Effacer les tirs de cette partie</button>  
-    
-    <button id="play">jouer</button>
-    </div>
+   
     </div>
     
     
@@ -609,14 +649,17 @@ var X=$("#selectX option:selected").text();
       
         $.getJSON('/qui', function (data) {
           if(data===undefined){
-            alert("Veuillez vous connecter.");
+            $("#info").append("<span>"+"Veuillez vous connecter."+"</br></span>");
+          //!! alert();
             window.location.href = "/loginpage";
           }
           
           
          
           if(JSON.stringify(data.message)==='"Qui êtes vous?, Veuillez-vous connecter. "'){
-            alert("Veuillez vous connecter.");
+           //!! alert("Veuillez vous connecter.");  
+            $("#info").append("<span>"+"Veuillez vous connecter."+"</br></span>");
+     
             window.location.href = "/loginpage";
           }
 
@@ -910,7 +953,9 @@ var posX;
     $.getJSON('/mesbateau/'+adversaire, function (data) {
       console.log("/////////////////"+JSON.stringify(data));
       if(data.message.length<2){
-        alert("veuillez placer deux bateaux contre "+adversaire );
+        $("#info").append("<span>"+"veuillez placer deux bateaux contre "+adversaire +"</br></span>");
+          //!! alert();
+       // alert("veuillez placer deux bateaux contre "+adversaire );
         window.location.href="/bateau";
        
 
@@ -919,8 +964,8 @@ var posX;
       for (var i = 0; i < data.message.length; i++) {
       
         console.log("!!!!!!!!!!!"+data.message);
-
-      alert(JSON.stringify("#td"+data.message[i].bateauX+data.message[i].bateauY));
+        $("#info").append("<span>"+JSON.stringify("#td"+data.message[i].bateauX+data.message[i].bateauY)+"</br></span>");
+     // alert(JSON.stringify("#td"+data.message[i].bateauX+data.message[i].bateauY));
 
       $("#ou").append("bateau en X: "+data.message[i].bateauX+"Y :"+data.message[i].bateauY+"<br>");
       $("#td"+data.message[i].bateauX+data.message[i].bateauY).css("color","red");
@@ -1240,7 +1285,9 @@ $.ajax({
           console.log("vous êtes joueur1 contre"+data.message[i].joueur2);
           
           if(data.message[i].tourj1==1){
-            alert("C'est votre tour contre :"+data.message[i].joueur2)
+
+            $("#info").append("<span>"+"C'est votre tour contre :"+data.message[i].joueur2+"</br></span>");
+            //alert("C'est votre tour contre :"+data.message[i].joueur2)
             generate+="  <option value=XXXT1"+data.message[i].tourj1+">"+data.message[i].joueur2+"</option>    ";
 
     
@@ -1255,7 +1302,8 @@ $.ajax({
        else if(quiestu==data.message[i].joueur2){
         console.log("vous êtes joueur2 contre"+data.message[i].joueu1);
         if(data.message[i].tourj1==0){
-            alert("C'est votre tour contre :"+data.message[i].joueur1)
+          $("#info").append("<span>"+"C'est votre tour contre :"+data.message[i].joueur1+"</br></span>");
+           // alert("C'est votre tour contre :"+data.message[i].joueur1)
            generate+="  <option value=XXXT2"+data.message[i].tourj1+">"+data.message[i].joueur1+"</option>    ";
           }
           else if(data.message[i].tourj1==1){
@@ -1294,7 +1342,8 @@ $.ajax({
           console.log("vous êtes joueur1 contre"+data.message[i].joueur2);
           
           if(data.message[i].tourj1==1){
-            alert("C'est votre tour contre :"+data.message[i].joueur2)
+            $("#info").append("<span>"+"C'est votre tour contre :"+data.message[i].joueur2+"</br></span>");
+          //  alert("C'est votre tour contre :"+data.message[i].joueur2)
             //generate+="  <option value=XXXT1"+data.message[i].tourj1+">"+data.message[i].joueur2+"</option>    ";
             $('#adversaire').find('option[text="'+new String(data.message[i].joueur2)+'"]').attr( "value", "XXXT1"+data.message[i].tourj1 );
            
@@ -1311,7 +1360,8 @@ $.ajax({
        else if(quiestu==data.message[i].joueur2){
         console.log("vous êtes joueur2 contre"+data.message[i].joueu1);
         if(data.message[i].tourj1==0){
-            alert("C'est votre tour contre :"+data.message[i].joueur1)
+          $("#info").append("<span>"+"C'est votre tour contre :"+data.message[i].joueur1+"</br></span>");
+            //alert("C'est votre tour contre :"+data.message[i].joueur1)
            //generate+="  <option value=XXXT2"+data.message[i].tourj1+">"+data.message[i].joueur1+"</option>    ";
            $('#adversaire').find('option[text="'+new String(data.message[i].joueur1)+'"]').attr( "value", "XXXT2"+data.message[i].tourj1 );
           
@@ -1339,7 +1389,8 @@ $.ajax({
    $("#changeone").text(2);
         },
        error:function(data){
-        alert(JSON.stringify(data));
+        $("#info").append("<span>"+JSON.stringify(data)+"</br></span>");
+        //alert(JSON.stringify(data));
        }
      });
 
@@ -1550,21 +1601,23 @@ $.ajax({
           var reqemail=$("#contreadv").html();
           data.qui.forEach(element => {
           if(element.email===reqemail){
-          alert(data.message+" vous avez atteint :"+element.email+"dont le bateau est :"+element.nom);
+            $("#info").append("<span>"+data.message+" vous avez atteint :"+element.email+"dont le bateau est :"+element.nom+"</br></span>");
+         //alert(data.message+" vous avez atteint :"+element.email+"dont le bateau est :"+element.nom);
         }
         });
         
          
         }
         else{
-          alert("aucun bateau touche");
+          $("#info").append("<span>"+"aucun bateau touche"+"</br></span>");
+        //  alert("aucun bateau touche");
         }
         actutirs();
            ///console.log(data); // show response from the php script.
        },
        error:function(data){
-        
-         alert(data.message);
+        $("#info").append("<span>"+data.message+"</br></span>");
+         //alert(data.message);
        }
      });
 

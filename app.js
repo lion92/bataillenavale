@@ -102,10 +102,13 @@ socket.on('disconnect', function(){
 })
 let transfert="";
 socket.on("chat message", function(msg){
-console.log(msg)
+console.log(msg) 
+if(!(msg.split(":")[0]===undefined||msg.split(":")[1]===undefined)){
 let user=msg.split(":")[0];
 let message=msg.split(":")[1];
+
 todo.enregistrerMsg(user,message);
+}
 io.emit("chat message", msg)
 
 })
