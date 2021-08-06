@@ -1,114 +1,120 @@
-body { background-color:black;
+body {
+  background-color: black;
   background-size: 100%, 100%;
-    font-family:anton;
+  font-family: anton;
 }
 
-  #transit{
-
+#transit {
   visibility: hidden;
 }
 
-
-body {font-family: Arial, Helvetica, sans-serif;
-    padding: 0px;}
-
-  
-  input[type=text], textarea, input[type=email] {
-    width: 100%;
-   
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    box-sizing: border-box;
- 
-    margin-bottom: 16px;
-    margin-right: 0px;
-    margin-left: 0px;
-    resize: vertical;
-  }
-  label{margin-right: 0px;
-    margin-left: 0px;
-    width: 100%;}
-  
-  button, input[type=submit] {
-    background-color: #1255a2;
-    color: white;
-    padding: 12px 20px;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-  }
-  
-  input[type=submit]:hover {
-    background-color: #1872D9;
-  }
-  .principal {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-wrap: wrap;
-    height:100%;
-  
-  }
-  
-
-  .container {
-    /* Ajouter box-sizing */
-    display: flex;
-    box-sizing : border-box;
-    border-radius:5px;
-    
-    opacity: 1;
-    
-  
-   
-   justify-content: center;
-  flex-wrap: wrap;
-    /* redéfinition 400 + 2*20 */
-    
-    margin:0 auto;
-  }
-
-  h1  {
-    color: cornflowerblue;
-
-  }
-  tr,td,img{
-    width: 30px;
-    height: 30px;
-  }
-  tr,td{border: solid 3px black;
-  background-color: lightskyblue;
-color: blue;}
-  
-  tr {
-    display: table-row;
-    vertical-align: inherit;
-    border-color: inherit;
-  }
-  table{ 
-    margin: 0 auto; }
-   
-    #container div{
-      margin: 3px;
-     
-    }
-  
-  
-
-  
- 
-  a{
-    font-size: 20px;
-  }
-#imgjeu{
-
-  width: 500px;
-  height:100%;
+body {
+  font-family: Arial, Helvetica, sans-serif;
+  padding: 0px;
 }
-body{box-sizing: border-box;}
-div{margin: 3px;
-padding: 3px;}
-td:hover{
+
+input[type="text"],
+textarea,
+input[type="email"] {
+  width: 100%;
+
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+
+  margin-bottom: 16px;
+  margin-right: 0px;
+  margin-left: 0px;
+  resize: vertical;
+}
+label {
+  margin-right: 0px;
+  margin-left: 0px;
+  width: 100%;
+}
+
+button,
+input[type="submit"] {
+  background-color: #1255a2;
+  color: white;
+  padding: 12px 20px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+input[type="submit"]:hover {
+  background-color: #1872d9;
+}
+.principal {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  height: 100%;
+}
+
+.container {
+  /* Ajouter box-sizing */
+  display: flex;
+  box-sizing: border-box;
+  border-radius: 5px;
+  flex-direction: row;
+  opacity: 1;
+
+  justify-content: center;
+
+  /* redéfinition 400 + 2*20 */
+  min-width: 10vw;
+
+
+}
+
+
+h1 {
+  color: cornflowerblue;
+}
+tr,
+td,
+img {
+  width: 30px;
+  height: 30px;
+}
+tr,
+td {
+  border: solid 3px black;
+  background-color: lightskyblue;
+  color: blue;
+}
+
+tr {
+  display: table-row;
+  vertical-align: inherit;
+  border-color: inherit;
+}
+table {
+  margin: 0 auto;
+}
+
+#container div {
+  margin: 3px;
+}
+
+a {
+  font-size: 20px;
+}
+#imgjeu {
+  width: 500px;
+  height: 100%;
+}
+body {
+  box-sizing: border-box;
+}
+div {
+  margin: 3px;
+  padding: 3px;
+}
+td:hover {
   background-color: gold;
 }
 #td00,
@@ -143,7 +149,7 @@ td:hover{
   text-align: center;
 }
 .container2 {
-  height:100%;
+  height: 100%;
   display: grid;
   grid-template-columns: 30px 30px 30px 30px 30px 30px;
   gap: 20px;
@@ -184,7 +190,6 @@ td:hover{
   grid-column-start: 2;
   grid-row-start: 2;
   transform: rotate(90deg);
-
 }
 #td12 {
   grid-column-start: 3;
@@ -282,24 +287,22 @@ td:hover{
 span {
   color: white;
 }
-#imgjeu{
+#imgjeu {
   display: flex;
 }
 .scroller {
   width: 300px;
   height: 100px;
   overflow-y: scroll;
-  scrollbar-color:  white black;
+  scrollbar-color: white black;
   scrollbar-width: thin;
 }
-#apparitionChat{
+#apparitionChat {
   display: grid;
   grid-template-columns: 7fr;
-
 }
-#apparitionChat div{
+#apparitionChat div {
   grid-column-start: 7;
-
 }
 select {
   -webkit-appearance: none;
@@ -325,17 +328,17 @@ select::-ms-expand {
   line-height: 3;
   background: #2c3e50;
   overflow: hidden;
-  border-radius: .25em;
+  border-radius: 0.25em;
 }
 select {
   flex: 1;
-  padding: 0 .5em;
+  padding: 0 0.5em;
   color: #fff;
   cursor: pointer;
 }
 /* Arrow */
 .select::after {
-  content: '\25BC';
+  content: "\25BC";
   position: absolute;
   top: 0;
   right: 0;
@@ -343,47 +346,233 @@ select {
   background: #34495e;
   cursor: pointer;
   pointer-events: none;
-  -webkit-transition: .25s all ease;
-  -o-transition: .25s all ease;
-  transition: .25s all ease;
+  -webkit-transition: 0.25s all ease;
+  -o-transition: 0.25s all ease;
+  transition: 0.25s all ease;
 }
 /* Transition */
 .select:hover::after {
   color: #f39c12;
 }
-.gradientDiv{
-    width: 300px;
-    height: 300px;
-    padding: 5px;
-    background: #181818 ;
-    margin: 30px;
+.gradientDiv {
+  width: 300px;
+  height: 300px;
+  padding: 5px;
+  background: #181818;
+  margin: 30px;
   opacity: 0.9;
-    box-shadow: 0px 0px 3px rgb(255 255  255 / 0.2),
-                     0px 0px 12px rgb(147 112 219 / 2);
+  box-shadow: 0px 0px 3px rgb(255 255 255 / 0.2),
+    0px 0px 12px rgb(147 112 219 / 2);
 
-    background: #222;
+  background: #222;
   background: radial-gradient(#333, #111);
-
 }
 
-
-
-
-.innerDiv{
-	width: 300px;
-	height: 300px;
-	background: linear-gradient(to right, #595656, #333);;
-	
-
+.innerDiv {
+  width: 300px;
+  height: 300px;
+  background: linear-gradient(to right, #595656, #333);
 }
 
-.inner_div{
-	width: 250px;
-	height: 250px;
-	background: transparent;
-	transform: translate(10%,10%);
-	color: #fff;
-	font-family: sans-serif;
-	text-align: left;
-	font-size: 23px;
+.inner_div {
+  width: 250px;
+  height: 250px;
+  background: transparent;
+  transform: translate(10%, 10%);
+  color: #fff;
+  font-family: sans-serif;
+  text-align: left;
+  font-size: 23px;
+}
+
+select {
+  width: 70px;
+  height: 60px;
+}
+
+:root {
+  --hue: 275deg; /* change hue of picture (320deg) */
+  --orangered: orangered;
+  --darkorange: darkorange;
+  --orange: orange;
+  --yellow: yellow;
+  --black: black;
+}
+* {
+  box-sizing: border-box;
+}
+html {
+  background: #788;
+}
+
+#canvas {
+  position: relative;
+  width: 600px;
+  height: 300px;
+  background: linear-gradient(
+    to bottom,
+    var(--darkorange) 25%,
+    var(--yellow) 70%,
+    var(--orange) 70%,
+    var(--orangered)
+  );
+  filter: hue-rotate(var(--hue));
+  transform-origin: top center;
+  transform: scale(1.5);
+  margin: 0 auto;
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.4);
+  border: 20px solid white;
+}
+#canvas:before {
+  /* texture-overlay */
+  content: "";
+  position: absolute;
+  left: -20px;
+
+  width: inherit;
+  height: inherit;
+  border: 20px solid white;
+  box-sizing: border-box;
+  background: radial-gradient(circle, rgba(60, 60, 60, 1) 1px, transparent 1px);
+  background-size: 3px 3px;
+  z-index: 2;
+  mix-blend-mode: overlay;
+  opacity: 0.25;
+}
+*,
+::before,
+::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+.container3 {
+  margin-bottom: 30px;
+  overflow: hidden;
+  display: flex;
+  /* Fonctionne avec toutes les tailles */
+  width: 30%;
+  position: absolute;
+  top: 5%;
+  transform: translateY(-50%);
+  /* pour rotate on enlève le translate et on rajoute le rotate */
+  /* transform:  rotate(90deg); */
+}
+.txt {
+  white-space: nowrap;
+  font-size: 30px;
+  animation: scrollTxt 5s linear infinite;
+}
+
+.t1 {
+  color: red;
+}
+.t2 {
+  color: blue;
+}
+@keyframes scrollTxt {
+  0% {
+    transform: translate(-100%, 0);
+  }
+  100% {
+    transform: translate(0%, 0);
+  }
+}
+select {
+  width: 200px;
+  height: 150px;
+}
+
+@import url("https://fonts.googleapis.com/css?family=Montserrat&display=swap");
+
+* {
+  cursor: none;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+section {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  flex-direction: column;
+}
+
+h1 {
+  font-family: montserrat;
+  font-size: 40px;
+}
+
+a {
+  font-family: Montserrat;
+  position: relative;
+  text-decoration: none;
+}
+
+a:after {
+  content: "";
+  position: absolute;
+  width: 0;
+  height: 2px;
+  display: block;
+  margin-top: 0px;
+  left: 0%;
+  background: black;
+  transition: width 0.3s ease;
+}
+
+a:hover:after {
+  width: 100%;
+  left: 0%;
+  background: black;
+}
+
+.cursor {
+  opacity: 0.8;
+  background-color: white;
+  width: 50px;
+  height: 50px;
+  border-radius: 100%;
+  border: 1px solid black;
+  transition: all 200ms ease-out;
+  position: fixed;
+  pointer-events: none;
+  left: 0;
+  top: 0;
+  transform: translate(calc(-50% + 15px), -50%);
+}
+
+.cursor2 {
+  width: 20px;
+  height: 20px;
+  border-radius: 100%;
+  background-color: white;
+  opacity: 0.3;
+  position: fixed;
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+  transition: width 0.3s, height 0.3s;
+}
+
+.hover {
+  background-color: red;
+  opacity: 0.5;
+}
+
+.cursorinnerhover {
+  width: 50px;
+  height: 50px;
+  opacity: 0.5;
+}
+
+body {
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+.but{
+  max-width: 100vw;
+  min-width: 50vw;
 }

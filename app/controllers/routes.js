@@ -3,9 +3,6 @@ var todo = require('../models/todo');
 module.exports = {
 //
   configure: function(app) {
-    app.post('/insertpmu', function(req, res){
-      todo.reqpmu(req.body.pmu,res);
-    });
     app.post('/register', function(req, res){
       todo.reqgister(req.body.email, req.body.password,req, res);
     });
