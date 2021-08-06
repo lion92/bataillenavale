@@ -409,76 +409,24 @@ var robot="!!robot!!";
      $("#info").empty();
    }
    </script>
-   <style>*,
-::before,
-::after {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
-}
-
-.container3 {
-    margin-bottom:30px;
-  overflow: hidden;
-  display: flex;
-  /* Fonctionne avec toutes les tailles */
-  width: 30%;
-  position: absolute;
-  top: 5%;
-  transform: translateY(-50%);
-  /* pour rotate on enlève le translate et on rajoute le rotate */
-  /* transform:  rotate(90deg); */
-}
-.txt {
-  white-space: nowrap;
-  font-size: 30px;
-  animation: scrollTxt 5s linear infinite;
-}
-
-.t1 {
-   color: red; 
-}
-.t2 {
-   color: blue; 
-}
-@keyframes scrollTxt {
-  0%{
-    transform: translate(-100%, 0);
-  }
-  100% {
-    transform: translate(0%, 0);
-  }
-}</style>
-
-<div class="cursor2"></div>
-       <div class="container3">
-      <span class="txt t1">Bataille Navale&nbsp;</span>
-    </div>
-     <div class="principal">
-    <div id="ChatMessage">
-      
-  <input style="width: 300px;" type="text" id="envoi"/>
-     <button onclick="send()">envoyer</button>
-     <div class="scroller" style="background-color: rgb(118, 227, 247)"><p id="receiveMsg"></p></div>
-     </div>
-     <div id="apparitionChat">
+  <div id="principal" >
+    
+  
+    <span>bataille navale</span>
+    <div><p id="contreadv"></p></div>
+    <div id="apparitionChat">
       <div>
       <button id="cacheChat" class="btn live-chat-btn util-padding-horz-5 util-padding-vert-5">
         <span class="live-chat-text util-padding-horz-10">Chat online</span>
         <i class="fa fa-comments live-chat-icon live-chat-icon-online" data-notifications="0"></i>
       </button>
-      
+      <div id="ChatMessage">
+    <input style="width: 300px;" type="text" id="envoi"/>
+       <button onclick="send()">envoyer</button>
+       <div class="scroller" style="background-color: rgb(118, 227, 247)"><p id="receiveMsg"></p></div>
        </div>
-       </div> 
-     
-    
-  <div class="principal" >
-    
-  
-    <span>bataille navale</span>
-    <div><p id="contreadv"></p></div>
-      
-       <div> <h2 style="margin: 0; padding: 0;" id="textAff">A vous</h2></div>
+       </div>
+       </div>   
 
        <div class="gradientDiv">
      
@@ -609,7 +557,7 @@ var robot="!!robot!!";
 
         </div>
         
-     
+       <div> <h2 id="textAff">Cliquer sur la case pour tirer si c'est votre tour.</h2></div>
       
             <div>
             <form id="touche" method="POST" action="/touche" target="hiddenFrame">
@@ -654,131 +602,10 @@ var robot="!!robot!!";
 </div>
 
 
-<style>@import url('https://fonts.googleapis.com/css?family=Montserrat&display=swap');
-
-* {
-  cursor: none;
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-  
-}
 
 
 
-section {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100vh;
-  flex-direction: column;
-}
 
-h1 {
-  font-family: montserrat;
-  font-size: 40px;
-}
-
-a {
-  font-family: Montserrat;
-  position: relative;
-  text-decoration: none;
-}
-
-a:after {
-  content: '';
-  position: absolute;
-  width: 0;
-  height: 2px;
-  display: block;
-  margin-top: 0px;
-  left: 0%;
-  background: black;
-  transition: width .3s ease;
-}
-
-a:hover:after{
-  width: 100%;
-  left: 0%;
-  background: black;
-}
-
-.cursor {
-  opacity:0.8;
-  background-color:white;
-  width: 50px;
-  height: 50px;
-  border-radius: 100%;
-  border: 1px solid black;
-  transition: all 200ms ease-out;
-  position: fixed;
-  pointer-events: none;
-  left: 0;
-  top: 0;
-  transform: translate(calc(-50% + 15px), -50%);
-}
-
-.cursor2 {
-  width: 20px;
-  height: 20px;
-  border-radius: 100%;
-  background-color: white;
-  opacity: .3;
-  position: fixed;
-  transform: translate(-50%, -50%);
-  pointer-events: none;
-  transition: width .3s, height .3s;
-}
-
-.hover {
-  background-color: red;
-  opacity: 0.5;
-}
-
-.cursorinnerhover {
-  width: 50px;
-  height: 50px;
-  opacity: .5;
-}</style>
-
-
-<script>// UPDATE: I was able to get this working again... Enjoy!
-
-var cursor = document.querySelector('.cursor');
-var cursorinner = document.querySelector('.cursor2');
-var a = document.querySelectorAll('a');
-
-document.addEventListener('mousemove', function(e){
-  var x = e.clientX;
-  var y = e.clientY;
-  cursor.style.transform = `translate3d(calc(${e.clientX}px - 50%), calc(${e.clientY}px - 50%), 0)`
-});
-
-document.addEventListener('mousemove', function(e){
-  var x = e.clientX;
-  var y = e.clientY;
-  cursorinner.style.left = x + 'px';
-  cursorinner.style.top = y + 'px';
-});
-
-document.addEventListener('mousedown', function(){
-  cursor.classList.add('click');
-  cursorinner.classList.add('cursorinnerhover')
-});
-
-document.addEventListener('mouseup', function(){
-  cursor.classList.remove('click')
-  cursorinner.classList.remove('cursorinnerhover')
-});
-
-a.forEach(item => {
-  item.addEventListener('mouseover', () => {
-    cursor.classList.add('hover');
-  });
-  item.addEventListener('mouseleave', () => {
-    cursor.classList.remove('hover');
-  });
-})</script>
 
 
 
@@ -786,9 +613,9 @@ a.forEach(item => {
       var socket=io();
  socket.on('untir', function(msg ){
    $("#joueuractu").submit();
+
   savoirsitirer();
           actumesbateau();
-          tempsReelQui()
         actutirs();
         
   var X=$("#selectX option:selected").text();
@@ -1214,7 +1041,7 @@ var posX;
     for(let i=0;i<5;i++){
       for(let j=0; j<5;j++){
         $("#td"+i+j).css("opacity", "1");
-        $("#td"+i+j).css("background-color", "darkblue");
+        $("#td"+i+j).css("background-color", "blue");
         
       
         
@@ -1450,7 +1277,7 @@ $.ajax({
       console.log(data.message);
       var generate="";
       $("#adversaire").empty();
-      generate+="<select  multiple='oui'  onclick='savoirsitirer()' onchange='actumesbateau(),tempsReelQui()' id='quiadversaire'><nom>Adversaire</nom>)";
+      generate+="<select  multiple='oui'  onclick='savoirsitirer(),tempsReelqui()' onchange='actumesbateau(),tempsReelQui()' id='quiadversaire'><nom>Adversaire</nom>)";
 
       for(var i=0; i<data.message.length;i++){
         if(quiestu==data.message[i].joueur1){
@@ -1776,6 +1603,8 @@ $.ajax({
           if(element.email===reqemail){
             $("#info").append("<span>"+data.message+" vous avez atteint :"+element.email+"dont le bateau est :"+element.nom+"</br></span>");
          alert(data.message+" vous avez atteint :"+element.email+"dont le bateau est :"+element.nom);
+        
+      
         }
         });
         
