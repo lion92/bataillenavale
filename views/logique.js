@@ -62,6 +62,11 @@ function postAqui() {
         resp.json().then((data) => {
           console.log(data);
           tirrobot();
+          savoirsitirer();
+               actumesbateau(),
+               tempsReelQui(),
+               actutirs()
+
         });
       })
       .catch((err) => {

@@ -52,6 +52,7 @@ input[type="submit"]:hover {
   justify-content: center;
   flex-wrap: wrap;
   height: 100%;
+  margin: 0;
 }
 
 .container {
@@ -66,10 +67,7 @@ input[type="submit"]:hover {
 
   /* redéfinition 400 + 2*20 */
   min-width: 10vw;
-
-
 }
-
 
 h1 {
   color: cornflowerblue;
@@ -110,13 +108,7 @@ a {
 body {
   box-sizing: border-box;
 }
-div {
-  margin: 3px;
-  padding: 3px;
-}
-td:hover {
-  background-color: gold;
-}
+
 #td00,
 #td01,
 #td02,
@@ -572,7 +564,36 @@ body {
   background-repeat: no-repeat;
   background-size: cover;
 }
-.but{
+.but {
   max-width: 100vw;
   min-width: 50vw;
+}
+#touche,
+#partieencours {
+  visibility: collapse;
+}
+.container3 {
+}
+#ChatMessage {
+  margin-top: 10vh;
+}
+.console,
+#apparitionChat {
+  margin-top: 10vh;
+}
+button {
+  margin-left: 2px;
+  margin-top: 5px;
+}
+.zone:hover{
+  background-color: red !important;
+}
+button:hover{
+  background-color:green;
+}
+#qui, p, h2{
+  color: white;
+}
+#receiveMsg{
+  color: black;
 }
