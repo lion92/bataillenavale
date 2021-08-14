@@ -6,32 +6,32 @@
       <title>bataille navale</title>
       <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
       <link rel="stylesheet" href="css/main.css">
-      <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
-   </head>
+      <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css" integrity="sha384-DyZ88mC6Up2uqS4h/KRgHuoeGwBcD4Ng9SiP4dIRy0EXTlnuz47vAwmeGwVChigm" crossorigin="anonymous">
+    </head>
    <body>
       <div class="cursor2"></div>
       <canvas id="canvas1"></canvas>
       <script src="particule.js"></script>
       <header>
          <div class="liensvers">
-            <a class="link" href="/loginpage">login</a>
+            <a class="link" href="/loginpage">Login</a>
             <a class="link" href="/bateau">Bateau</a>
-            <a class="link" href="/partie">partie</a>
+            <a class="link" href="/partie">Partie</a>
          </div>
          <div class="robot">
-            <a class="link" onclick="postAqui()">robot-tir</a>
-            <a onclick="poserbateauRobot()" class="link">bateau-robot</a>
-            <a onclick="effacerTirBisRobot()" class="link">effacer-tir-robot</a>
-            <a onclick=" effacerBateauBisRobot()" class="link">effacer-robot-bat</a>
+            <a class="link" onclick="postAqui()"><i class="fas fa-robot"></i><i class="fas fa-fire"></i></a>
+            <a onclick="poserbateauRobot()" class="link"><i class="fas fa-robot"><i class="fas fa-ship"></i></i></a>
+            <a onclick="effacerTirBisRobot()" class="link"><i class="fas fa-robot"></i><i class="far fa-trash-alt"></i></a>
+            <a onclick=" effacerBateauBisRobot()" class="link"><i class="fas fa-robot"></i><i class="far fa-trash-alt"></i><i class="fas fa-ship"></i></a>
          </div>
          <div class="notretir">
-            <a onclick="restoreColor(),effacerBateauBis()">Effacer les bateux de cette partie</a>
-            <a onclick="restoreColor(),effacerTirBis()">Effacer les tirs de cette partie</a>
+            <a onclick="restoreColor(),effacerBateauBis()"><i class="far fa-trash-alt"></i><i class="fas fa-ship"></i></a>
+            <a onclick="restoreColor(),effacerTirBis()"><i class="far fa-trash-alt"></i></a>
          </div>
          <div class="musique">
-            <a id="play2" class="link">jouer musique</a>
-            <a id="pause2" class="link">pause</a>
-            <a id="restart2" class="link">recommencer la musique</a>
+            <a id="play2" class="link"><i class="fas fa-music"></i></a>
+            <a id="pause2" class="link"><i class="fas fa-pause-circle"></i></a>
+            <a id="restart2" class="link"><i class="fas fa-reply"></i></a>
          </div>
       </header>
       <div class="container3">
@@ -48,7 +48,7 @@
             <div>
                <button id="cacheChat" class="btn live-chat-btn util-padding-horz-5 util-padding-vert-5">
                <span class="live-chat-text util-padding-horz-10">Chat online</span>
-               <i class="fa fa-comments live-chat-icon live-chat-icon-online" data-notifications="0"></i>
+               
                </button>
             </div>
          </div>
@@ -56,9 +56,9 @@
       <div class="principal">
          <div>
             <div class="container">
-               <div><a href="/loginpage">login</a></br></br>
+               <div><a href="/loginpage">Login</a></br></br>
                   <a href="/bateau">Bateau</a></br></br>
-                  <a href="/partie">partie</a></br></br>
+                  <a href="/partie">Partie</a></br></br>
                </div>
                <div id="adversaire"></div>
             </div>
@@ -142,7 +142,7 @@
                   <option valeur="4">4</option>
                   <input id="adv" name="adversaire" type="text">
                </select>
-               <button id="feu" type="submit"> Feu<i style="color:red; width:50px" class="fas fa-meteor" onclick=" actutirs(), savoirsitirer()"></i></button>
+               <button onclick=" actutirs(), savoirsitirer()" id="feu" type="submit"> Feu </button>
             </form>
          </div>
       </div>
@@ -189,6 +189,43 @@
             </form>
          </div>
       </div>
+      <footer class="site-footer">
+        <div class="container">
+          <div class="row">
+            <div class="col-sm-12 col-md-6">
+              <h6>About</h6>
+              <p class="text-justify">Bataille navale créé par kriss pour son projet de fin d'étude.</p>
+            </div>
+  
+            <div class="col-xs-6 col-md-3">
+              <h6>Categories</h6>
+              <ul class="footer-links">
+                <li>  <a class="link" href="/loginpage">Login</a></li>
+               <li><a class="link" href="/bateau">Bateau</a></li>
+               <li> <a class="link" href="/partie">Parie</a></li>
+              </ul>
+            </div>
+  
+            <div class="col-xs-6 col-md-3">
+              <h6>Quick Links</h6>
+              <ul class="footer-links">
+                <li><a href="https://krissclotilde.com/">Autre site</a></li>
+                <li><a href="https://krissdeveloppeur.com/">Autre site</a></li>
+              </ul>
+            </div>
+          </div>
+          <hr>
+        </div>
+        <div class="container">
+          <div class="row">
+            <div class="col-md-8 col-sm-6 col-xs-12">
+              <p class="copyright-text">Copyright &copy; 2017 All Rights Reserved by 
+           <a href="#">Bataille navale</a>.
+              </p>
+            </div>
+          </div>
+        </div>
+  </footer>
    </body>
    <script src="./logique.js"></script>
    <script src='/socket.io/socket.io.js'></script>
