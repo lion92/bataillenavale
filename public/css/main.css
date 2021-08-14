@@ -587,6 +587,7 @@ button {
 }
 .zone:hover{
   background-color: red !important;
+  transform: scale(2,2) !important;
 }
 button:hover{
   background-color:green;
@@ -596,4 +597,93 @@ button:hover{
 }
 #receiveMsg{
   color: black;
+}
+*{z-index: 3;}
+#quiadversaire{z-index: 2;}
+#canvas1 {
+  position: fixed;
+  z-index: 0;
+  opacity: 0.5;
+  width: 100%;
+  height: 100%;
+  background: transparent;
+}
+.cursor2{
+  z-index: 6;
+}
+.container2{
+  background-color: lightsteelblue;
+  margin-top: 30px;
+  opacity: 0.9;
+  border-radius: 5%
+}
+#quiadversaire{
+  opacity: 0.9;
+  border-radius: 5%
+}
+
+@import url('https://fonts.googleapis.com/css2?family=Kanit:ital,wght@0,200;1,900&display=swap');
+
+a,#qui{border-radius: 5%;font-family: 'Kanit', sans-serif;
+background-color: lightyellow;
+opacity: 0.9;
+margin-right: 10px;
+color: black;}
+a:hover{
+  border-radius: 5%;
+  background-color: greenyellow;
+  cursor: pointer;
+  margin-right: 10px;
+}
+.console{
+  margin-bottom:10px;
+}
+header {
+  display: flex;
+  top: 30px;
+
+  height: 30%;
+  width: 100%;
+  background-color: white;
+  align-items: center;
+  flex-wrap: wrap;
+  justify-content: center;
+  opacity: 0.7;
+}
+header a {
+  margin-left: 10px;
+  font-size: 1.3em;
+}
+.menuaff {
+  display: none;
+}
+.link {
+    margin-bottom: 5px;
+  }
+  .notretir, .liensvers, .robot, .musique{
+    display: flex;
+    flex-direction: column;
+  }
+@media screen and (max-width: 600px) {
+  header {
+    display: none;
+  }
+  .menuaff {
+    display: block;
+  }
+  header {
+    display: flex;
+    top: 30px;
+    flex-direction: column;
+    height: 40%;
+    width: 100%;
+    background-color: white;
+    align-items: center;
+    padding: 5px;
+    justify-content: center;
+    font-size: 7px;
+    opacity: 0.7;
+  }
+  
+
 }
