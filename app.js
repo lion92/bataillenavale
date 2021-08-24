@@ -22,6 +22,7 @@ app.use('/css', express.static(__dirname + 'public/css'))
 app.use('/js', express.static(__dirname + 'public/js'))
 app.use('/img', express.static(__dirname + 'public/img'))
 app.use('/img', express.static(__dirname + 'public/son'))
+app.use(express.static('views'))
 
 // Set Views
 app.set('views', './views')
@@ -29,6 +30,9 @@ app.set('view engine', 'ejs')
 
 app.get('', (req, res) => {
     res.render('index', { text: 'This is EJS'})
+})
+app.get('/info', (req, res) => {
+  res.render('chat')
 })
 
 app.get('/about', (req, res) => {
@@ -99,11 +103,27 @@ socket.on('disconnect', function(){
 })
 let transfert="";
 socket.on("chat message", function(msg){
-console.log(msg)
+console.log(msg) 
+if(!(msg.split(":")[0]===undefined||msg.split(":")[1]===undefined)){
+let user=msg.split(":")[0];
+let message=msg.split(":")[1];
 
+todo.enregistrerMsg(user,message);
+}
 io.emit("chat message", msg)
 
 })
+
+socket.on("information", function(msg){
+  console.log(msg)
+ 
+  todo.chatkriss(msg);
+  io.emit("chat message", msg)
+  
+  })
+
+
+
 socket.on('actuTir', function(msg){
   console.log("QUIIII:: "+msg);
   io.emit('tir', msg);

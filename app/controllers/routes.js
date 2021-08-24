@@ -3,9 +3,6 @@ var todo = require('../models/todo');
 module.exports = {
 //
   configure: function(app) {
-    app.post('/insertpmu', function(req, res){
-      todo.reqpmu(req.body.pmu,res);
-    });
     app.post('/register', function(req, res){
       todo.reqgister(req.body.email, req.body.password,req, res);
     });
@@ -13,10 +10,17 @@ module.exports = {
       todo.reqlogin(req.body.email, req.body.password,req, res);
     });
     app.post('/insert/bateau', function(req, res){
-      todo.reqbateau(req.body.nom,req.body.bateauX, req.body.bateauY,req,res);
+      todo.reqbateau(req.body.nom,req.body.bateauX, req.body.bateauY, req.body.partie,req,res);
     });
+    app.post('/insertrobot/bateau', function(req, res){
+      todo.reqbateauRobot(req.body.nom,req.body.bateauX, req.body.bateauY, req.body.email,req.body.partie,req,res);
+    });
+    
     app.get('/joueur', function(req, res){
       todo.reqjoueurencours(req,res);
+    });
+    app.get('/joueur/:qui/:adv', function(req, res){
+      todo.reqjoueurRobot(req.params.qui,req.params.adv,req,res);
     });
     app.get('/partieactu', function(req, res){
       todo.reqjoueurencours(req,res);
@@ -30,6 +34,10 @@ module.exports = {
     app.post('/updatej2', function(req, res){
       todo.requpdatetourj2( req.body.tourj1,req.body.joueur2,req,res);
     });
+    app.post('/updaterobotj2', function(req, res){
+      todo.requpdatetourobotj2( req.body.tourj1,req.body.joueur1, req.body.robot,req,res);
+    });
+
     app.post('/deconnexion', function(req, res){
       todo.reqdeconnexion(req,res);
     });
@@ -39,21 +47,31 @@ module.exports = {
     app.get('/tour', function(req, res){
       todo.selectpartie(req,res)
     });
-    app.get('/mesbateau', function(req, res){
-      todo.selectbateauparmail(req,res)
+    app.get('/mesbateau/:adv', function(req, res){
+      todo.selectbateauparmail(req.params.adv,req,res)
+    });
+
+    app.get('/mesbateau/:robot/:adv', function(req, res){
+      todo.selectbateauRobot(req.params.robot,req.params.adv,req,res)
     });
     app.post('/insert/tir', function(req, res){
       todo.reqtir(req.body.posX, req.body.posY,req.body.adversaire,req,res)
+    });
+    app.post('/robot/tir', function(req, res){
+      todo.reqtirRobot(req.body.posX, req.body.posY,req.body.adversaire,req.body.email,req,res)
     });
     app.post('/touche', function(req, res){
       todo.reqtouche(req.body.posX, req.body.posY,req,res)
     });
     app.post('/effacerBateau', function(req, res){
-      todo.reqeffacerbateau(req,res);
+      todo.reqeffacerbateau(req.body.adv,req,res);
+    });
+    app.post('/effacerBateauRobot', function(req, res){
+      todo.reqeffacerbateaurobot(req.body.robot,req.body.adv,req,res);
     });
   
     app.post('/deletetir', function(req, res){
-      todo.deleteplateau(res)
+      todo.deleteplateau(req.body.email, req.body.adversaire,req,res);
     });
     app.post('/deletetir/:email', function(req, res){
       todo.deleteplateauemail(req.params.email,res)
@@ -61,9 +79,16 @@ module.exports = {
     app.post('/deleteposition', function(req, res){
       todo.deleteposition(res)
     });
+
     app.get('/select/:bateau', function(req, res){
       todo.reqselect(req.params.bateau,res)
     });
+    app.get('/conversation', function(req, res){
+      todo.reqconversation(req,res)
+    })
+    app.get('/conv', function(req, res){
+      todo.chatkrissselect(req,res)
+    })
     app.get('/tirs', function(req, res){
       todo.gettir(res)
     });
