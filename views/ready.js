@@ -562,6 +562,9 @@ $(document).ready(function () {
       },
     });
   });
+  $(".menu").click(function() {
+    $( "header div" ).toggle();
+  });
   $("#updatej2").submit(function (e) {
     e.preventDefault(); // avoid to execute the actual submit of the form.
 
@@ -583,6 +586,7 @@ $(document).ready(function () {
       },
     });
   });
+ 
   $("#partie").submit(function (e) {
     e.preventDefault(); // avoid to execute the actual submit of the form.
 

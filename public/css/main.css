@@ -611,20 +611,12 @@ header a {
 .link {
   margin-bottom: 5px;
 }
-.liensvers,
-.musique,
-.notretir,
-.robot {
-  display: flex;
+.liensvers, .musique, .notretir, .robot{
+  display: none;
   flex-direction: column;
 }
 @media screen and (max-width: 600px) {
-  header {
-    display: none;
-  }
-  .menuaff {
-    display: block;
-  }
+  
   header {
     display: flex;
     top: 30px;
@@ -635,6 +627,10 @@ header a {
     align-items: center;
     padding: 5px;
     justify-content: center;
+  }
+  .liensvers, .musique, .notretir, .robot{
+    display: none;
+    flex-direction: column;
   }
 }
 .site-footer {
@@ -774,4 +770,12 @@ header a {
     margin-right: 0;
     font-weight: 600;
   }
+
+}
+.menu{
+  max-width: 200px;
+  max-height: 200px;
+}
+.menu :hover{
+  color: greenyellow;
 }
