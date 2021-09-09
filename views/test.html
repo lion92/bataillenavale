@@ -948,7 +948,9 @@ var posX;
                
       }
     }
+
     $("#contreadv").empty().append($('#quiadversaire option:selected').text());
+    
         let adversaire=$("#contreadv").html();
     $.getJSON('/mesbateau/'+adversaire, function (data) {
       console.log("/////////////////"+JSON.stringify(data));
@@ -1264,6 +1266,7 @@ $.ajax({
        success: function(data)
        {if(actualiser!=JSON.stringify(data.message) && $("#changeone").html()==1){
         actualiser=JSON.stringify(data.message);
+        alert(JSON.stringify(actualiser));
        //alert("C'est peut être votre tour :"+JSON.stringify(data.message));
        //  alert(JSON.stringify(data.message));
         var quiestu1=$("#qui").html();

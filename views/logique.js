@@ -68,7 +68,7 @@ function postAqui() {
                 actutirs()  
                 savoirsitirer();
                 
-               console.log("TTTTTTTTTTTTTESSSSSSSSSSSSSTTTTTTTTTTTTTTT");
+            
 
         });
       })

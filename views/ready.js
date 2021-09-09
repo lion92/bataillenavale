@@ -65,22 +65,20 @@ function quiestu() {
   $("#qui").empty();
 
   fetch("/qui").then(function (response) {
- console.log("test :"+JSON.stringify(response));
     if (response.ok) {
       response.json().then((data) => {
-         $("#qui").append(JSON.stringify(data.message)); 
-        
-          actu();
-          actubateau();
-          actutirs();
-        
-      
+        $("#qui").append(JSON.stringify(data.message));
+
+        actu();
+        actubateau();
+        actutirs();
+
         $("#tacheCree").submit(function (e) {
           e.preventDefault(); // avoid to execute the actual submit of the form.
-      
+
           var form = $(this);
           var url = form.attr("action");
-      
+
           $.ajax({
             type: "POST",
             url: url,
@@ -94,13 +92,13 @@ function quiestu() {
             },
           });
         });
-      
+
         $("#delete").submit(function (e) {
           e.preventDefault(); // avoid to execute the actual submit of the form.
-      
+
           var form = $(this);
           var url = form.attr("action");
-      
+
           $.ajax({
             type: "POST",
             url: url,
@@ -116,10 +114,10 @@ function quiestu() {
         });
         $("#joueur").submit(function (e) {
           e.preventDefault(); // avoid to execute the actual submit of the form.
-      
+
           var form = $(this);
           var url = form.attr("action");
-      
+
           $.ajax({
             type: "Get",
             url: url,
@@ -136,10 +134,10 @@ function quiestu() {
         });
         $("#tour").submit(function (e) {
           e.preventDefault(); // avoid to execute the actual submit of the form.
-      
+
           var form = $(this);
           var url = form.attr("action");
-      
+
           $.ajax({
             type: "Get",
             url: url,
@@ -147,7 +145,7 @@ function quiestu() {
             success: function (data) {
               actu();
               var qui = data.message;
-      
+
               for (var i = 0; i < qui.length; i++) {
                 console.log(qui[i].joueur1);
                 console.log(qui[i].joueur2);
@@ -160,13 +158,13 @@ function quiestu() {
             },
           });
         });
-      
+
         $("#updatej1").submit(function (e) {
           e.preventDefault(); // avoid to execute the actual submit of the form.
-      
+
           var form = $(this);
           var url = form.attr("action");
-      
+
           $.ajax({
             type: "POST",
             url: url,
@@ -183,24 +181,22 @@ function quiestu() {
           });
         });
         $("#changeone").text(1);
-      
+
         var actualiser = "";
         $("#joueuractu").submit(function (e) {
           e.preventDefault(); // avoid to execute the actual submit of the form.
-      
+
           var form = $(this);
           var url = form.attr("action");
-      
+
           $.ajax({
             type: "GET",
             url: url,
             data: form.serialize(), // serializes the form's elements.
             success: function (data) {
-              if (
-                actualiser != JSON.stringify(data.message) &&
-                $("#changeone").html() == 1
-              ) {
+              if (actualiser != JSON.stringify(data.message)) {
                 actualiser = JSON.stringify(data.message);
+
                 //alert("C'est peut être votre tour :"+JSON.stringify(data.message));
                 //  alert(JSON.stringify(data.message));
                 var quiestu1 = $("#qui").html();
@@ -209,21 +205,21 @@ function quiestu() {
                     .html()
                     .split("Vous êtes ")[1]
                     .replace('"', "");
-      
+
                   console.log(quiestu);
                   console.log(data.message);
                   console.log(data.message);
                   var generate = "";
                   $("#adversaire").empty();
                   generate +=
-                    "<select  multiple='oui'  onclick='savoirsitirer()' onchange='actumesbateau(),tempsReelQui()' id='quiadversaire'><nom>Adversaire</nom>)";
-      
+                    "<select  multiple='oui'  onclick='aquidejouerIndependant();savoirsitirer()' onchange='aquidejouerIndependant();actumesbateau(),tempsReelQui()' id='quiadversaire'><nom>Adversaire</nom>)";
+
                   for (var i = 0; i < data.message.length; i++) {
                     if (quiestu == data.message[i].joueur1) {
                       console.log(
                         "vous êtes joueur1 contre" + data.message[i].joueur2
                       );
-      
+
                       if (data.message[i].tourj1 == 1) {
                         $("#info").append(
                           "<span>" +
@@ -239,7 +235,9 @@ function quiestu() {
                           data.message[i].joueur2 +
                           "</option>    ";
                       } else if (data.message[i].tourj1 == 0) {
-                        console.log("C'est le tour de :" + data.message[i].joueur2);
+                        console.log(
+                          "C'est le tour de :" + data.message[i].joueur2
+                        );
                         generate +=
                           "  <option value=XXXT1" +
                           data.message[i].tourj1 +
@@ -266,7 +264,9 @@ function quiestu() {
                           data.message[i].joueur1 +
                           "</option>    ";
                       } else if (data.message[i].tourj1 == 1) {
-                        console.log("C'est le tour de :" + data.message[i].joueur1);
+                        console.log(
+                          "C'est le tour de :" + data.message[i].joueur1
+                        );
                         generate +=
                           "  <option value=XXXT2" +
                           data.message[i].tourj1 +
@@ -285,110 +285,17 @@ function quiestu() {
                 } else {
                   console.log("Veuillez vous connecter.");
                 }
-              } else {
-                actualiser = JSON.stringify(data.message);
-                //alert("C'est peut être votre tour :"+JSON.stringify(data.message));
-                //  alert(JSON.stringify(data.message));
-                var quiestu1 = $("#qui").html();
-                if (quiestu1 !== "Qui êtes vous?, Veuillez-vous connecter.") {
-                  var quiestu = $("#qui")
-                    .html()
-                    .split("Vous êtes ")[1]
-                    .replace('"', "");
-      
-                  console.log(quiestu);
-                  console.log(data.message);
-                  //console.log(data.message);
-                  var generate = "";
-                  // $("#adversaire").empty();
-                  // generate+="<select  multiple='oui'  onclick='savoirsitirer(),tempsReelqui()' onchange='actumesbateau(),tempsReelQui()' id='quiadversaire'><nom>Adversaire</nom>)";
-      
-                  for (var i = 0; i < data.message.length; i++) {
-                    if (quiestu == data.message[i].joueur1) {
-                      console.log(
-                        "vous êtes joueur1 contre" + data.message[i].joueur2
-                      );
-      
-                      if (data.message[i].tourj1 == 1) {
-                        $("#info").append(
-                          "<span>" +
-                            "C'est votre tour contre :" +
-                            data.message[i].joueur2 +
-                            "</br></span>"
-                        );
-                        //  alert("C'est votre tour contre :"+data.message[i].joueur2)
-                        //generate+="  <option value=XXXT1"+data.message[i].tourj1+">"+data.message[i].joueur2+"</option>    ";
-                        $("#adversaire")
-                          .find(
-                            'option[text="' +
-                              new String(data.message[i].joueur2) +
-                              '"]'
-                          )
-                          .attr("value", "XXXT1" + data.message[i].tourj1);
-                      } else if (data.message[i].tourj1 == 0) {
-                        console.log("C'est le tour de :" + data.message[i].joueur2);
-                        // generate+="  <option value=XXXT1"+data.message[i].tourj1+">"+data.message[i].joueur2+"</option>    ";
-                        $("#adversaire")
-                          .find(
-                            'option[text="' +
-                              new String(data.message[i].joueur2) +
-                              '"]'
-                          )
-                          .attr("value", "XXXT1" + data.message[i].tourj1);
-                      }
-                    } else if (quiestu == data.message[i].joueur2) {
-                      console.log(
-                        "vous êtes joueur2 contre" + data.message[i].joueu1
-                      );
-                      if (data.message[i].tourj1 == 0) {
-                        $("#info").append(
-                          "<span>" +
-                            "C'est votre tour contre :" +
-                            data.message[i].joueur1 +
-                            "</br></span>"
-                        );
-                        //alert("C'est votre tour contre :"+data.message[i].joueur1)
-                        //generate+="  <option value=XXXT2"+data.message[i].tourj1+">"+data.message[i].joueur1+"</option>    ";
-                        $("#adversaire")
-                          .find(
-                            'option[text="' +
-                              new String(data.message[i].joueur1) +
-                              '"]'
-                          )
-                          .attr("value", "XXXT2" + data.message[i].tourj1);
-                      } else if (data.message[i].tourj1 == 1) {
-                        console.log(
-                          "C'est le tour de :" + "" + data.message[i].joueur1
-                        );
-                        //generate+= "  <option value=XXXT2"+data.message[i].tourj1+">"+data.message[i].joueur1+"</option>    ";
-                        $("#adversaire")
-                          .find(
-                            'option[text="' +
-                              new String(data.message[i].joueur1) +
-                              '"]'
-                          )
-                          .attr("value", "XXXT2" + data.message[i].tourj1);
-                      }
-                    }
-                    console.log(generate);
-                    //$("#adversaire").empty().append(generate);
-                  }
-                  actubateau();
-                  actu();
-                  console.log(JSON.stringify(data.message));
-                  ///   console.log(data); // show response from the php script.
-                } else {
-                  console.log("Veuillez vous connecter.");
-                }
               }
               restoreColor();
               actutirsparemail2($("#contreadv").html());
               actutirsparemail($("#contreadv").html());
-      
+
               $("#changeone").text(2);
             },
             error: function (data) {
-              $("#info").append("<span>" + JSON.stringify(data) + "</br></span>");
+              $("#info").append(
+                "<span>" + JSON.stringify(data) + "</br></span>"
+              );
               //alert(JSON.stringify(data));
             },
           });
@@ -398,10 +305,10 @@ function quiestu() {
         });
         $("#updatej2").submit(function (e) {
           e.preventDefault(); // avoid to execute the actual submit of the form.
-      
+
           var form = $(this);
           var url = form.attr("action");
-      
+
           $.ajax({
             type: "POST",
             url: url,
@@ -417,13 +324,13 @@ function quiestu() {
             },
           });
         });
-      
+
         $("#partie").submit(function (e) {
           e.preventDefault(); // avoid to execute the actual submit of the form.
-      
+
           var form = $(this);
           var url = form.attr("action");
-      
+
           $.ajax({
             type: "POST",
             url: url,
@@ -438,13 +345,13 @@ function quiestu() {
             },
           });
         });
-      
+
         $("#positionbateau").submit(function (e) {
           e.preventDefault(); // avoid to execute the actual submit of the form.
-      
+
           var form = $(this);
           var url = form.attr("action");
-      
+
           $.ajax({
             type: "POST",
             url: url,
@@ -467,7 +374,7 @@ function quiestu() {
             console.log("email vide");
           } else {
             // avoid to execute the actual submit of the form.
-      
+
             $.ajax({
               type: "POST",
               url: url,
@@ -485,10 +392,10 @@ function quiestu() {
         });
         $("#email").submit(function (e) {
           e.preventDefault(); // avoid to execute the actual submit of the form.
-      
+
           var form = $(this);
           var url = form.attr("action");
-      
+
           $.ajax({
             type: "GET",
             url: url,
@@ -499,7 +406,7 @@ function quiestu() {
                 console.log(data[i].email);
                 $("#emailAff").append("" + data[i].email + "<br>");
               }
-      
+
               actu();
               ///   console.log(data); // show response from the php script.
             },
@@ -512,10 +419,10 @@ function quiestu() {
           $("#adv").val("");
           $("#adv").val($("#contreadv").html());
           e.preventDefault(); // avoid to execute the actual submit of the form.
-      
+
           var form = $(this);
           var url = form.attr("action");
-      
+
           $.ajax({
             type: "POST",
             url: url,
@@ -524,14 +431,14 @@ function quiestu() {
               console.log(data.message);
               actutirs();
               var socket = io();
-      
+
               restoreColor();
-      
+
               $("#iciX").val($("#selectX").val());
-      
+
               $("#iciY").val($("#selectY").val());
               $("#touche").submit();
-      
+
               $("#joue1").val($("#contreadv").html());
               $("#joue2").val($("#contreadv").html());
               $("#tourj1").val(0);
@@ -547,13 +454,13 @@ function quiestu() {
             },
           });
         });
-      
+
         $("#touche").submit(function (e) {
           e.preventDefault(); // avoid to execute the actual submit of the form.
-      
+
           var form = $(this);
           var url = form.attr("action");
-      
+
           $.ajax({
             type: "POST",
             url: url,
@@ -584,7 +491,9 @@ function quiestu() {
                   }
                 });
               } else {
-                $("#info").append("<span>" + "aucun bateau touche" + "</br></span>");
+                $("#info").append(
+                  "<span>" + "aucun bateau touche" + "</br></span>"
+                );
                 //  alert("aucun bateau touche");
               }
               actutirs();
@@ -596,20 +505,20 @@ function quiestu() {
             },
           });
         });
-      
+
         $("#tirdelete").submit(function (e) {
           e.preventDefault(); // avoid to execute the actual submit of the form.
-      
+
           var form = $(this);
           var url = form.attr("action");
-      
+
           $.ajax({
             type: "POST",
             url: url,
             data: form.serialize(), // serializes the form's elements.
             success: function (data) {
               actutirs();
-      
+
               savoirsitirer();
               actumesbateau();
               actutirs();
@@ -621,14 +530,14 @@ function quiestu() {
           document.location.href = "/";
         });
         $("#joueuractu").submit();
-      
+
         $("#updatej1").hide();
         $("#updatej2").hide();
         $("#partieencours").hide();
         quiestu2();
         var audioElement = document.createElement("audio");
         audioElement.setAttribute("src", "/son/tir.mp3");
-      
+
         audioElement.addEventListener(
           "ended",
           function () {
@@ -636,17 +545,17 @@ function quiestu() {
           },
           false
         );
-      
+
         audioElement.addEventListener("canplay", function () {
           $("#length").text("Duration:" + audioElement.duration + " seconds");
           $("#source").text("Source:" + audioElement.src);
           $("#status").text("Status: Ready to play").css("color", "green");
         });
-      
+
         audioElement.addEventListener("timeupdate", function () {
           $("#currentTime").text("Current second:" + audioElement.currentTime);
         });
-      
+
         $("#play").click(function () {
           audioElement.play();
           $("#status").text("Status: Playing");
@@ -654,19 +563,19 @@ function quiestu() {
             audioElement.pause(), $("#status").text("Status: Paused");
           }, 5000);
         });
-      
+
         $("#pause").click(function () {
           audioElement.pause();
           $("#status").text("Status: Paused");
         });
-      
+
         $("#restart").click(function () {
           audioElement.currentTime = 0;
         });
         fetchConversation();
         var audioElement2 = document.createElement("audio");
         audioElement2.setAttribute("src", "/son/musiquefond.mp3");
-      
+
         audioElement2.addEventListener(
           "ended",
           function () {
@@ -674,27 +583,29 @@ function quiestu() {
           },
           false
         );
-      
+
         audioElement2.addEventListener("canplay", function () {
           $("#length2").text("Duration:" + audioElement2.duration + " seconds");
           $("#source2").text("Source:" + audioElement2.src);
           $("#status2").text("Status: Ready to play").css("color", "green");
         });
-      
+
         audioElement2.addEventListener("timeupdate", function () {
-          $("#currentTime2").text("Current second:" + audioElement2.currentTime);
+          $("#currentTime2").text(
+            "Current second:" + audioElement2.currentTime
+          );
         });
-      
+
         $("#play2").click(function () {
           audioElement2.play();
           $("#status").text("Status: Playing");
         });
-      
+
         $("#pause2").click(function () {
           audioElement2.pause();
           $("#status2").text("Status: Paused");
         });
-      
+
         $("#restart2").click(function () {
           audioElement2.currentTime = 0;
         });
@@ -706,7 +617,7 @@ function quiestu() {
         $("td").mouseout(function () {
           $("#textAff").css("visibility", "hidden");
         });
-      
+
         $("#joueuractu").submit();
         $("#feu").hide();
         savoirsitirer();
@@ -719,10 +630,6 @@ function quiestu() {
           actutirsparemail2($("#contreadv").html());
           actutirsparemail($("#contreadv").html());
         });
-         
-
-
-
       });
     }
   });
@@ -743,7 +650,8 @@ function actumesbateau() {
   for (let i = 0; i < 5; i++) {
     for (let j = 0; j < 5; j++) {}
   }
-  $("#contreadv").empty().append($("#quiadversaire option:selected").text());
+  if ($("#quiadversaire option:selected").text() !== "")
+    $("#contreadv").empty().append($("#quiadversaire option:selected").text());
   let adversaire = $("#contreadv").html();
   $.getJSON("/mesbateau/" + adversaire, function (data) {
     console.log("/////////////////" + JSON.stringify(data));
@@ -807,7 +715,8 @@ function actumesbateau() {
 function tempsReelQui() {
   var quiestu2 = $("#qui").html().split("Vous êtes ")[1].replace('"', "");
   var socket = io();
-  $("#contreadv").empty().append($("#quiadversaire option:selected").text());
+  if ($("#quiadversaire option:selected").text() !== "")
+    $("#contreadv").empty().append($("#quiadversaire option:selected").text());
   let adversaire = $("#contreadv").html();
   //alert(adversaire);
   socket.emit("actuTir", quiestu2 + "/:/" + adversaire);
@@ -874,6 +783,45 @@ function actubateau() {
           actumesbateau();
         actutirs() }, 2000);*/
 //setInterval(function(){ $("#joueuractu").submit()}, 2000);
+function aquidejouerIndependant() {
+  alert("ok");
+  let joueur2 = $("#quiadversaire option:selected").text();
+  fetch("/aquidejouerj1/" + joueur2).then(function (response) {
+    // The API call was successful!
+    if (response.ok) {
+      let data = response.json().then((data) => {
+        console.log("RRRRRRRRRRRR" + JSON.stringify(data));
+        if (data.message !== 0) {
+          alert("ok2");
+          
+            if (data.message[0].tourj1 === 1) {
+              alert("ok3");
+              alert("C'est votre tour");
+            } else if (data.message[0].tourj1 === 0) {
+              alert("C'est le tour de :" + joueur2);
+            }
+          
+        } else if (data.length === 0) {
+          alert("ok3");
+          fetch("/aquidejouerj2/" + joueur2).then(function (response) {
+            // The API call was successful!
+            if (response.ok) {
+              let data = response.json().then((data) => {
+                if (!data.message[0].tourj1) {
+                  if (data.message[0].tourj1 === 0) {
+                    alert("C'est votre tour");
+                  } else if (data.message[0].tourj1 === 1) {
+                    alert("C'est le tour de :" + joueur2);
+                  }
+                }
+              });
+            }
+          });
+        }
+      });
+    }
+  });
+}
 
 $(document).ready(function () {
   $("#changeone").hide();
@@ -894,7 +842,6 @@ $(document).ready(function () {
   // $("#cont2").hide();
   $("#feu").hide();
   quiestu();
- 
 });
 
 /////////////////////////////////////////////////////////////////

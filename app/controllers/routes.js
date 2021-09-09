@@ -25,6 +25,12 @@ module.exports = {
     app.get('/partieactu', function(req, res){
       todo.reqjoueurencours(req,res);
     });
+    app.get('/aquidejouerj1/:joueur2', function(req, res){
+      todo.reqjoueurencoursIndependant(req.params.joueur2, req,res);
+    });
+    app.get('/aquidejouerj2/:joueur2', function(req, res){
+      todo.reqjoueurencoursIndependantj2(req.params.joueur2, req,res);
+    });
     app.post('/insert/partie', function(req, res){
       todo.reqpartie(req.body.joueur2, req.body.tourj1,req,res);
     });
