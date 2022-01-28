@@ -48,30 +48,33 @@ socket.on("untir", function (msg) {
       msg.split("/:/")[3] +
       "</br>"
   );
-  $("#textAff").hide();
+ $("#textAff").hide();
   //alert(msg);
 });
 
 function valueCase(e) {
   //;
+  
 
-  let idValue = e.id;
+    let idValue = e.id;
 
-  $("#selectX").val(idValue.split("td")[1].substr(0, 1));
-  $("#selectY").val(idValue.split("td")[1].substr(1, 2));
-  if ($("#textAff").is(":visible")) {
-    var socket = io();
-    var adversaire = $("#contreadv").html();
-    var quiestu2 = $("#qui").html().split("Vous êtes ")[1].replace('"', "");
-    var X = $("#selectX option:selected").text();
-    var Y = $("#selectY option:selected").text();
-    var msg = quiestu2 + "/:/" + adversaire + "/:/" + X + "/:/" + Y;
-    socket.emit("untir", msg);
-
-    $("#feu").submit();
-    $("#play").click();
+    $("#selectX").val(idValue.split("td")[1].substr(0, 1));
+    $("#selectY").val(idValue.split("td")[1].substr(1, 2));
+    if ($("#textAff").is(":visible")) {
+      var socket = io();
+      var adversaire = $("#contreadv").html();
+      var quiestu2 = $("#qui").html().split("Vous êtes ")[1].replace('"', "");
+      var X = $("#selectX option:selected").text();
+      var Y = $("#selectY option:selected").text();
+      var msg = quiestu2 + "/:/" + adversaire + "/:/" + X + "/:/" + Y;
+      socket.emit("untir", msg);
+      $("#textAff").hide();
+      $("#feu").submit();
+      $("#play").click();
+    }
   }
-}
+
+
 function quiestu2() {
   $.getJSON("/qui", function (data) {
     if (data === undefined) {
@@ -93,15 +96,15 @@ function quiestu2() {
 }
 function savoirsitirer() {
   $("#feu").hide();
-  $("#textAff").hide();
+  //$("#textAff").hide();
   console.log($("#contreadv").html());
   if ($("#quiadversaire option:selected").val() == "XXXT11") {
     // $("#feu").show();
-    $("#textAff").show();
+    //$("#textAff").show();
     $("#joueuractu").submit;
   } else if ($("#quiadversaire option:selected").val() == "XXXT20") {
     // $("#feu").show();
-    $("#textAff").show();
+    //$("#textAff").show();
     $("#joueuractu").submit;
   } else {
     $("#feu").hide();

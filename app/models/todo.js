@@ -29,11 +29,11 @@ function Todo() {
     res.send({ status: 200, message: "deconnexion" });
   };
 
-  this.reqlogin = function (reqemail, reqpassword, req, res) {
+  this.reqlogin = function (reqemail, reqpassword, reqtoken, req, res) {
     let conection2 = false;
     let email = "";
     jwt.verify(
-      req.cookies["essai"],
+      reqtoken,
       "secret_this_should_be_longer",
       function (err, decoded) {
         //console.log("////////////");
@@ -56,6 +56,7 @@ function Todo() {
           reqemail,
           function (err, result) {
             con.release();
+
             res.header("Access-Control-Allow-Origin", "*");
             res.header(
               "Access-Control-Allow-Methods",
@@ -101,10 +102,12 @@ function Todo() {
                         expiresIn: new Date(Date.now() + 24 * 3600),
                         httpOnly: true,
                       };
+                      console.log(jwttoken);
                       res.cookie("essai", jwttoken, cookieOption);
                       res.send({
                         status: 0,
                         message: "Connecte " + reqemail + result2,
+                        token: jwttoken,
                       });
                     }
                   }
@@ -310,57 +313,63 @@ function Todo() {
       });
     }
   };
-  this.reqbateauRobot = function (nom, bateauX, bateauY, email, partie, req, res) {
-    
+  this.reqbateauRobot = function (
+    nom,
+    bateauX,
+    bateauY,
+    email,
+    partie,
+    req,
+    res
+  ) {
+    //console.log("!!!!!");
+    connection.acquire(function (err, con) {
+      //console.log(err);
+      //console.log("Connecté à la base de données MySQL!");
 
-
-      //console.log("!!!!!");
-      connection.acquire(function (err, con) {
-        //console.log(err);
-        //console.log("Connecté à la base de données MySQL!");
-
-        con.query(
-          "insert into bateau (nom,bateauX, bateauY, email,idpartie) values (?,?,?,?,?) ",
-          [nom, bateauX, bateauY, email, partie],
-          function (err, result) {
-            con.release();
-            res.header("Access-Control-Allow-Origin", "*");
-            res.header(
-              "Access-Control-Allow-Methods",
-              "GET,HEAD,OPTIONS,POST,PUT"
-            );
-            res.header(
-              "Access-Control-Allow-Headers",
-              "Origin, X-Requested-With, Content-Type, Accept, x-client-key, x-client-token, x-client-secret, Authorization"
-            );
-            if (err) {
-              res.send({ status: 1, message: "TODO creation fail " + err });
-            } else {
-              res.send({
-                status: 0,
-                message:
-                  "bateau poser " +
-                  " PosX : " +
-                  bateauX +
-                  " posY : " +
-                  bateauY +
-                  " email: " +
-                  email,
-              });
-              //console.log("Post successful");
-            }
+      con.query(
+        "insert into bateau (nom,bateauX, bateauY, email,idpartie) values (?,?,?,?,?) ",
+        [nom, bateauX, bateauY, email, partie],
+        function (err, result) {
+          con.release();
+          res.header("Access-Control-Allow-Origin", "*");
+          res.header(
+            "Access-Control-Allow-Methods",
+            "GET,HEAD,OPTIONS,POST,PUT"
+          );
+          res.header(
+            "Access-Control-Allow-Headers",
+            "Origin, X-Requested-With, Content-Type, Accept, x-client-key, x-client-token, x-client-secret, Authorization"
+          );
+          if (err) {
+            res.send({ status: 1, message: "TODO creation fail " + err });
+          } else {
+            res.send({
+              status: 0,
+              message:
+                "bateau poser " +
+                " PosX : " +
+                bateauX +
+                " posY : " +
+                bateauY +
+                " email: " +
+                email,
+            });
+            //console.log("Post successful");
           }
-        );
-      });
-    
+        }
+      );
+    });
   };
 
-  this.reqtir = function (posX, posY, adversaire, req, res) {
+  this.reqtir = function (token, posX, posY, adversaire, req, res) {
+    console.log(adversaire);
     connection.acquire(function (err, con) {
       let conection2 = false;
+      console.log(token);
       let email = "";
       jwt.verify(
-        req.cookies["essai"],
+        token,
         "secret_this_should_be_longer",
         function (err, decoded) {
           //console.log("////////////");
@@ -395,12 +404,13 @@ function Todo() {
             );
 
             if (err) {
+              console.log(err);
               res.send({ status: 1, message: "Erreur" + err + email });
             } else {
               res.send({
                 status: 0,
                 message:
-                  "Tirer en POsX " + posX + " posY : " + posY + "par " + email,
+                  "Tirer en POsX " + posX + " posY : " + posY + "par " + email+"sur"+adversaire,
               });
               //console.log("Post successful");
             }
@@ -410,42 +420,39 @@ function Todo() {
     });
   };
 
-  
   this.reqtirRobot = function (posX, posY, adversaire, email, req, res) {
     connection.acquire(function (err, con) {
-     
-        //console.log(err);
-        //console.log("Connecté à la base de données MySQL!");
+      //console.log(err);
+      //console.log("Connecté à la base de données MySQL!");
 
-        con.query(
-          "insert into plateau (placeX, placeY, email,adversaire) values (?,?,?,?) ",
-          [posX, posY, email, adversaire],
-          function (err, result) {
-            con.release();
-            res.header("Access-Control-Allow-Origin", "*");
-            res.header(
-              "Access-Control-Allow-Methods",
-              "GET,HEAD,OPTIONS,POST,PUT"
-            );
-            res.header(
-              "Access-Control-Allow-Headers",
-              "Origin, X-Requested-With, Content-Type, Accept, x-client-key, x-client-token, x-client-secret, Authorization"
-            );
+      con.query(
+        "insert into plateau (placeX, placeY, email,adversaire) values (?,?,?,?) ",
+        [posX, posY, email, adversaire],
+        function (err, result) {
+          con.release();
+          res.header("Access-Control-Allow-Origin", "*");
+          res.header(
+            "Access-Control-Allow-Methods",
+            "GET,HEAD,OPTIONS,POST,PUT"
+          );
+          res.header(
+            "Access-Control-Allow-Headers",
+            "Origin, X-Requested-With, Content-Type, Accept, x-client-key, x-client-token, x-client-secret, Authorization"
+          );
 
-            if (err) {
-              res.send({ status: 1, message: "Erreur" + err + email });
-            } else {
-              res.send({
-                status: 0,
-                message:
-                  "Tirer en POsX " + posX + " posY : " + posY + "par " + email,
-              });
-              //console.log("Post successful");
-            }
+          if (err) {
+            res.send({ status: 1, message: "Erreur" + err + email });
+          } else {
+            res.send({
+              status: 0,
+              message:
+                "Tirer en POsX " + posX + " posY : " + posY + "par " + email,
+            });
+            //console.log("Post successful");
           }
-        );
-        })
-
+        }
+      );
+    });
   };
 
   this.reqtouche = function (posX, posY, req, res) {
@@ -564,50 +571,50 @@ function Todo() {
     });
   };
 
-  this.reqeffacerbateaurobot = function (robot,adv, req, res) {
+  this.reqeffacerbateaurobot = function (robot, adv, req, res) {
     connection.acquire(function (err, con) {
-     
-        //console.log(err);
-        //console.log("Connecté à la base de données MySQL!");
+      //console.log(err);
+      //console.log("Connecté à la base de données MySQL!");
 
-        con.query(
-          "DELETE w FROM bateau w INNER JOIN partieactu e ON w.idpartie=e.idAdversaire WHERE email=? AND (joueur1=? or joueur2=?);",
-          [robot, adv, adv],
-          function (err, result) {
-            con.release();
-            res.header("Access-Control-Allow-Origin", "*");
-            res.header(
-              "Access-Control-Allow-Methods",
-              "GET,HEAD,OPTIONS,POST,PUT"
-            );
-            res.header(
-              "Access-Control-Allow-Headers",
-              "Origin, X-Requested-With, Content-Type, Accept, x-client-key, x-client-token, x-client-secret, Authorization"
-            );
+      con.query(
+        "DELETE w FROM bateau w INNER JOIN partieactu e ON w.idpartie=e.idAdversaire WHERE email=? AND (joueur1=? or joueur2=?);",
+        [robot, adv, adv],
+        function (err, result) {
+          con.release();
+          res.header("Access-Control-Allow-Origin", "*");
+          res.header(
+            "Access-Control-Allow-Methods",
+            "GET,HEAD,OPTIONS,POST,PUT"
+          );
+          res.header(
+            "Access-Control-Allow-Headers",
+            "Origin, X-Requested-With, Content-Type, Accept, x-client-key, x-client-token, x-client-secret, Authorization"
+          );
 
-            if (err) {
-              res.send({
-                status: 1,
-                message: "TODO creation fail " + err ,
-              });
+          if (err) {
+            res.send({
+              status: 1,
+              message: "TODO creation fail " + err,
+            });
+          } else {
+            if (result == "") {
+              res.send({ status: 0, message: "bateaux effacés" });
             } else {
-              if (result == "") {
-                res.send({ status: 0, message: "bateaux effacés" });
-              } else {
-                res.send({ status: 0, message: "bateaux effacés"  });
-                //console.log("Post successful");
-              }
+              res.send({ status: 0, message: "bateaux effacés" });
+              //console.log("Post successful");
             }
           }
-        );
-        })
+        }
+      );
+    });
   };
-  this.selectbateauparmail = function (adv, req, res) {
+  this.selectbateauparmail = function (token, adv, req, res) {
+    console.log(token);
     connection.acquire(function (err, con) {
       let conection2 = false;
       let email = "";
       jwt.verify(
-        req.cookies["essai"],
+        token,
         "secret_this_should_be_longer",
         function (err, decoded) {
           //console.log("////////////");
@@ -616,6 +623,7 @@ function Todo() {
             res.send({ status: 1, message: "veillez vous connecter " });
           } else {
             email = decoded.email;
+            console.log(email);
             conection2 = false;
           }
           ////console.log(decoded.code) // bar
@@ -660,47 +668,44 @@ function Todo() {
     });
   };
 
-  this.selectbateauRobot= function (robot,adv, req, res) {
+  this.selectbateauRobot = function (robot, adv, req, res) {
     connection.acquire(function (err, con) {
-      
+      //console.log(err);
+      //console.log("Connecté à la base de données MySQL!");
 
-     
-        //console.log(err);
-        //console.log("Connecté à la base de données MySQL!");
+      con.query(
+        "select * from bateau INNER JOIN partieactu ON bateau.idpartie = partieactu.idAdversaire where email=? and (joueur1=? or joueur2=?)",
+        [robot, adv, adv],
+        function (err, result) {
+          con.release();
+          res.header("Access-Control-Allow-Origin", "*");
+          res.header(
+            "Access-Control-Allow-Methods",
+            "GET,HEAD,OPTIONS,POST,PUT"
+          );
+          res.header(
+            "Access-Control-Allow-Headers",
+            "Origin, X-Requested-With, Content-Type, Accept, x-client-key, x-client-token, x-client-secret, Authorization"
+          );
 
-        con.query(
-          "select * from bateau INNER JOIN partieactu ON bateau.idpartie = partieactu.idAdversaire where email=? and (joueur1=? or joueur2=?)",
-          [robot, adv, adv],
-          function (err, result) {
-            con.release();
-            res.header("Access-Control-Allow-Origin", "*");
-            res.header(
-              "Access-Control-Allow-Methods",
-              "GET,HEAD,OPTIONS,POST,PUT"
-            );
-            res.header(
-              "Access-Control-Allow-Headers",
-              "Origin, X-Requested-With, Content-Type, Accept, x-client-key, x-client-token, x-client-secret, Authorization"
-            );
-
-            if (err) {
-              res.send({
-                status: 1,
-                message: "TODO creation fail " + err + email,
-              });
+          if (err) {
+            res.send({
+              status: 1,
+              message: "TODO creation fail " + err + email,
+            });
+          } else {
+            if (result == "") {
+              res.send({ status: 0, message: result });
             } else {
-              if (result == "") {
-                res.send({ status: 0, message: result });
-              } else {
-                res.send({ status: 0, message: result });
-                //console.log("Post successful");
-              }
+              res.send({ status: 0, message: result });
+              //console.log("Post successful");
             }
           }
-        );
-    })
+        }
+      );
+    });
   };
-  this.deleteplateau = function (email, adv,req, res) {
+  this.deleteplateau = function (email, adv, req, res) {
     connection.acquire(function (err, con) {
       //console.log(err);
       //console.log("Connecté à la base de données MySQL!");
@@ -1277,7 +1282,8 @@ function Todo() {
         //console.log("Connecté à la base de données MySQL!");
 
         con.query(
-          "select * from partieactu where joueur1=? and joueur2=?",[email, joueur2],
+          "select * from partieactu where joueur1=? and joueur2=?",
+          [email, joueur2],
 
           function (err, result) {
             con.release();
@@ -1301,15 +1307,6 @@ function Todo() {
       });
     }
   };
-
-
-
-
-
-
-
-
-
 
   this.reqjoueurencoursIndependantj2 = function (joueur2, req, res) {
     let conection2 = false;
@@ -1338,7 +1335,8 @@ function Todo() {
         //console.log("Connecté à la base de données MySQL!");
 
         con.query(
-          "select * from partieactu where joueur1=? and joueur2=?",[joueur2, email],
+          "select * from partieactu where joueur1=? and joueur2=?",
+          [joueur2, email],
 
           function (err, result) {
             con.release();
@@ -1363,52 +1361,36 @@ function Todo() {
     }
   };
 
+  this.reqjoueurRobot = function (qui, adv, req, res) {
+    //console.log("!!!!!");
+    connection.acquire(function (err, con) {
+      //console.log(err);
+      //console.log("Connecté à la base de données MySQL!");
 
+      con.query(
+        "select * from partieactu where joueur1=? and joueur2=?",
+        [qui, adv],
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-  this.reqjoueurRobot = function (qui,adv,req, res) {
-   
-      //console.log("!!!!!");
-      connection.acquire(function (err, con) {
-        //console.log(err);
-        //console.log("Connecté à la base de données MySQL!");
-
-        con.query(
-          "select * from partieactu where joueur1=? and joueur2=?",[qui,adv],
-
-          function (err, result) {
-            con.release();
-            res.header("Access-Control-Allow-Origin", "*");
-            res.header(
-              "Access-Control-Allow-Methods",
-              "GET,HEAD,OPTIONS,POST,PUT"
-            );
-            res.header(
-              "Access-Control-Allow-Headers",
-              "Origin, X-Requested-With, Content-Type, Accept, x-client-key, x-client-token, x-client-secret, Authorization"
-            );
-            if (err) {
-              res.send({ status: 1, message: "TODO creation fail " + err });
-            } else {
-              res.send({ status: 0, message: result });
-              //console.log("Post successful");
-            }
+        function (err, result) {
+          con.release();
+          res.header("Access-Control-Allow-Origin", "*");
+          res.header(
+            "Access-Control-Allow-Methods",
+            "GET,HEAD,OPTIONS,POST,PUT"
+          );
+          res.header(
+            "Access-Control-Allow-Headers",
+            "Origin, X-Requested-With, Content-Type, Accept, x-client-key, x-client-token, x-client-secret, Authorization"
+          );
+          if (err) {
+            res.send({ status: 1, message: "TODO creation fail " + err });
+          } else {
+            res.send({ status: 0, message: result });
+            //console.log("Post successful");
           }
-        );
-      });
-    
+        }
+      );
+    });
   };
   this.selectpartie = function (req, res) {
     let conection2 = false;
@@ -1592,75 +1574,70 @@ function Todo() {
       });
     }
   };
-  this.requpdatetourobotj2 = function (tourj1, joueur1,robot, req, res) {
-   
-      //console.log("!!!!!");
-      connection.acquire(function (err, con) {
-        //console.log(err);
-        //console.log("Connecté à la base de données MySQL!");
+  this.requpdatetourobotj2 = function (tourj1, joueur1, robot, req, res) {
+    //console.log("!!!!!");
+    connection.acquire(function (err, con) {
+      //console.log(err);
+      //console.log("Connecté à la base de données MySQL!");
 
-        con.query(
-          "update partieactu set tourj1=? where joueur1=? and joueur2=?",
-          [tourj1, joueur1, robot],
+      con.query(
+        "update partieactu set tourj1=? where joueur1=? and joueur2=?",
+        [tourj1, joueur1, robot],
 
-          function (err, result) {
-            con.release();
-            res.header("Access-Control-Allow-Origin", "*");
-            res.header(
-              "Access-Control-Allow-Methods",
-              "GET,HEAD,OPTIONS,POST,PUT"
-            );
-            res.header(
-              "Access-Control-Allow-Headers",
-              "Origin, X-Requested-With, Content-Type, Accept, x-client-key, x-client-token, x-client-secret, Authorization"
-            );
-            if (err) {
-              res.send({ status: 1, message: "TODO creation fail " + err });
+        function (err, result) {
+          con.release();
+          res.header("Access-Control-Allow-Origin", "*");
+          res.header(
+            "Access-Control-Allow-Methods",
+            "GET,HEAD,OPTIONS,POST,PUT"
+          );
+          res.header(
+            "Access-Control-Allow-Headers",
+            "Origin, X-Requested-With, Content-Type, Accept, x-client-key, x-client-token, x-client-secret, Authorization"
+          );
+          if (err) {
+            res.send({ status: 1, message: "TODO creation fail " + err });
+          } else {
+            if (tourj1 == 1) {
+              res.send({
+                status: 0,
+                message: "c est votre tour" + JSON.stringify(result),
+              });
+              //console.log("Post successful");
             } else {
-              if (tourj1 == 1) {
-                res.send({
-                  status: 0,
-                  message: "c est votre tour" + JSON.stringify(result),
-                });
-                //console.log("Post successful");
-              } else {
-                res.send({
-                  status: 0,
-                  message:
-                    "c est au tour de votre adversaire" +
-                    JSON.stringify(result),
-                });
-                //console.log("Post successful");
-              }
+              res.send({
+                status: 0,
+                message:
+                  "c est au tour de votre adversaire" + JSON.stringify(result),
+              });
+              //console.log("Post successful");
             }
           }
-        );
-        })
+        }
+      );
+    });
   };
-  this.quiesttu = function (req, res) {
+  this.quiesttu = function (token, req, res) {
     let conection2 = false;
     let email = "";
-    jwt.verify(
-      req.cookies["essai"],
-      "secret_this_should_be_longer",
-      function (err, decoded) {
-        //console.log("////////////");
-        if (decoded === undefined) {
-          conection2 = true;
-          //console.log("true");
-          res.send({
-            status: 1,
-            message: "Qui êtes vous?, Veuillez-vous connecter. ",
-          });
-        } else {
-          email = decoded.email;
-          conection2 = false;
-          //console.log("!!!!!" + false);
-          res.send({ status: 1, message: "Vous êtes " + email });
-        }
-        ////console.log(decoded.code) // bar
+    jwt.verify(token, "secret_this_should_be_longer", function (err, decoded) {
+      //console.log("////////////");
+      if (decoded === undefined) {
+        conection2 = true;
+        //console.log("true");
+        res.send({
+          status: 1,
+          message: "Qui êtes vous?, Veuillez-vous connecter. ",
+        });
+      } else {
+        email = decoded.email;
+        console.log(email);
+        conection2 = false;
+        //console.log("!!!!!" + false);
+        res.send({ status: 1, message: email});
       }
-    );
+      ////console.log(decoded.code) // bar
+    });
   };
 }
 

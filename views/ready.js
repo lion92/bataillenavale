@@ -784,25 +784,29 @@ function actubateau() {
         actutirs() }, 2000);*/
 //setInterval(function(){ $("#joueuractu").submit()}, 2000);
 function aquidejouerIndependant() {
-  alert("ok");
+  
+  
   let joueur2 = $("#quiadversaire option:selected").text();
   fetch("/aquidejouerj1/" + joueur2).then(function (response) {
     // The API call was successful!
     if (response.ok) {
       let data = response.json().then((data) => {
         console.log("RRRRRRRRRRRR" + JSON.stringify(data));
-        if (data.message !== 0) {
-          alert("ok2");
+        
+        if (data.message.length !== 0) {
+          
           
             if (data.message[0].tourj1 === 1) {
-              alert("ok3");
+              
               alert("C'est votre tour");
+              $("#textAff").show()
             } else if (data.message[0].tourj1 === 0) {
               alert("C'est le tour de :" + joueur2);
+              $("#textAff").hide()
             }
           
-        } else if (data.length === 0) {
-          alert("ok3");
+        } else if (data.message.length === 0) {
+      
           fetch("/aquidejouerj2/" + joueur2).then(function (response) {
             // The API call was successful!
             if (response.ok) {
@@ -810,15 +814,19 @@ function aquidejouerIndependant() {
                 if (!data.message[0].tourj1) {
                   if (data.message[0].tourj1 === 0) {
                     alert("C'est votre tour");
+                    $("#textAff").show()
                   } else if (data.message[0].tourj1 === 1) {
                     alert("C'est le tour de :" + joueur2);
+                    $("#textAff").hide()
                   }
                 }
               });
             }
+          
           });
         }
       });
+      
     }
   });
 }

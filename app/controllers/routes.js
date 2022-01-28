@@ -7,7 +7,7 @@ module.exports = {
       todo.reqgister(req.body.email, req.body.password,req, res);
     });
     app.post('/login', function(req, res){
-      todo.reqlogin(req.body.email, req.body.password,req, res);
+      todo.reqlogin(req.body.email, req.body.password, req.body.token, req, res);
     });
     app.post('/insert/bateau', function(req, res){
       todo.reqbateau(req.body.nom,req.body.bateauX, req.body.bateauY, req.body.partie,req,res);
@@ -53,15 +53,15 @@ module.exports = {
     app.get('/tour', function(req, res){
       todo.selectpartie(req,res)
     });
-    app.get('/mesbateau/:adv', function(req, res){
-      todo.selectbateauparmail(req.params.adv,req,res)
+    app.get('/mesbateau/:token/:adv', function(req, res){
+      todo.selectbateauparmail(req.params.token, req.params.adv,req,res)
     });
 
     app.get('/mesbateau/:robot/:adv', function(req, res){
       todo.selectbateauRobot(req.params.robot,req.params.adv,req,res)
     });
     app.post('/insert/tir', function(req, res){
-      todo.reqtir(req.body.posX, req.body.posY,req.body.adversaire,req,res)
+      todo.reqtir(req.body.token,req.body.posX, req.body.posY,req.body.adversaire,req,res)
     });
     app.post('/robot/tir', function(req, res){
       todo.reqtirRobot(req.body.posX, req.body.posY,req.body.adversaire,req.body.email,req,res)
@@ -98,8 +98,8 @@ module.exports = {
     app.get('/tirs', function(req, res){
       todo.gettir(res)
     });
-    app.get('/qui', function(req, res){
-      todo.quiesttu(req,res);
+    app.get('/qui/:token', function(req, res){
+      todo.quiesttu(req.params.token,req,res);
     });
     app.get('/tirs/:email/:adversaire', function(req, res){
       todo.gettirparemail(req.params.email, req.params.adversaire,req,res)
