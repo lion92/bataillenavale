@@ -44,10 +44,10 @@ module.exports = {
       todo.reqpartie(req.body.token, req.body.joueur2, req.body.tourj1,req,res);
     });
     app.post('/updatej1', function(req, res){
-      todo.requpdatetourj1( req.body.tourj1,req.body.joueur1, req,res);
+      todo.requpdatetourj1( req.body.token, req.body.tourj1,req.body.joueur, req,res);
     });
     app.post('/updatej2', function(req, res){
-      todo.requpdatetourj2( req.body.tourj1,req.body.joueur2,req,res);
+      todo.requpdatetourj2( req.body.token, req.body.tourj1,req.body.joueur,req,res);
     });
     app.post('/updaterobotj2', function(req, res){
       todo.requpdatetourobotj2( req.body.tourj1,req.body.joueur1, req.body.robot,req,res);

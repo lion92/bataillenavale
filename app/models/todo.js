@@ -1403,6 +1403,9 @@ function Todo() {
 
     this.reqjoueurencoursIndependant = function (token, joueur2, req, res) {
         let conection2 = false;
+        console.log(token);
+        console.log(joueur2)
+
         let email = "";
         jwt.verify(
             token,
@@ -1412,16 +1415,18 @@ function Todo() {
                 if (decoded === undefined) {
                     conection2 = true;
                     //console.log("true");
+                    res.send({status: 1, message: "fail"});
                 } else {
                     email = decoded.email;
                     conection2 = false;
+                    console.log(email);
                     //console.log("!!!!!" + false);
                 }
                 ////console.log(decoded.code) // bar
             }
         );
 
-        if (!(connection == true)) {
+        if (!(conection2)) {
             //console.log("!!!!!");
             connection.acquire(function (err, con) {
                 //console.log(err);
@@ -1457,6 +1462,9 @@ function Todo() {
     this.reqjoueurencoursIndependantj2 = function (token, joueur2, req, res) {
         let conection2 = false;
         let email = "";
+        console.log(joueur2);
+        console.log(token)
+
         jwt.verify(
             token,
             "secret_this_should_be_longer",
@@ -1469,6 +1477,7 @@ function Todo() {
                     email = decoded.email;
                     conection2 = false;
                     //console.log("!!!!!" + false);
+                    console.log(email)
                 }
                 ////console.log(decoded.code) // bar
             }
@@ -1590,21 +1599,29 @@ function Todo() {
             });
         }
     };
-    this.requpdatetourj1 = function (tourj1, joueur1, req, res) {
+    this.requpdatetourj1 = function (token, tourj1, joueur1, req, res) {
         let conection2 = false;
         let email = "";
+        console.log(joueur1)
+        console.log(token)
+        console.log(tourj1)
         jwt.verify(
-            req.cookies["essai"],
+            token,
             "secret_this_should_be_longer",
             function (err, decoded) {
                 //console.log("////////////");
                 if (decoded === undefined) {
                     conection2 = true;
                     //console.log("true");
+                    res.send({
+                        status: 0,
+                        message: "decode error"
+                    });
                 } else {
                     email = decoded.email;
                     conection2 = false;
                     //console.log("!!!!!" + false);
+                    console.log(email);
                 }
                 ////console.log(decoded.code) // bar
             }
@@ -1655,11 +1672,13 @@ function Todo() {
             });
         }
     };
-    this.requpdatetourj2 = function (tourj1, joueur2, req, res) {
+    this.requpdatetourj2 = function (token, tourj1, joueur2, req, res) {
         let conection2 = false;
         let email = "";
+        console.log(token)
+        console.log(joueur2);
         jwt.verify(
-            req.cookies["essai"],
+            token,
             "secret_this_should_be_longer",
             function (err, decoded) {
                 //console.log("////////////");
@@ -1669,6 +1688,7 @@ function Todo() {
                 } else {
                     email = decoded.email;
                     conection2 = false;
+                    console.log(email);
                     //console.log("!!!!!" + false);
                 }
                 ////console.log(decoded.code) // bar
