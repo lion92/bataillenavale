@@ -83,7 +83,7 @@ module.exports = {
       todo.reqtouche(req.body.posX, req.body.posY,req,res)
     });
     app.post('/effacerBateau', function(req, res){
-      todo.reqeffacerbateau(req.body.adv,req,res);
+      todo.reqeffacerbateau(req.body.token,req.body.adv,req,res);
     });
     app.post('/effacerBateauRobot', function(req, res){
       todo.reqeffacerbateaurobot(req.body.robot,req.body.adv,req,res);

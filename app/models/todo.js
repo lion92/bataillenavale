@@ -254,6 +254,8 @@ function Todo() {
     };
 
     this.reqIdadversaireJ2 = function (token, joueur1, req, res) {
+        console.log(joueur1);
+        console.log(token);
         let conection2 = false;
         let email = "";
         jwt.verify(
@@ -280,7 +282,7 @@ function Todo() {
                 //console.log("Connecté à la base de données MySQL!");
 
                 con.query(
-                    "select idAdversaire from partieactu where joueur1=? and joueur2=?",
+                    "SELECT * FROM partieactu where joueur1=? and joueur2=?",
                     [joueur1, email],
                     function (err, result) {
                         con.release();
@@ -339,7 +341,7 @@ function Todo() {
                 //console.log("Connecté à la base de données MySQL!");
 
                 con.query(
-                    "SELECT * FROM bateau inner join partieactu on partieactu.idAdversaire=bateau.idpartie where joueur1=? and joueur2=?",
+                    "SELECT * FROM partieactu where joueur1=? and joueur2=?",
                     [email, joueur2],
                     function (err, result) {
                         con.release();
@@ -634,12 +636,13 @@ function Todo() {
             }
         });
     };
-    this.reqeffacerbateau = function (adv, req, res) {
+    this.reqeffacerbateau = function (token, adv, req, res) {
         connection.acquire(function (err, con) {
             let conection2 = false;
+            console.log(token);
             let email = "";
             jwt.verify(
-                req.cookies["essai"],
+                token,
                 "secret_this_should_be_longer",
                 function (err, decoded) {
                     //console.log("////////////");
