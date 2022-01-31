@@ -10,8 +10,17 @@ module.exports = {
       todo.reqlogin(req.body.email, req.body.password, req.body.token, req, res);
     });
     app.post('/insert/bateau', function(req, res){
-      todo.reqbateau(req.body.nom,req.body.bateauX, req.body.bateauY, req.body.partie,req,res);
+      todo.reqbateau(req.body.token,req.body.nom,req.body.bateauX, req.body.bateauY, req.body.partie,req,res);
     });
+
+    app.get('/idAdversaireJ2/:joueur2/:token', function(req, res){
+      todo.reqIdadversaireJ1(req.params.token, req.params.joueur2,req,res);
+    });
+
+    app.get('/idAdversaireJ1/:joueur1/:token', function(req, res){
+      todo.reqIdadversaireJ2(req.params.token, req.params.joueur1,req,res);
+    });
+
     app.post('/insertrobot/bateau', function(req, res){
       todo.reqbateauRobot(req.body.nom,req.body.bateauX, req.body.bateauY, req.body.email,req.body.partie,req,res);
     });
@@ -25,14 +34,14 @@ module.exports = {
     app.get('/partieactu', function(req, res){
       todo.reqjoueurencours(req,res);
     });
-    app.get('/aquidejouerj1/:joueur2', function(req, res){
-      todo.reqjoueurencoursIndependant(req.params.joueur2, req,res);
+    app.get('/aquidejouerj1/:joueur2/:token', function(req, res){
+      todo.reqjoueurencoursIndependant(req.params.token, req.params.joueur2, req,res);
     });
-    app.get('/aquidejouerj2/:joueur2', function(req, res){
-      todo.reqjoueurencoursIndependantj2(req.params.joueur2, req,res);
+    app.get('/aquidejouerj2/:joueur2/:token', function(req, res){
+      todo.reqjoueurencoursIndependantj2(req.params.token, req.params.joueur2, req,res);
     });
     app.post('/insert/partie', function(req, res){
-      todo.reqpartie(req.body.joueur2, req.body.tourj1,req,res);
+      todo.reqpartie(req.body.token, req.body.joueur2, req.body.tourj1,req,res);
     });
     app.post('/updatej1', function(req, res){
       todo.requpdatetourj1( req.body.tourj1,req.body.joueur1, req,res);
@@ -59,6 +68,10 @@ module.exports = {
 
     app.get('/mesbateau/:robot/:adv', function(req, res){
       todo.selectbateauRobot(req.params.robot,req.params.adv,req,res)
+    });
+
+    app.get('/users', function(req, res){
+      todo.selectUsers(req,res)
     });
     app.post('/insert/tir', function(req, res){
       todo.reqtir(req.body.token,req.body.posX, req.body.posY,req.body.adversaire,req,res)
