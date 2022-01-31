@@ -90,9 +90,9 @@ module.exports = {
     });
   
     app.post('/deletetir', function(req, res){
-      todo.deleteplateau(req.body.email, req.body.adversaire,req,res);
+      todo.deleteplateau(req.body.token, req.body.adversaire,req,res);
     });
-    app.post('/deletetir/:email', function(req, res){
+    app.post('/deletetir2/:email', function(req, res){
       todo.deleteplateauemail(req.params.email,res)
     });
     app.post('/deleteposition', function(req, res){

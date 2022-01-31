@@ -826,35 +826,57 @@ function Todo() {
             );
         });
     };
-    this.deleteplateau = function (email, adv, req, res) {
+    this.deleteplateau = function (token, adv, req, res) {
+        console.log(token);
+        console.log(adv);
         connection.acquire(function (err, con) {
-            //console.log(err);
-            //console.log("Connecté à la base de données MySQL!");
-
-            con.query(
-                "delete from plateau where email=? and adversaire=? ",
-                [email, adv],
-                function (err, result) {
-                    con.release();
-                    res.header("Access-Control-Allow-Origin", "*");
-                    res.header(
-                        "Access-Control-Allow-Methods",
-                        "GET,HEAD,OPTIONS,POST,PUT"
-                    );
-                    res.header(
-                        "Access-Control-Allow-Headers",
-                        "Origin, X-Requested-With, Content-Type, Accept, x-client-key, x-client-token, x-client-secret, Authorization"
-                    );
-
-                    if (err) {
-                        res.send({status: 1, message: "TODO creation fail " + err});
+            let conection2 = false;
+            let email = "";
+            jwt.verify(
+                token,
+                "secret_this_should_be_longer",
+                function (err, decoded) {
+                    //console.log("////////////");
+                    if (decoded === undefined) {
+                        conection2 = true;
+                        res.send({status: 1, message: "veillez vous connecter "});
                     } else {
-                        res.send({status: 0, message: "TODO create success " + result});
-                        //console.log("Post successful");
+                        email = decoded.email;
+                        console.log(email);
+                        conection2 = false;
                     }
+                    ////console.log(decoded.code) // bar
                 }
             );
+
+            if (!(conection2 == true)) {
+
+                con.query(
+                    "delete from plateau where email=? and adversaire=? ",
+                    [email, adv],
+                    function (err, result) {
+                        con.release();
+                        res.header("Access-Control-Allow-Origin", "*");
+                        res.header(
+                            "Access-Control-Allow-Methods",
+                            "GET,HEAD,OPTIONS,POST,PUT"
+                        );
+                        res.header(
+                            "Access-Control-Allow-Headers",
+                            "Origin, X-Requested-With, Content-Type, Accept, x-client-key, x-client-token, x-client-secret, Authorization"
+                        );
+
+                        if (err) {
+                            res.send({status: 1, message: "TODO creation fail " + err});
+                        } else {
+                            res.send({status: 0, message: "TODO create success " + result});
+                            //console.log("Post successful");
+                        }
+                    }
+                );
+            }
         });
+
     };
     this.deleteplateauemail = function (req, res) {
         connection.acquire(function (err, con) {
