@@ -7,11 +7,20 @@ module.exports = {
       todo.reqgister(req.body.email, req.body.password,req, res);
     });
     app.post('/login', function(req, res){
-      todo.reqlogin(req.body.email, req.body.password,req, res);
+      todo.reqlogin(req.body.email, req.body.password, req.body.token, req, res);
     });
     app.post('/insert/bateau', function(req, res){
-      todo.reqbateau(req.body.nom,req.body.bateauX, req.body.bateauY, req.body.partie,req,res);
+      todo.reqbateau(req.body.token,req.body.nom,req.body.bateauX, req.body.bateauY, req.body.partie,req,res);
     });
+
+    app.get('/idAdversaireJ2/:joueur2/:token', function(req, res){
+      todo.reqIdadversaireJ1(req.params.token, req.params.joueur2,req,res);
+    });
+
+    app.get('/idAdversaireJ1/:joueur1/:token', function(req, res){
+      todo.reqIdadversaireJ2(req.params.token, req.params.joueur1,req,res);
+    });
+
     app.post('/insertrobot/bateau', function(req, res){
       todo.reqbateauRobot(req.body.nom,req.body.bateauX, req.body.bateauY, req.body.email,req.body.partie,req,res);
     });
@@ -25,8 +34,14 @@ module.exports = {
     app.get('/partieactu', function(req, res){
       todo.reqjoueurencours(req,res);
     });
+    app.get('/aquidejouerj1/:joueur2/:token', function(req, res){
+      todo.reqjoueurencoursIndependant(req.params.token, req.params.joueur2, req,res);
+    });
+    app.get('/aquidejouerj2/:joueur2/:token', function(req, res){
+      todo.reqjoueurencoursIndependantj2(req.params.token, req.params.joueur2, req,res);
+    });
     app.post('/insert/partie', function(req, res){
-      todo.reqpartie(req.body.joueur2, req.body.tourj1,req,res);
+      todo.reqpartie(req.body.token, req.body.joueur2, req.body.tourj1,req,res);
     });
     app.post('/updatej1', function(req, res){
       todo.requpdatetourj1( req.body.tourj1,req.body.joueur1, req,res);
@@ -47,15 +62,19 @@ module.exports = {
     app.get('/tour', function(req, res){
       todo.selectpartie(req,res)
     });
-    app.get('/mesbateau/:adv', function(req, res){
-      todo.selectbateauparmail(req.params.adv,req,res)
+    app.get('/mesbateau/:token/:adv', function(req, res){
+      todo.selectbateauparmail(req.params.token, req.params.adv,req,res)
     });
 
     app.get('/mesbateau/:robot/:adv', function(req, res){
       todo.selectbateauRobot(req.params.robot,req.params.adv,req,res)
     });
+
+    app.get('/users', function(req, res){
+      todo.selectUsers(req,res)
+    });
     app.post('/insert/tir', function(req, res){
-      todo.reqtir(req.body.posX, req.body.posY,req.body.adversaire,req,res)
+      todo.reqtir(req.body.token,req.body.posX, req.body.posY,req.body.adversaire,req,res)
     });
     app.post('/robot/tir', function(req, res){
       todo.reqtirRobot(req.body.posX, req.body.posY,req.body.adversaire,req.body.email,req,res)
@@ -64,16 +83,16 @@ module.exports = {
       todo.reqtouche(req.body.posX, req.body.posY,req,res)
     });
     app.post('/effacerBateau', function(req, res){
-      todo.reqeffacerbateau(req.body.adv,req,res);
+      todo.reqeffacerbateau(req.body.token,req.body.adv,req,res);
     });
     app.post('/effacerBateauRobot', function(req, res){
       todo.reqeffacerbateaurobot(req.body.robot,req.body.adv,req,res);
     });
   
     app.post('/deletetir', function(req, res){
-      todo.deleteplateau(req.body.email, req.body.adversaire,req,res);
+      todo.deleteplateau(req.body.token, req.body.adversaire,req,res);
     });
-    app.post('/deletetir/:email', function(req, res){
+    app.post('/deletetir2/:email', function(req, res){
       todo.deleteplateauemail(req.params.email,res)
     });
     app.post('/deleteposition', function(req, res){
@@ -92,8 +111,8 @@ module.exports = {
     app.get('/tirs', function(req, res){
       todo.gettir(res)
     });
-    app.get('/qui', function(req, res){
-      todo.quiesttu(req,res);
+    app.get('/qui/:token', function(req, res){
+      todo.quiesttu(req.params.token,req,res);
     });
     app.get('/tirs/:email/:adversaire', function(req, res){
       todo.gettirparemail(req.params.email, req.params.adversaire,req,res)
