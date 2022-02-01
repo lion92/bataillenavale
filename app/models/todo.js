@@ -313,6 +313,7 @@ function Todo() {
     this.reqIdadversaireJ1 = function (token, joueur2, req, res) {
         let conection2 = false;
         console.log(joueur2);
+        console.log(token)
 
 
         let email = "";
@@ -327,14 +328,14 @@ function Todo() {
                 } else {
                     email = decoded.email;
                     conection2 = false;
-                    console.log(email);
+                    console.log("//"+email);
                     //console.log("!!!!!" + false);
                 }
                 ////console.log(decoded.code) // bar
             }
         );
 
-        if (!(connection == true)) {
+        if (!conection2) {
             //console.log("!!!!!");
             connection.acquire(function (err, con) {
                 //console.log(err);
@@ -388,13 +389,14 @@ function Todo() {
                 } else {
                     email = decoded.email;
                     conection2 = false;
+                    console.log(email);
                     //console.log("!!!!!" + false);
                 }
                 ////console.log(decoded.code) // bar
             }
         );
 
-        if (!(connection == true)) {
+        if (!conection2) {
             //console.log("!!!!!");
             connection.acquire(function (err, con) {
                 //console.log(err);
@@ -732,8 +734,160 @@ function Todo() {
             );
         });
     };
+
+    this.selectbateauparmailJ2 = function (token, adv, req, res) {
+        console.log(token);
+        console.log(adv);
+        connection.acquire(function (err, con) {
+            let conection2 = false;
+            let email = "";
+            jwt.verify(
+                token,
+                "secret_this_should_be_longer",
+                function (err, decoded) {
+                    //console.log("////////////");
+                    if (decoded === undefined) {
+                        conection2 = true;
+                        res.send({status: 1, message: "veillez vous connecter "});
+                    } else {
+                        email = decoded.email;
+                        console.log(email);
+                        conection2 = false;
+                    }
+                    ////console.log(decoded.code) // bar
+                }
+            );
+
+            if (!(conection2 == true)) {
+                //console.log(err);
+                //console.log("Connecté à la base de données MySQL!");
+
+                con.query(
+                    "select * from bateau INNER JOIN partieactu ON bateau.idpartie = partieactu.idAdversaire where email=? and joueur1=?",
+                    [email, adv],
+                    function (err, result) {
+                        con.release();
+                        res.header("Access-Control-Allow-Origin", "*");
+                        res.header(
+                            "Access-Control-Allow-Methods",
+                            "GET,HEAD,OPTIONS,POST,PUT"
+                        );
+                        res.header(
+                            "Access-Control-Allow-Headers",
+                            "Origin, X-Requested-With, Content-Type, Accept, x-client-key, x-client-token, x-client-secret, Authorization"
+                        );
+
+                        if (err) {
+                            res.send({
+                                status: 1,
+                                message: "TODO creation fail " + err + email,
+                            });
+                        } else {
+                            if (result == "") {
+                                res.send({status: 0, message: result});
+                            } else {
+                                res.send({status: 0, message: result});
+                                //console.log("Post successful");
+                            }
+                        }
+                    }
+                );
+            }
+        });
+    };
+    this.selectbateauParMailVisibleJ2 = function (emailJ1, emailJ2, req, res) {
+        console.log(emailJ1);
+        console.log(emailJ2);
+        connection.acquire(function (err, con) {
+
+            let email = emailJ1;
+
+
+            if (true) {
+                //console.log(err);
+                //console.log("Connecté à la base de données MySQL!");
+
+                con.query(
+                    "select * from bateau INNER JOIN partieactu ON bateau.idpartie = partieactu.idAdversaire where email=? and joueur2=?",
+                    [emailJ1, emailJ2],
+                    function (err, result) {
+                        con.release();
+                        res.header("Access-Control-Allow-Origin", "*");
+                        res.header(
+                            "Access-Control-Allow-Methods",
+                            "GET,HEAD,OPTIONS,POST,PUT"
+                        );
+                        res.header(
+                            "Access-Control-Allow-Headers",
+                            "Origin, X-Requested-With, Content-Type, Accept, x-client-key, x-client-token, x-client-secret, Authorization"
+                        );
+
+                        if (err) {
+                            res.send({
+                                status: 1,
+                                message: "TODO creation fail " + err + email,
+                            });
+                        } else {
+                            if (result == "") {
+                                res.send({status: 0, message: result});
+                            } else {
+                                res.send({status: 0, message: result});
+                                //console.log("Post successful");
+                            }
+                        }
+                    }
+                );
+            }
+        });
+    };
+    this.selectbateauParMailVisible = function (emailJ1, emailJ2, req, res) {
+        console.log(emailJ1);
+        console.log(emailJ2);
+        connection.acquire(function (err, con) {
+
+            let email = emailJ1;
+
+
+            if (true) {
+                //console.log(err);
+                //console.log("Connecté à la base de données MySQL!");
+
+                con.query(
+                    "select * from bateau INNER JOIN partieactu ON bateau.idpartie = partieactu.idAdversaire where email=? and joueur1=?",
+                    [emailJ1, emailJ2],
+                    function (err, result) {
+                        con.release();
+                        res.header("Access-Control-Allow-Origin", "*");
+                        res.header(
+                            "Access-Control-Allow-Methods",
+                            "GET,HEAD,OPTIONS,POST,PUT"
+                        );
+                        res.header(
+                            "Access-Control-Allow-Headers",
+                            "Origin, X-Requested-With, Content-Type, Accept, x-client-key, x-client-token, x-client-secret, Authorization"
+                        );
+
+                        if (err) {
+                            res.send({
+                                status: 1,
+                                message: "TODO creation fail " + err + email,
+                            });
+                        } else {
+                            if (result == "") {
+                                res.send({status: 0, message: result});
+                            } else {
+                                res.send({status: 0, message: result});
+                                //console.log("Post successful");
+                            }
+                        }
+                    }
+                );
+            }
+        });
+    };
     this.selectbateauparmail = function (token, adv, req, res) {
         console.log(token);
+        console.log(adv);
         connection.acquire(function (err, con) {
             let conection2 = false;
             let email = "";
@@ -760,7 +914,7 @@ function Todo() {
 
                 con.query(
                     "select * from bateau INNER JOIN partieactu ON bateau.idpartie = partieactu.idAdversaire where email=? and joueur2=?",
-                    [email, adv, adv],
+                    [email, adv],
                     function (err, result) {
                         con.release();
                         res.header("Access-Control-Allow-Origin", "*");
@@ -1403,6 +1557,9 @@ function Todo() {
 
     this.reqjoueurencoursIndependant = function (token, joueur2, req, res) {
         let conection2 = false;
+        console.log(token);
+        console.log(joueur2)
+
         let email = "";
         jwt.verify(
             token,
@@ -1412,16 +1569,18 @@ function Todo() {
                 if (decoded === undefined) {
                     conection2 = true;
                     //console.log("true");
+                    res.send({status: 1, message: "fail"});
                 } else {
                     email = decoded.email;
                     conection2 = false;
+                    console.log(email);
                     //console.log("!!!!!" + false);
                 }
                 ////console.log(decoded.code) // bar
             }
         );
 
-        if (!(connection == true)) {
+        if (!(conection2)) {
             //console.log("!!!!!");
             connection.acquire(function (err, con) {
                 //console.log(err);
@@ -1457,6 +1616,9 @@ function Todo() {
     this.reqjoueurencoursIndependantj2 = function (token, joueur2, req, res) {
         let conection2 = false;
         let email = "";
+        console.log(joueur2);
+        console.log(token)
+
         jwt.verify(
             token,
             "secret_this_should_be_longer",
@@ -1469,6 +1631,7 @@ function Todo() {
                     email = decoded.email;
                     conection2 = false;
                     //console.log("!!!!!" + false);
+                    console.log(email)
                 }
                 ////console.log(decoded.code) // bar
             }
@@ -1590,27 +1753,35 @@ function Todo() {
             });
         }
     };
-    this.requpdatetourj1 = function (tourj1, joueur1, req, res) {
+    this.requpdatetourj1 = function (token, tourj1, joueur1, req, res) {
         let conection2 = false;
         let email = "";
+        console.log(joueur1)
+        console.log(token)
+        console.log(tourj1)
         jwt.verify(
-            req.cookies["essai"],
+            token,
             "secret_this_should_be_longer",
             function (err, decoded) {
                 //console.log("////////////");
                 if (decoded === undefined) {
                     conection2 = true;
                     //console.log("true");
+                    res.send({
+                        status: 0,
+                        message: "decode error"
+                    });
                 } else {
                     email = decoded.email;
                     conection2 = false;
                     //console.log("!!!!!" + false);
+                    console.log(email);
                 }
                 ////console.log(decoded.code) // bar
             }
         );
 
-        if (!(connection == true)) {
+        if (!conection2 == true) {
             //console.log("!!!!!");
             connection.acquire(function (err, con) {
                 //console.log(err);
@@ -1655,11 +1826,13 @@ function Todo() {
             });
         }
     };
-    this.requpdatetourj2 = function (tourj1, joueur2, req, res) {
+    this.requpdatetourj2 = function (token, tourj1, joueur2, req, res) {
         let conection2 = false;
         let email = "";
+        console.log(token)
+        console.log(joueur2);
         jwt.verify(
-            req.cookies["essai"],
+            token,
             "secret_this_should_be_longer",
             function (err, decoded) {
                 //console.log("////////////");
@@ -1669,6 +1842,7 @@ function Todo() {
                 } else {
                     email = decoded.email;
                     conection2 = false;
+                    console.log(email);
                     //console.log("!!!!!" + false);
                 }
                 ////console.log(decoded.code) // bar

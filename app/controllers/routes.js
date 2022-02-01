@@ -44,10 +44,10 @@ module.exports = {
       todo.reqpartie(req.body.token, req.body.joueur2, req.body.tourj1,req,res);
     });
     app.post('/updatej1', function(req, res){
-      todo.requpdatetourj1( req.body.tourj1,req.body.joueur1, req,res);
+      todo.requpdatetourj1( req.body.token, req.body.tourj1,req.body.joueur, req,res);
     });
     app.post('/updatej2', function(req, res){
-      todo.requpdatetourj2( req.body.tourj1,req.body.joueur2,req,res);
+      todo.requpdatetourj2( req.body.token, req.body.tourj1,req.body.joueur,req,res);
     });
     app.post('/updaterobotj2', function(req, res){
       todo.requpdatetourobotj2( req.body.tourj1,req.body.joueur1, req.body.robot,req,res);
@@ -65,10 +65,17 @@ module.exports = {
     app.get('/mesbateau/:token/:adv', function(req, res){
       todo.selectbateauparmail(req.params.token, req.params.adv,req,res)
     });
-
-    app.get('/mesbateau/:robot/:adv', function(req, res){
-      todo.selectbateauRobot(req.params.robot,req.params.adv,req,res)
+    app.get('/mesbateauVisibleJ2/:emailJ1/:emailJ2', function(req, res){
+      todo.selectbateauParMailVisibleJ2(req.params.emailJ1, req.params.emailJ2,req,res)
     });
+    app.get('/mesbateauVisibleJ1/:emailJ1/:emailJ2', function(req, res){
+      todo.selectbateauParMailVisible(req.params.emailJ1, req.params.emailJ2,req,res)
+    });
+    app.get('/mesbateauJ2/:token/:adv', function(req, res){
+      todo.selectbateauparmailJ2(req.params.token, req.params.adv,req,res)
+    });
+
+
 
     app.get('/users', function(req, res){
       todo.selectUsers(req,res)
