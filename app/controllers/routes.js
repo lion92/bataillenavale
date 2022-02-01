@@ -65,10 +65,11 @@ module.exports = {
     app.get('/mesbateau/:token/:adv', function(req, res){
       todo.selectbateauparmail(req.params.token, req.params.adv,req,res)
     });
-
-    app.get('/mesbateau/:robot/:adv', function(req, res){
-      todo.selectbateauRobot(req.params.robot,req.params.adv,req,res)
+    app.get('/mesbateauJ2/:token/:adv', function(req, res){
+      todo.selectbateauparmailJ2(req.params.token, req.params.adv,req,res)
     });
+
+
 
     app.get('/users', function(req, res){
       todo.selectUsers(req,res)
