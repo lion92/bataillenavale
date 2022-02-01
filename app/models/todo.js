@@ -795,7 +795,96 @@ function Todo() {
             }
         });
     };
+    this.selectbateauParMailVisibleJ2 = function (emailJ1, emailJ2, req, res) {
+        console.log(emailJ1);
+        console.log(emailJ2);
+        connection.acquire(function (err, con) {
 
+            let email = emailJ1;
+
+
+            if (true) {
+                //console.log(err);
+                //console.log("Connecté à la base de données MySQL!");
+
+                con.query(
+                    "select * from bateau INNER JOIN partieactu ON bateau.idpartie = partieactu.idAdversaire where email=? and joueur2=?",
+                    [emailJ1, emailJ2],
+                    function (err, result) {
+                        con.release();
+                        res.header("Access-Control-Allow-Origin", "*");
+                        res.header(
+                            "Access-Control-Allow-Methods",
+                            "GET,HEAD,OPTIONS,POST,PUT"
+                        );
+                        res.header(
+                            "Access-Control-Allow-Headers",
+                            "Origin, X-Requested-With, Content-Type, Accept, x-client-key, x-client-token, x-client-secret, Authorization"
+                        );
+
+                        if (err) {
+                            res.send({
+                                status: 1,
+                                message: "TODO creation fail " + err + email,
+                            });
+                        } else {
+                            if (result == "") {
+                                res.send({status: 0, message: result});
+                            } else {
+                                res.send({status: 0, message: result});
+                                //console.log("Post successful");
+                            }
+                        }
+                    }
+                );
+            }
+        });
+    };
+    this.selectbateauParMailVisible = function (emailJ1, emailJ2, req, res) {
+        console.log(emailJ1);
+        console.log(emailJ2);
+        connection.acquire(function (err, con) {
+
+            let email = emailJ1;
+
+
+            if (true) {
+                //console.log(err);
+                //console.log("Connecté à la base de données MySQL!");
+
+                con.query(
+                    "select * from bateau INNER JOIN partieactu ON bateau.idpartie = partieactu.idAdversaire where email=? and joueur1=?",
+                    [emailJ1, emailJ2],
+                    function (err, result) {
+                        con.release();
+                        res.header("Access-Control-Allow-Origin", "*");
+                        res.header(
+                            "Access-Control-Allow-Methods",
+                            "GET,HEAD,OPTIONS,POST,PUT"
+                        );
+                        res.header(
+                            "Access-Control-Allow-Headers",
+                            "Origin, X-Requested-With, Content-Type, Accept, x-client-key, x-client-token, x-client-secret, Authorization"
+                        );
+
+                        if (err) {
+                            res.send({
+                                status: 1,
+                                message: "TODO creation fail " + err + email,
+                            });
+                        } else {
+                            if (result == "") {
+                                res.send({status: 0, message: result});
+                            } else {
+                                res.send({status: 0, message: result});
+                                //console.log("Post successful");
+                            }
+                        }
+                    }
+                );
+            }
+        });
+    };
     this.selectbateauparmail = function (token, adv, req, res) {
         console.log(token);
         console.log(adv);

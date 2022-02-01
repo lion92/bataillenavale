@@ -65,6 +65,12 @@ module.exports = {
     app.get('/mesbateau/:token/:adv', function(req, res){
       todo.selectbateauparmail(req.params.token, req.params.adv,req,res)
     });
+    app.get('/mesbateauVisibleJ2/:emailJ1/:emailJ2', function(req, res){
+      todo.selectbateauParMailVisibleJ2(req.params.emailJ1, req.params.emailJ2,req,res)
+    });
+    app.get('/mesbateauVisibleJ1/:emailJ1/:emailJ2', function(req, res){
+      todo.selectbateauParMailVisible(req.params.emailJ1, req.params.emailJ2,req,res)
+    });
     app.get('/mesbateauJ2/:token/:adv', function(req, res){
       todo.selectbateauparmailJ2(req.params.token, req.params.adv,req,res)
     });
