@@ -1627,7 +1627,7 @@ function Todo() {
             }
         );
 
-        if (!(connection == true)) {
+        if (!conection2 == true) {
             //console.log("!!!!!");
             connection.acquire(function (err, con) {
                 //console.log(err);
